@@ -81,10 +81,18 @@
 							'category'    => get_category_by_slug('college')->term_id,
 						)) as $i=>$college): $last=!(($i + 1)  % 3);?>
 							<li class="college span-3<?=($last)?' last':'';?>">
+								<?php $url = get_post_meta($college->ID, 'provost_unit_url', True);?>
+								<?php if($url):?>
 								<a href="<?=get_post_meta($college->ID, 'provost_unit_url', True)?>">
 									<?=get_the_post_thumbnail($college->ID)?>
 									<span class="name"><?=$college->post_title?></span>
 								</a>
+								<?php else:?>
+								<div>
+									<?=get_the_post_thumbnail($college->ID)?>
+									<span class="name"><?=$college->post_title?></span>
+								</div>
+								<?php endif;?>
 							</li>
 						<?php endforeach;?>
 					</ul>
@@ -102,10 +110,18 @@
 							'category'    => get_category_by_slug('academic-unit')->term_id,
 						)) as $i=>$unit): $last=!(($i + 1)  % 2);?>
 							<li class="unit span-3<?=($last)?' last':'';?>">
+								<?php $url = get_post_meta($unit->ID, 'provost_unit_url', True);?>
+								<?php if($url):?>
 								<a href="<?=get_post_meta($unit->ID, 'provost_unit_url', True)?>">
 									<?=get_the_post_thumbnail($unit->ID)?>
 									<span class="name"><?=$unit->post_title?></span>
 								</a>
+								<?php else:?>
+								<div>
+									<?=get_the_post_thumbnail($unit->ID)?>
+									<span class="name"><?=$unit->post_title?></span>
+								</div>
+								<?php endif;?>
 							</li>
 						<?php endforeach;?>
 					</ul>

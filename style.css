@@ -60,9 +60,11 @@ ul{padding: 0; margin: 0; list-style-type: none;}
 #home-colleges ul,
 #home-units ul{padding: 0; margin: 0; list-style-type: none;}
 #home-colleges ul li a,
-#home-units ul li a{display: block; height: 90px; width: 110px; color: #fff; text-decoration: none; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; font-size: 14px;}
-#home-colleges ul li a img,
-#home-units ul li a img{z-index: -1; position: absolute; background-color: #000;}
+#home-colleges ul li div,
+#home-units ul li a,
+#home-units ul li div{display: block; height: 90px; width: 110px; color: #fff; text-decoration: none; font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif; font-size: 14px;}
+#home-colleges ul li img,
+#home-units ul li img{z-index: -1; position: absolute; background-color: #000;}
 #home-colleges ul .college .name,
 #home-units ul .unit .name{display: block; padding: 5px; overflow: hidden; text-shadow: #000 0px 0px 4px; font-weight: 500;}
 #home #widgets h3{font-family: "Helvetica Neue", "Helvetica", "sans-serif";}
