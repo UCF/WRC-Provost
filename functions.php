@@ -150,6 +150,23 @@ add_action('wp_footer', 'provost_footer');
 
 // Theme custom functions
 // ----------------------
+function hyphenate($string, $max_word_length=14){
+	$words = explode(' ', $string);
+	foreach($words as $key=>$word){
+		$length = strlen($word);
+		if ($length > $max_word_length){
+			$cut_at = ($length - $max_word_length > 2) ? $max_word_length : $max_word_length - 2;
+			$insert = '&ndash;<br />';
+			$word   = implode($insert, array(
+				substr($word, 0, $cut_at),
+				substr($word, $cut_at),
+			));
+		}
+		$words[$key] = $word;
+	}
+	return implode(' ', $words);
+}
+
 
 /**
  * Returns the name of the custom post type defined by $class

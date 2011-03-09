@@ -85,12 +85,12 @@
 								<?php if($url):?>
 								<a href="<?=get_post_meta($college->ID, 'provost_unit_url', True)?>">
 									<?=get_the_post_thumbnail($college->ID)?>
-									<span class="name"><?=$college->post_title?></span>
+									<span class="name"><?=hyphenate($college->post_title)?></span>
 								</a>
 								<?php else:?>
 								<div>
 									<?=get_the_post_thumbnail($college->ID)?>
-									<span class="name"><?=$college->post_title?></span>
+									<span class="name"><?=hyphenate($college->post_title)?></span>
 								</div>
 								<?php endif;?>
 							</li>
@@ -114,12 +114,12 @@
 								<?php if($url):?>
 								<a href="<?=get_post_meta($unit->ID, 'provost_unit_url', True)?>">
 									<?=get_the_post_thumbnail($unit->ID)?>
-									<span class="name"><?=$unit->post_title?></span>
+									<span class="name"><?=hyphenate($unit->post_title)?></span>
 								</a>
 								<?php else:?>
 								<div>
 									<?=get_the_post_thumbnail($unit->ID)?>
-									<span class="name"><?=$unit->post_title?></span>
+									<span class="name"><?=hyphenate($unit->post_title)?></span>
 								</div>
 								<?php endif;?>
 							</li>
