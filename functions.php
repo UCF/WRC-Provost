@@ -156,13 +156,12 @@ add_action('admin_enqueue_scripts', 'provost_admin_scripts');
 // Theme custom functions
 // ----------------------
 function hyphenate($string){
-	require_once('include/hyphenate/Hyphenator.php');
-	$h = new Org_Heigl_Hyphenator('en_EN');
-	$h->setHyphen('&ndash;');
-	$h->setLeftMin('10');
-	$h->setWordMin('10');
-	$h->setQuality(Org_Heigl_Hyphenator::QUALITY_LOWEST);
-	return $h->hyphenate($string);
+	# Automatic hyphentation is difficult so here's a really stupid solution
+	$words = array(
+		'Commercialization' => 'Commericaliz-ation',
+	);
+	
+	return str_replace(array_keys($words), array_values($words), $string);
 }
 
 /**
