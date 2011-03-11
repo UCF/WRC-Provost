@@ -3,10 +3,15 @@ var __init__ = (function($){
 		var _this = $(this);
 		_this.change(function(){
 			var selected = _this.children('option:selected');
-			var url      = selected.attr('value');
-			if (url != 'null'){
+			var url   = selected.attr('value');
+			var title = selected.text();
+			if (url != null){
 				$('#provost_help_url').val(url);
 			}
+			if (title != null){
+				$('#title').val(title);
+			}
+			
 		});
 	};
 	

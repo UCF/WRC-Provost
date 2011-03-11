@@ -574,7 +574,8 @@ function _show_meta_boxes($post, $meta_box){
 				?>
 					<label for="<?=$field['id']?>"><?=$field['desc']?></label><br />
 					<select class="filler" name="<?=$field['id']?>" id="<?=$field['id']?>">
-					<?php foreach($field['options'] as $k=>$v):?>
+						<option>Choose form...</option>
+						<?php foreach($field['options'] as $k=>$v):?>
 						<?php
 						 	$this_url  = get_post_meta($v, 'provost_form_url', true);
 							$this_file = get_post_meta($v, 'provost_form_file', true);
@@ -582,8 +583,8 @@ function _show_meta_boxes($post, $meta_box){
 								$this_url = wp_get_attachment_url(get_post($this_file)->ID);
 							}
 						?>
-						<option <?php if($help_url == $this_url):?>selected="selected" <?php endif;?>value="<?=$this_url?>"><?=$k?></option>
-					<?php endforeach;?>
+						<option value="<?=$this_url?>"><?=$k?></option>
+						<?php endforeach;?>
 					</select>
 				<?php
 				break;
