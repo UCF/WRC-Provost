@@ -147,26 +147,23 @@ function provost_footer(){
 }
 add_action('wp_footer', 'provost_footer');
 
+#Add custom javascript to admin
+function provost_admin_scripts(){
+	wp_enqueue_script('custom-admin', PROVOST_JS_URL.'/admin.js', array('jquery'), False, True);
+}
+add_action('admin_enqueue_scripts', 'provost_admin_scripts');
 
 // Theme custom functions
 // ----------------------
-function hyphenate($string, $max_word_length=14){
-	$words = explode(' ', $string);
-	foreach($words as $key=>$word){
-		$length = strlen($word);
-		if ($length > $max_word_length){
-			$cut_at = ($length - $max_word_length > 2) ? $max_word_length : $max_word_length - 2;
-			$insert = '&ndash;<br />';
-			$word   = implode($insert, array(
-				substr($word, 0, $cut_at),
-				substr($word, $cut_at),
-			));
-		}
-		$words[$key] = $word;
-	}
-	return implode(' ', $words);
+function hyphenate($string){
+	require_once('include/hyphenate/Hyphenator.php');
+	$h = new Org_Heigl_Hyphenator('en_EN');
+	$h->setHyphen('&ndash;');
+	$h->setLeftMin('10');
+	$h->setWordMin('10');
+	$h->setQuality(Org_Heigl_Hyphenator::QUALITY_LOWEST);
+	return $h->hyphenate($string);
 }
-
 
 /**
  * Returns the name of the custom post type defined by $class

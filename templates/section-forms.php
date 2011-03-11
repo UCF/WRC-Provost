@@ -22,8 +22,15 @@
 			));
 		?>
 		<?php foreach($forms as $form):?>
+		<?php
+			$url  = get_post_meta($form->ID, $provost_forms->options('name').'_url', True);
+			$file = get_post_meta($form->ID, 'provost_form_file', true);
+			if ($file){
+				$url = wp_get_attachment_url(get_post($file)->ID);
+			}
+		?>
 		<li class="pdf">
-			<a href="<?=get_post_meta($form->ID, $provost_forms->options('name').'_url', True)?>"><?=$form->post_title?></a>
+			<a href="<?=$url?>"><?=$form->post_title?></a>
 		</li>
 		<?php endforeach;?>
 	</ul>

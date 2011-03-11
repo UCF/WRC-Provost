@@ -29,6 +29,34 @@ abstract class ProvostCustomPostType{
 		$use_title      = False,
 		$use_metabox    = False;
 	
+	public function get_objects($options=array()){
+		$defaults = array(
+			'numberposts'   => -1,
+			'orderby'       => 'title',
+			'order'         => 'ASC',
+			'post_type'     => $this->options('name'),
+		);
+		$options = array_merge($defaults, $options);
+		$objects = get_posts($options);
+		return $objects;
+	}
+	
+	public function get_objects_as_options($options=array()){
+		$objects = $this->get_objects($options);
+		$opt     = array();
+		foreach($objects as $o){
+			switch(True){
+				case $this->use_title:
+					$opt[$o->post_title] = $o->ID;
+					break;
+				default:
+					$opt[$o->ID] = $o->ID;
+					break;
+			}
+		}
+		return $opt;
+	}
+	
 	public function options($key){
 		$vars = get_object_vars($this);
 		return $vars[$key];
@@ -144,6 +172,19 @@ class ProvostHelp extends ProvostLink{
 		$edit_item      = 'Edit Help',
 		$new_item       = 'New Help',
 		$public         = True;
+	
+	public function fields(){
+		$forms    = new ProvostForm();
+		$fields   = parent::fields();
+		$fields[] = array(
+			'name'    => __('forms'),
+			'desc'    => __('You can define a url or select an existing form.'),
+			'id'      => $this->options('name').'_forms',
+			'type'    => 'selector',
+			'options' => $forms->get_objects_as_options(),
+		);
+		return $fields;
+	}
 }
 
 
@@ -157,6 +198,17 @@ class ProvostForm extends ProvostLink{
 		$new_item       = 'New Form',
 		$public         = True,
 		$use_categories = True;
+	
+	public function fields(){
+		$fields   = parent::fields();
+		$fields[] = array(
+			'name'    => __('Document'),
+			'desc'    => __('Define an external url or upload a new file.  Uploaded files will override any url set.'),
+			'id'      => $this->options('name').'_file',
+			'type'    => 'file',
+		);
+		return $fields;
+	}
 }
 
 
@@ -375,6 +427,73 @@ function provost_show_meta_boxes($post){
 }
 
 /**
+ * Field type save functions.
+ */
+function save_file($post_id, $field){
+	$file_uploaded = @!empty($_FILES[$field['id']]);
+	if ($file_uploaded){
+		require_once(ABSPATH.'wp-admin/includes/file.php');
+		$override['action'] = 'editpost';
+		$file               = $_FILES[$field['id']];
+		$uploaded_file      = wp_handle_upload($file, $override);
+		
+		# TODO: Pass reason for error back to frontend
+		if ($uploaded_file['error']){return;}
+		
+		$attachment = array(
+			'post_title'     => $file['name'],
+			'post_content'   => '',
+			'post_type'      => 'attachment',
+			'post_parent'    => $post_id,
+			'post_mime_type' => $file['type'],
+			'guid'           => $uploaded_file['url'],
+		);
+		$id = wp_insert_attachment($attachment, $file['file'], $post_id);
+		wp_update_attachment_metadata(
+			$id,
+			wp_generate_attachment_metadata($id, $file['file'])
+		);
+		update_post_meta($post_id, $field['id'], $id);
+	}
+}
+
+function save_members($post_id, $field){
+	$new_members = $_POST[$field['id']];
+	$members     = array();
+	if (count($new_members)){
+		foreach($new_members as $id){
+			if(isset($_POST[$field['id'].'_'.$id.'_role'])){
+				$members[$id] =  $_POST[$field['id'].'_'.$id.'_role'];
+			}else{
+				$members[$id] = null;
+			}
+		}
+		update_post_meta($post_id, $field['id'], $members);
+	}
+}
+
+function save_simple_members($post_id, $field){
+	$new_members = $_POST[$field['id']];
+	$members     = array();
+	if (count($new_members)){
+		foreach($new_members as $id){
+			$members[] = $id;
+		}
+	}
+	update_post_meta($post_id, $field['id'], $members);
+}
+
+function save_default($post_id, $field){
+	$old = get_post_meta($post_id, $field['id'], true);
+	$new = $_POST[$field['id']];
+	if ($new && $new != $old) {
+		update_post_meta($post_id, $field['id'], $new);
+	} elseif ('' == $new && $old) {
+		delete_post_meta($post_id, $field['id'], $old);
+	}
+}
+
+/**
  * Handles saving a custom post as well as it's custom fields and metadata.
  *
  * @return void
@@ -401,12 +520,19 @@ function _save_meta_data($post_id, $meta_box){
 	}
 	
 	foreach ($meta_box['fields'] as $field) {
-		$old = get_post_meta($post_id, $field['id'], true);
-		$new = $_POST[$field['id']];
-		if ($new && $new != $old) {
-			update_post_meta($post_id, $field['id'], $new);
-		} elseif ('' == $new && $old) {
-			delete_post_meta($post_id, $field['id'], $old);
+		switch ($field['type']){
+			case 'file':
+				save_file($post_id, $field);
+				break;
+			case 'members':
+				save_members($post_id, $field);
+				break;
+			case 'simple-members':
+				save_simple_members($post_id, $field);
+				break;
+			default:
+				save_default($post_id, $field);
+				break;
 		}
 	}
 }
@@ -439,9 +565,27 @@ function _show_meta_boxes($post, $meta_box){
 			case 'select':
 				echo '<select name="', $field['id'], '" id="', $field['id'], '">';
 				foreach ($field['options'] as $k=>$option) {
-					echo '<option', $meta == $option ? ' selected="selected"' : '', ' value="', $k, '">', $option, '</option>';
+					echo '<option', $meta == $option ? ' selected="selected"' : '', ' value="', $option, '">', $k, '</option>';
 				}
 				echo '</select>';
+				break;
+			case 'selector':
+					$help_url = get_post_meta($post->ID, 'provost_help_url', true);
+				?>
+					<label for="<?=$field['id']?>"><?=$field['desc']?></label><br />
+					<select class="filler" name="<?=$field['id']?>" id="<?=$field['id']?>">
+					<?php foreach($field['options'] as $k=>$v):?>
+						<?php
+						 	$this_url  = get_post_meta($v, 'provost_form_url', true);
+							$this_file = get_post_meta($v, 'provost_form_file', true);
+							if ($this_file){
+								$this_url = wp_get_attachment_url(get_post($this_file)->ID);
+							}
+						?>
+						<option <?php if($help_url == $this_url):?>selected="selected" <?php endif;?>value="<?=$this_url?>"><?=$k?></option>
+					<?php endforeach;?>
+					</select>
+				<?php
 				break;
 			case 'radio':
 				foreach ($field['options'] as $option) {
@@ -451,6 +595,22 @@ function _show_meta_boxes($post, $meta_box){
 			case 'checkbox':
 				echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
 				break;
+			case 'file':
+				$document_id = get_post_meta($post->ID, $field['id'], True);
+				if ($document_id){
+					$document = get_post($document_id);
+					$url      = wp_get_attachment_url($document->ID);
+				}else{
+					$document = null;
+				}
+				?>
+				<label for="file_<?=$post->ID?>"><?=$field['desc'];?></label><br />
+				<?php if($document):?>
+				Current file:
+				<a href="<?=$url?>"><?=$document->post_title?></a><br /><br />
+				<?php endif;?>
+				<input type="file" id="file_<?=$post->ID?>" name="<?=$field['id']?>"><br />
+				<?php break;
 		}
 		echo     '<td>',
 		'</tr>';
