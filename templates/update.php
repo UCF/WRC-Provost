@@ -109,8 +109,7 @@ border=0 cellSpacing=0 cellPadding=0 width=600 align=center>
             src="<?=PROVOST_IMG_URL?>/provost-update.jpg"></TD>
           <TD 
           style="BORDER-BOTTOM: #999 1px solid; TEXT-ALIGN: center; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; COLOR: #000; VERTICAL-ALIGN: bottom; PADDING-TOP: 0px">
-            <DIV style="MARGIN: 10px auto">Thursday, February 10, 
-        2011</DIV></TD></TR>
+            <DIV style="MARGIN: 10px auto"><?=date('l, F j, Y', strtotime($post->post_date))?></DIV></TD></TR>
         <TR 
         style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
           <TD 
