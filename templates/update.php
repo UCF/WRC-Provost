@@ -1,153 +1,67 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- saved from url=(0120)mhtml:file://C:\Users\adiaak\AppData\Local\Microsoft\Windows\Temporary Internet Files\Content.Outlook\AQUUL588\email.mht -->
-<HTML 
-style="PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #dbdcdc; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Georgia, 'Times New Roman', Times, serif; COLOR: #3f3d3d; FONT-SIZE: 14px; PADDING-TOP: 0px" 
-xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>Provost's Update</TITLE>
-<META content="text/html; charset=utf-8" http-equiv=Content-Type>
-<STYLE type=text/css>HTML {
-	PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #dbdcdc; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Georgia, "Times New Roman", Times, serif; COLOR: #3f3d3d; FONT-SIZE: 14px; PADDING-TOP: 0px
-}
-BODY {
-	PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #dbdcdc; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Georgia, "Times New Roman", Times, serif; COLOR: #3f3d3d; FONT-SIZE: 14px; PADDING-TOP: 0px
-}
-#left {
-	LINE-HEIGHT: 21px; FONT-SIZE: 14px
-}
-#left P {
-	LINE-HEIGHT: 21px; FONT-SIZE: 14px
-}
-#right {
-	PADDING-BOTTOM: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; FONT-FAMILY: "Lucida Grande", Arial, sans-serif; FONT-SIZE: 10px; PADDING-TOP: 0px
-}
-#box {
-	PADDING-BOTTOM: 10px; PADDING-LEFT: 26px; PADDING-RIGHT: 10px; PADDING-TOP: 16px
-}
-#box P {
-	PADDING-BOTTOM: 5px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
-}
-#box UL {
-	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: "Lucida Grande", Arial, sans-serif; FONT-SIZE: 10px; PADDING-TOP: 0px
-}
-#box LI {
-	PADDING-BOTTOM: 0px; LINE-HEIGHT: 17px; LIST-STYLE-TYPE: none; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; COLOR: #9c0404; LIST-STYLE-IMAGE: none; PADDING-TOP: 0px
-}
-#box LI A {
-	COLOR: #9c0404; TEXT-DECORATION: underline
-}
-#foot A {
-	COLOR: #a1a1a1; TEXT-DECORATION: underline
-}
-H2 {
-	TEXT-ALIGN: center; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Georgia, "Times New Roman", Times, serif; MARGIN-BOTTOM: 6px; COLOR: #666; FONT-SIZE: 15px; PADDING-TOP: 0px
-}
-A {
-	COLOR: #660000
-}
-A:hover {
-	COLOR: #e50606
-}
-A IMG {
-	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
-}
-IMG {
-	BORDER-BOTTOM: 0px; BORDER-LEFT: 0px; BORDER-TOP: 0px; BORDER-RIGHT: 0px
-}
-TABLE {
-	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px
-}
-TD {
-	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px
-}
-TR {
-	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px
-}
-noCSS {
-	DISPLAY: none
-}
-</STYLE>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<title>Provost's Update</title>
+<style type="text/css">
+<!--
+html, body { margin-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px;
+	background-color:#dbdcdc; color:#3f3d3d; font-family:Georgia, "Times New Roman", Times, serif;
+	font-size:14px; padding:0; }
+#main { background:white url(<?=PROVOST_IMG_URL?>/bg.gif) top repeat-x; }
+#left { font-size:14px; line-height:21px; }
+#left p { font-size:14px;  line-height:21px;}
+#right { font-family:'Lucida Grande', Arial, sans-serif; font-size:10px; padding:0 0 0 20px;}
+#box { padding:16px 10px 10px 26px; }
+#box p { margin:0; padding:0 0 5px 0; }
+#box ul { padding:0; margin:0; font-family:"Lucida Grande", Arial, sans-serif; font-size:10px; }
+#box li { list-style:none; color:#9c0404; margin:0; padding:0; line-height:17px; }
+#box li a { color:#9c0404; text-decoration:underline;  }
+#foot a { color:#a1a1a1; text-decoration:underline; }
+h2 { text-align:center; color:#666; font-family:Georgia, "Times New Roman", Times, serif; font-size:15px; margin-bottom:6px; padding:0; }
+a { color:#660000; }
+a:hover { color:#E50606; }
+a img { border: 0; }	
+img { border:0; }
+table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:top; }
+.noCSS { display:none; }
+-->
+</style>
+</head>
 
-<META name=GENERATOR content="MSHTML 8.00.7600.16722"></HEAD>
-<BODY 
-style="PADDING-BOTTOM: 0px; BACKGROUND-COLOR: #dbdcdc; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Georgia, 'Times New Roman', Times, serif; COLOR: #3f3d3d; FONT-SIZE: 14px; PADDING-TOP: 0px">
-<DIV 
-style="BORDER-BOTTOM: #858585 1px solid; TEXT-ALIGN: center; PADDING-BOTTOM: 5px; PADDING-LEFT: 5px; PADDING-RIGHT: 5px; DISPLAY: none; FONT-FAMILY: 'Lucida Grande', Arial, sans-serif; BACKGROUND: #dedede left top; COLOR: #000; FONT-SIZE: 11px; PADDING-TOP: 5px" 
-class=noCSS>You’re receiving this newsletter because 
-______________________________________________ Having trouble reading this 
-email? <FONT color=#e90606><A style="COLOR: #660000" 
-href="http://provostoffice.createsend1.com/t/y/e/fftjy/pijhykrdt/">View it in 
-your browser</A></FONT>. </DIV>
-<DIV 
-style="BACKGROUND: url(http://i7.createsend1.com/ti/y/8C/556/9C3/064642/images/bg.gif) white repeat-x 50% top" 
-id=main>
-<TABLE 
-style="PADDING-BOTTOM: 0px; MARGIN: 0px auto; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px" 
-border=0 cellSpacing=0 cellPadding=0 width=600 align=center>
-  <TBODY>
-  <TR 
-  style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
-    <TD 
-    style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px" 
-    height=37><A style="COLOR: #660000" 
-      href="http://provostoffice.createsend1.com/t/y/l/fftjy/pijhykrdt/r"><IMG 
-      style="BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" 
-      alt="University of Central Florida" 
-      src="<?=PROVOST_IMG_URL?>/ucf.gif"></A></TD></TR>
-  <TR 
-  style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
-    <TD 
-    style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
-      <TABLE 
-      style="PADDING-BOTTOM: 0px; MARGIN: 0px auto; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px" 
-      border=0 cellSpacing=0 cellPadding=0 width=560 align=center>
-        <TBODY>
-        <TR 
-        style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
-          <TD 
-          style="BORDER-BOTTOM: #999 1px solid; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px"><IMG 
-            style="BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; FONT-SIZE: 19px; BORDER-LEFT-WIDTH: 0px" 
-            alt="Provost Update" 
-            src="<?=PROVOST_IMG_URL?>/provost-update.jpg"></TD>
-          <TD 
-          style="BORDER-BOTTOM: #999 1px solid; TEXT-ALIGN: center; PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; COLOR: #000; VERTICAL-ALIGN: bottom; PADDING-TOP: 0px">
-            <DIV style="MARGIN: 10px auto">Thursday, February 10, 
-        2011</DIV></TD></TR>
-        <TR 
-        style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
-          <TD 
-          style="PADDING-BOTTOM: 0px; LINE-HEIGHT: 21px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; FONT-SIZE: 14px; VERTICAL-ALIGN: top; PADDING-TOP: 0px" 
-          id=left width='auto'>
-            <?php the_post(); the_content()?>
-            <P style="LINE-HEIGHT: 21px; FONT-SIZE: 14px">Sincerely,<BR><IMG 
-            style="BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" 
-            alt="Signature—Tony Waldrop" 
-            src="<?=PROVOST_IMG_URL?>/signature.gif"></P></TD>
-          <TD 
-          style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 20px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; FONT-FAMILY: 'Lucida Grande', Arial, sans-serif; FONT-SIZE: 10px; VERTICAL-ALIGN: top; PADDING-TOP: 0px" 
-          id=right>
-            <DIV style="PADDING-TOP: 24px"><IMG 
-            style="BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" 
-            alt="Tony G. Waldrop, Ph.D. Provost and Vice President for Academic Affairs" 
-            src="<?=PROVOST_IMG_URL?>/tony-waldrop.jpg"></DIV>
-            <DIV 
-            style="BORDER-BOTTOM: #999 1px solid; LINE-HEIGHT: 6px; MARGIN: 6px auto 15px; WIDTH: 174px; FONT-SIZE: 6px"></DIV>
-            <H2 
-            style="TEXT-ALIGN: center; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; FONT-FAMILY: Georgia, 'Times New Roman', Times, serif; MARGIN-BOTTOM: 6px; COLOR: #666; FONT-SIZE: 15px; PADDING-TOP: 0px">Contact 
-            the Provost</H2>
-			<a style="COLOR: #660000" target="_blank" href="http://provost.ucf.edu/message.html"><IMG 
-            style="BORDER-RIGHT-WIDTH: 0px; BORDER-TOP-WIDTH: 0px; BORDER-BOTTOM-WIDTH: 0px; BORDER-LEFT-WIDTH: 0px" 
-            src="<?=PROVOST_IMG_URL?>/feedback.jpg"></a> </TD></TR>
-        <TR 
-        style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px">
-          <TD 
-          style="PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; BORDER-COLLAPSE: collapse; VERTICAL-ALIGN: top; PADDING-TOP: 0px" 
-          colSpan=2>
-            <DIV 
-            style="LINE-HEIGHT: 150%; MARGIN: 0px 0px 20px; FONT-FAMILY: 'Lucida Grande', Arial, sans-serif; COLOR: #a1a1a1; FONT-SIZE: 11px; BORDER-TOP: #ededed 1px solid; PADDING-TOP: 10px" 
-            id=foot>University of Central Florida • 4000 Central Florida Blvd. • 
-            Orlando, FL 32816-0065<BR>
-				<a style="COLOR: #a1a1a1; TEXT-DECORATION: underline" target="_blank" href="http://provost.ucf.edu/">http://provost.ucf.edu</a> 
-            &nbsp;&nbsp;|&nbsp;&nbsp; 
-</DIV></TD></TR></TBODY></TABLE></TD></TR></TBODY></TABLE></DIV><IMG 
-style="PADDING-BOTTOM: 0px !important; BORDER-RIGHT-WIDTH: 0px !important; MARGIN: 0px; PADDING-LEFT: 0px !important; WIDTH: 1px !important; PADDING-RIGHT: 0px !important; BORDER-TOP-WIDTH: 0px !important; BORDER-BOTTOM-WIDTH: 0px !important; HEIGHT: 1px !important; BORDER-LEFT-WIDTH: 0px !important; PADDING-TOP: 0px !important" 
-border=0 src="February102011ProvostUpdate_files/o.htm" width=1 height=1> 
-</BODY></HTML>
+<body>
+<div style="background:#dedede; border-bottom:1px solid #858585; color:#000;font-family:'Lucida Grande', Arial, sans-serif; font-size:11px; text-align:center;padding:5px;" class="noCSS" >Having trouble reading this email? <font color="#e90606"><webversion>View it in your browser</webversion></font>.
+</div>
+<div id="main">
+	<table width="600" border="1" align="center" cellpadding="0" cellspacing="0" style="width: 600px; margin:0 auto; background-color: #fff;">
+		<tr><td height="37" style="background-color: #000; padding-left: 20px;"><a href="http://www.ucf.edu/"><img alt="University of Central Florida" src="<?=PROVOST_IMG_URL?>/ucf.gif"></a></td></tr>
+		<tr><td>
+			<table border="0" align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;">
+				<tr>
+					<td width="600" colspan="2" style="background-color: #fffae4; border-bottom:1px solid #999;"><img alt="Provost Update" src="<?=PROVOST_IMG_URL?>/provost-update.jpg" style="font-size:19px"></td>
+				</tr>
+				<tr><td id="left" style="padding: 0 20px;" width="auto">
+					<div style="padding-top:24px;padding-bottom:15px; line-height: 21px;"><img src="<?=PROVOST_IMG_URL?>/tony-waldrop.jpg?t=<?=time()?>" alt="Tony G. Waldrop, Ph.D. Provost and Vice President for Academic Affairs"></div>
+					<?php the_post(); the_content();?>
+					<p>Sincerely,<br><img src="<?=PROVOST_IMG_URL?>/signature.gif" alt="Signature&mdash;Tony Waldrop"></p>
+				</td><td id="right">
+					<div style="margin-top: 10px; font-size: 15px;"><?=date("l, F j Y")?></div>
+					<div style="padding-top:24px;">
+					<h2><a href="http://provost.ucf.edu/contact.html">Contact the Provost</a></h2>
+					<a href="http://www.provost.ucf.edu/message.html"><img src="<?=PROVOST_IMG_URL?>/feedback.jpg"></a></div>
+			
+				</td></tr>
+				<tr><td style="padding: 0 20px;" colspan="2">
+					<div style="font-family:'Lucida Grande', Arial, sans-serif; font-size:11px; margin:0 0 20px 0; border-top:1px solid #ededed;color:#a1a1a1;padding-top:10px;line-height:150%;" id="foot">
+						University of Central Florida &bull; 4000 Central Florida Blvd. &bull; Orlando, FL 32816-0065<br>
+						<a href="http://www.provost.ucf.edu" style="color:#a1a1a1;text-decoration:underline;">http://www.provost.ucf.edu</a> &nbsp;&nbsp;|&nbsp;&nbsp;<unsubscribe>Click here to unsubscribe.</unsubscribe>
+					</div>
+				</td></tr>
+			</table>
+		</td></tr>
+	</table>
+</div>
+
+
+</body>
+</html>
