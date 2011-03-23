@@ -28,7 +28,6 @@ table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:to
 -->
 </style>
 </head>
-
 <body>
 <div style="background:#dedede; border-bottom:1px solid #858585; color:#000;font-family:'Lucida Grande', Arial, sans-serif; font-size:11px; text-align:center;padding:5px;" class="noCSS" >Having trouble reading this email? <font color="#e90606"><webversion>View it in your browser</webversion></font>.
 </div>
@@ -61,7 +60,5 @@ table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:to
 		</td></tr>
 	</table>
 </div>
-
-
 </body>
 </html>
