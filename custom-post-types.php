@@ -557,10 +557,10 @@ function _show_meta_boxes($post, $meta_box){
 			'<td>';
 		switch ($field['type']) {
 			case 'text':
-				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? $meta : $field['std'], '" size="30" style="width:97%" />', "\n", $field['desc'];
+				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? htmlentities($meta) : $field['std'], '" size="30" style="width:97%" />', "\n", $field['desc'];
 				break;
 			case 'textarea':
-				echo '<textarea name="', $field['id'], '" id="', $field['id'], '" cols="60" rows="4" style="width:97%">', $meta ? $meta : $field['std'], '</textarea>', "\n", $field['desc'];
+				echo '<textarea name="', $field['id'], '" id="', $field['id'], '" cols="60" rows="4" style="width:97%">', $meta ? htmlentities($meta) : $field['std'], '</textarea>', "\n", $field['desc'];
 				break;
 			case 'select':
 				echo '<select name="', $field['id'], '" id="', $field['id'], '">';
