@@ -7,7 +7,7 @@
 	if (count($deans_list)){
 		$deans_list = $deans_list[0];
 	}
-	$org_chart  = get_posts(array(
+	$org_chart = get_posts(array(
 		'numberposts' => 1,
 		'post_type'   => get_custom_post_type('ProvostForm'),
 		'category'    => get_category_by_slug('org-chart')->term_id,
@@ -30,6 +30,13 @@
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
 	));
+	$administrative_staff = get_posts(array(
+		'numberposts' => -1,
+		'post_type'   => get_custom_post_type('ProvostPerson'),
+		'category'    => get_category_by_slug('administrative-staff')->term_id,
+		'orderby'     => 'menu_order',
+		'order'       => 'ASC',
+	));
 	
 	function display_people($people, $id=null){
 		?>
@@ -48,11 +55,20 @@
 	}
 ?>
 <div id="org-chart">
+	<?php if ($academic_officers):?>
 	<h2>Academic Affairs Organizational Structure</h2>
 	<a href="<?=get_post_meta($org_chart->ID, 'provost_form_url', True)?>">Download PDF <?=$org_chart->post_title?></a>
 	<?php display_people($academic_officers, 'academic-officers');?>
+	<?php endif;?>
 	
+	<?php if ($college_deans):?>
 	<h2>College Deans</h2>
 	<a href="<?=get_post_meta($deans_list->ID, 'provost_form_url', True)?>">Download PDF <?=$deans_list->post_title?></a>
 	<?php display_people($college_deans, 'college-deans');?>
+	<?php endif;?>
+	
+	<?php if ($administrative_staff):?>
+	<h2>Administrative Staff</h2>
+	<?php display_people($administrative_staff, 'administrative-staff');?>
+	<?php endif;?>
 </div>

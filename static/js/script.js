@@ -61,15 +61,17 @@ var __init__ = (function($){
 		var options      = $.extend({}, defaults, arguments);
 		var container    = $(this);
 		
-		var active = $(this).children('img.active');
+		var active = container.children('img.active');
 		if (active.length < 1){
-			active = $(this).children('img:last');
+			active = container.children('img:first');
 			active.addClass('active');
+			setTimeout(function(){container.imageRotate(options);}, options.image_length);
+			return;
 		}
 		
 		var next = active.next();
 		if (next.length < 1){
-			next = $(this).children('img:first');
+			next = container.children('img:first');
 		}
 		
 		active.addClass('last-active');

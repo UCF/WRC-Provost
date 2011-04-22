@@ -234,7 +234,9 @@ class ProvostHomeImages extends ProvostCustomPostType{
 		$add_new_item   = 'Add Home Image',
 		$edit_item      = 'Edit Home Image',
 		$new_item       = 'New Home Image',
+		$help           = '',
 		$public         = True,
+		$use_order      = True,
 		$use_thumbnails = True,
 		$use_title      = True,
 		$use_metabox    = True;
@@ -243,6 +245,9 @@ class ProvostHomeImages extends ProvostCustomPostType{
 		$metabox = $this->metabox();
 		global $wp_meta_boxes;
 		remove_meta_box('postimagediv', $metabox['page'], 'side');
+		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
+			print "<p>Images will be outputted as defined by the order attribute in the side bar.  Higher numbers have priority.</p>";
+		'), $metabox['page'], 'normal', 'high');
 		add_meta_box('postimagediv', __('Home Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
 	}
 }
@@ -276,6 +281,9 @@ class ProvostPerson extends ProvostCustomPostType{
 		$metabox = $this->metabox();
 		global $wp_meta_boxes;
 		remove_meta_box('postimagediv', $metabox['page'], 'side');
+		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
+			print "<p>People defined here, and categorized as Academic Officers, Administrative Staff, or College Deans, will appear in their respective sections on the academic affairs page.</p>";
+		'), $metabox['page'], 'normal', 'high');
 		add_meta_box('postimagediv', __('Person Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
 		
 		parent::register_metaboxes();
@@ -546,7 +554,6 @@ function _save_meta_data($post_id, $meta_box){
 function _show_meta_boxes($post, $meta_box){
 	// Use nonce for verification
 	echo '<input type="hidden" name="provost_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
-	
 	echo '<table class="form-table">';
 	foreach ($meta_box['fields'] as $field) {
 		// get current post meta data

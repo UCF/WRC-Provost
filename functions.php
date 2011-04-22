@@ -204,14 +204,13 @@ function get_menu_pages($c){
  * @return void
  * @author Jared Lang
  **/
-function get_home_images($limit=null, $orderby=null){
+function get_home_images($limit=null, $orderby='menu_order'){
 	$limit       = ($limit) ? $limit : -1;
-	$orderby     = ($orderby) ? $orderby : 'date';
 	$home_images = new ProvostHomeImages();
 	$images      = get_posts(array(
 		'numberposts' => -1,
 		'orderby'     => $orderby,
-		'order'       => 'ASC',
+		'order'       => 'DESC',
 		'post_type'   => $home_images->options('name'),
 	));
 	if ($images){
