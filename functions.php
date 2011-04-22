@@ -38,6 +38,7 @@ $SCRIPTS = array(
 	"<script src='http://events.ucf.edu/tools/script.js' type='text/javascript'></script>",
 	"<script type='text/javascript'>
 		var PROVOST_MISC_URL = '".PROVOST_MISC_URL."';
+		var GA_ACCOUNT       = 'UA-7506281-3';
 	</script>",
 	"<script src='".PROVOST_JS_URL."/script.js' type='text/javascript'></script>",
 );
