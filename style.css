@@ -30,7 +30,8 @@ h2, h3, h4{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif"; co
 .optional:after{content: ')';}
 .optional:before{content: '(';}
 #footer{margin-top: 20px;}
-ul{padding: 0; margin: 0; list-style-type: none;}
+ul,ol{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
+ul.none{padding: 0; margin: 0; list-style-type: none;}
 
 
 /*/ Home Page /*/
