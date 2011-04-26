@@ -2,8 +2,18 @@
 <?php get_header(); the_post();?>
 	
 	<div class="page-content" id="<?=$post->post_name?>">
-		<h2><?php the_title();?></h2>
-		<div id="left" class="span-6 append-1">
+		<h2 class="page-title"><?php the_title();?></h2>
+		<div id="left" class="span-17 append-1">
+			<article>
+				<?php the_content();?>
+			</article>
+			
+			<?php if(get_post_meta($post->ID, 'use-comments', True)):?>
+			<!-- Academic Affairs specific template information -->
+			<?php thematic_comments_template()?>
+			<?php endif;?>
+		</div>
+		<div id="right" class="span-6 last">
 			
 			<!-- Featured Image -->
 			<?php if(has_post_thumbnail() and get_the_title() == 'About the Provost'):?>
@@ -40,16 +50,6 @@
 				<?php endif;?>
 				</ul>
 			</div>
-		</div>
-		<div id="right" class="span-17 last">
-			<article>
-				<?php the_content();?>
-			</article>
-			
-			<?php if(get_post_meta($post->ID, 'use-comments', True)):?>
-			<!-- Academic Affairs specific template information -->
-			<?php thematic_comments_template()?>
-			<?php endif;?>
 		</div>
 		
 	</div>
