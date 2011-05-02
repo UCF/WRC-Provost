@@ -12,10 +12,17 @@
 <div class="faculty-award-programs">
 	<h2>Faculty Award Programs</h2>
 	<ul class="programs"><?php foreach($programs as $program):?>
-		<li><a href="<?=get_post_meta($program->ID, 'provost_award_url', True)?>">
-			<?=get_the_post_thumbnail($program->ID)?>
-			<span class="caption"><?=$program->post_title?></span>
-		</a></li>
+		<li>
+			<?php
+				$url = get_post_meta($program->ID, 'provost_award_url', True);
+				if($url[0] == "/") $url = site_url() . $url;
+				printf('<a href="%s">%s<span class="caption">%s</span</a>',
+					$url,
+					get_the_post_thumbnail($program->ID),
+					$program->post_title
+				);
+			?>
+		</li>
 	<?php endforeach;?></ul>
 	<div class="end"><!-- --></div>
 </div>
