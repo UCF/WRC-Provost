@@ -4,6 +4,9 @@
 require_once('custom-post-types.php');
 require_once('shortcodes.php');
 
+# Plugin-ins
+require_once('custom-post-template/custom-post-templates.php');
+
 define('PROVOST_THEME_URL', get_bloginfo('stylesheet_directory'));
 define('PROVOST_STATIC_URL', PROVOST_THEME_URL.'/static');
 define('PROVOST_IMG_URL', PROVOST_STATIC_URL.'/img');
@@ -79,7 +82,12 @@ function provost_template_redirect(){
 	}
 	switch($type){
 		case 'provost_update':
-			include('templates/update.php');
+			$post_template = get_post_meta( $post->ID, 'custom_post_template', true );
+			if(empty($post_template)){
+				include('provost-update-tony.php');
+			} else {
+				include($post_template);
+			}
 			die();
 	}
 }
