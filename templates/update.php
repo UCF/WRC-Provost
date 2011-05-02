@@ -39,7 +39,7 @@
 			</div>
 			
 			<div id="sidebar">
-				<div class="date"><?=date('l, F j, Y', strtotime($post->post_date))?></div>
+				<div class="date"><?=date('l, F j, Y', strtotime($post->post_title))?></div>
 				<div id="contact">
 					<h2><a href="#">Contact&nbsp;the&nbsp;Provost</a></h2>
 					<a id="feedback" href="#">For questions or comments</a>
