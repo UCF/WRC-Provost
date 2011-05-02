@@ -33,6 +33,7 @@ h2, h3, h4{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif"; co
 ul,ol{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
 ul.none{padding: 0; margin: 0; list-style-type: none;}
 
+.blue tr:nth-child(even) td, .blue tr.even td {background:#e5ecf9;}
 
 /*/ Home Page /*/
 #home #top{}
