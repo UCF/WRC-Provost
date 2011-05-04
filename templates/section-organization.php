@@ -16,27 +16,33 @@
 		$org_chart = $org_chart[0];
 	}
 	
-	$college_deans = get_posts(array(
+	
+	$category = get_category_by_slug('college-deans');
+	$college_deans = ($category) ? get_posts(array(
 		'numberposts' => -1,
 		'post_type'   => get_custom_post_type('ProvostPerson'),
-		'category'    => get_category_by_slug('college-deans')->term_id,
+		'category'    => $category->term_id,
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
-	));
-	$academic_officers = get_posts(array(
+	)) : false;
+	
+	$category = get_category_by_slug('academic-officers');
+	$academic_officers = ($category) ? get_posts(array(
 		'numberposts' => -1,
 		'post_type'   => get_custom_post_type('ProvostPerson'),
-		'category'    => get_category_by_slug('academic-officers')->term_id,
+		'category'    => $category->term_id,
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
-	));
-	$administrative_staff = get_posts(array(
+	)) : false;
+	
+	$category = get_category_by_slug('administrative-staff');
+	$administrative_staff = ($category) ? get_posts(array(
 		'numberposts' => -1,
 		'post_type'   => get_custom_post_type('ProvostPerson'),
 		'category'    => get_category_by_slug('administrative-staff')->term_id,
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
-	));
+	)) : false;
 	
 	function display_people($people, $id=null){
 		?>
@@ -56,19 +62,19 @@
 ?>
 <div id="org-chart">
 	<?php if ($academic_officers):?>
-	<h2>Academic Affairs Organizational Structure</h2>
+	<h2><?=get_category_by_slug('academic-officers')->name ?></h2>
 	<a href="<?=get_post_meta($org_chart->ID, 'provost_form_url', True)?>">Download PDF <?=$org_chart->post_title?></a>
 	<?php display_people($academic_officers, 'academic-officers');?>
 	<?php endif;?>
 	
 	<?php if ($college_deans):?>
-	<h2>College Deans</h2>
+	<h2><?=get_category_by_slug('college-deans')->name ?></h2>
 	<a href="<?=get_post_meta($deans_list->ID, 'provost_form_url', True)?>">Download PDF <?=$deans_list->post_title?></a>
 	<?php display_people($college_deans, 'college-deans');?>
 	<?php endif;?>
 	
 	<?php if ($administrative_staff):?>
-	<h2>Administrative Staff</h2>
+	<h2><?=get_category_by_slug('administrative-staff')->name ?></h2>
 	<?php display_people($administrative_staff, 'administrative-staff');?>
 	<?php endif;?>
 </div>
