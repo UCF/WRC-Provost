@@ -4,7 +4,12 @@
 	<div class="page-content" id="<?=$post->post_name?>">
 		<h2 class="span-24 last"><?php the_title();?></h2>
 		
-		<div id="left" class="span-6 append-1">
+		<div id="left" class="span-17 append-1">
+			<article>
+				<?php the_content();?>
+			</article>
+		</div>
+		<div id="right" class="span-6 last">
 			<!-- Sub-page List-->
 			<?php $children = get_pages(array(
 				'child_of'    => $post->ID,
@@ -29,11 +34,6 @@
 				<?php endif; ?>
 				</ul>
 			</div>
-		</div>
-		<div id="right" class="span-17 last">
-			<article>
-				<?php the_content();?>
-			</article>
 		</div>
 		
 	</div>
