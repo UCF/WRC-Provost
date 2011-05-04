@@ -21,8 +21,15 @@ h2, h3, h4{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif"; co
 .slideshow img { position:absolute; top:0; left:0; z-index:8; opacity:0.0; }
 .slideshow img.active { z-index:10; opacity:1.0; }
 .slideshow img.last-active { z-index:9; }
-.pdf{background: transparent url('static/img/pdf.png') no-repeat center left; overflow:hidden; padding: 5px 5px 5px 25px;}
-.pdf a{text-decoration: underline; color: #333;}
+
+.document {background: transparent url('static/img/document.png') no-repeat center left; overflow:hidden; padding: 5px 5px 5px 25px;}
+.document a { text-decoration: underline; color: #333;}
+.pdf        { background-image: url('static/img/document-pdf.png'); }
+.doc, .docx { background-image: url('static/img/document-doc.png'); }
+.xls        { background-image: url('static/img/document-xls.png'); }
+.ppt        { background-image: url('static/img/document-ppt.png'); }
+.missing    { background-image: url('static/img/document-missing.png'); }
+
 .required{font-weight: bold; font-size: 12px; color: #A00;}
 .required:after{content: ')';}
 .required:before{content: '(';}

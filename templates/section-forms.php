@@ -28,8 +28,14 @@
 			if ($file){
 				$url = wp_get_attachment_url(get_post($file)->ID);
 			}
+			if($url=="#"){
+				$class = 'missing';
+			} else {
+				preg_match('/\.(?<file_ext>[^.]+)$/', $url, $matches);
+				$class = isset($matches['file_ext']) ? $matches['file_ext'] : 'file';
+			}	
 		?>
-		<li class="pdf">
+		<li class="document <?=$class?>">
 			<a href="<?=$url?>"><?=$form->post_title?></a>
 		</li>
 		<?php endforeach;?>
