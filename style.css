@@ -25,9 +25,9 @@ h2, h3, h4{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif"; co
 .document {background: transparent url('static/img/document.png') no-repeat center left; overflow:hidden; padding: 5px 5px 5px 25px;}
 .document a { text-decoration: underline; color: #333;}
 .pdf        { background-image: url('static/img/document-pdf.png'); }
-.doc, .docx { background-image: url('static/img/document-doc.png'); }
-.xls        { background-image: url('static/img/document-xls.png'); }
-.ppt        { background-image: url('static/img/document-ppt.png'); }
+.doc, .docx, .docm { background-image: url('static/img/document-doc.png'); }
+.ppt, .pptx, .pptm { background-image: url('static/img/document-ppt.png'); }
+.xls, .xlsx, .xlsm, .xlt, .xltx, .xltm { background-image: url('static/img/document-xls.png'); }
 .missing    { background-image: url('static/img/document-missing.png'); }
 
 .required{font-weight: bold; font-size: 12px; color: #A00;}
