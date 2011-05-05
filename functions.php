@@ -70,6 +70,13 @@ function provost_head_profile($profile){
 }
 add_filter('thematic_head_profile', 'provost_head_profile');
 
+function childtheme_doctitle($title){
+	if ( is_home() || is_front_page() ) {
+		return get_bloginfo('name');
+	}
+	return $title;
+}
+add_filter('thematic_doctitle', 'childtheme_doctitle');
 
 function provost_template_redirect(){
 	global $post;

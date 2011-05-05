@@ -44,7 +44,7 @@
 ?>
 	<div id="wrap">
 		<div id="header" class="span-24 last">
-			<h1 class="span-9"><a href="<?php bloginfo('url')?>"><?php bloginfo('name')?></a></h1>
+			<h1 class="span-9"><a href="<?php bloginfo('url')?>">Office of the Provost</a></h1>
 			<div class="span-15 last" id="menu">
 				<?=preg_replace(
 					'/<li[^>]*>([^<]*<[^>]+>[^<]+<[^>]+>)<\/li>[\s]*<\/ul>/',
