@@ -5,8 +5,27 @@
 		<h2 class="span-24 last"><?php the_title();?></h2>
 		
 		<div id="left" class="span-17 append-1">
+			<?php if($post->post_type == 'profile'): ?>
+			<div id="profile">
+				<?=get_the_post_thumbnail($person->ID)?>
+				<strong><?=get_post_meta($post->ID, 'profile_description', True)?></strong>
+				<?php
+					$categories = get_the_category();
+					foreach($categories as $c){
+						echo $c->name;
+					}
+				?>
+			</div>
+			<?php endif; ?>
 			<article>
-				<?php the_content();?>
+			<?php 
+				$content = $post->post_content;
+				if(!empty($content)){
+					the_content();
+				} else {
+					echo "Coming soon...";
+				}
+			?>
 			</article>
 		</div>
 		<div id="right" class="span-6 last">
