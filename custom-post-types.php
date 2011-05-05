@@ -254,7 +254,7 @@ class ProvostHomeImages extends ProvostCustomPostType{
 
 class ProvostPerson extends ProvostCustomPostType{
 	public
-		$name           = 'provost_person',
+		$name           = 'profile',
 		$plural_name    = 'People',
 		$singular_name  = 'Person',
 		$add_new_item   = 'Add Person',
@@ -264,7 +264,8 @@ class ProvostPerson extends ProvostCustomPostType{
 		$use_categories = True,
 		$use_order      = True,
 		$use_title      = True,
-		$use_metabox    = True;
+		$use_metabox    = True,
+		$use_editor     = True;
 	
 	public function fields(){
 		return array(
@@ -281,15 +282,26 @@ class ProvostPerson extends ProvostCustomPostType{
 		$metabox = $this->metabox();
 		global $wp_meta_boxes;
 		remove_meta_box('postimagediv', $metabox['page'], 'side');
-		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
-			print "<p>People defined here, and categorized as Academic Officers, Administrative Staff, or College Deans, will appear in their respective sections on the academic affairs page.</p>";
-		'), $metabox['page'], 'normal', 'high');
 		add_meta_box('postimagediv', __('Person Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
+		
+		remove_meta_box('categorydiv', $metabox['page'], 'side');
+		add_meta_box('categorydiv', 'Profile Categories', 'custom_post_categories_meta_box', $metabox['page'], 'side');
 		
 		parent::register_metaboxes();
 	}
 }
 
+function custom_post_categories_meta_box($post, $box){
+	// add help text to categories box
+	echo '<p style="padding:8px; border:1px solid #84B6CC; background:#EAF2FA; margin:8px 0;">
+			<span style="font-family:monospace;font-weight:bold;color:#21759B;line-height:13px;">Note</span>: 
+			the Academic Affairs page displays people categorized as 
+			<strong>College Deans</strong>,
+			<strong>Academic Officers</strong>, or 
+			<strong>Administrative Staff</strong>.
+		</p>';
+	post_categories_meta_box($post, $box);
+}
 
 class ProvostUnit extends ProvostLink{
 	public

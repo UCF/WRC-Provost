@@ -20,7 +20,7 @@
 	$category = get_category_by_slug('college-deans');
 	$college_deans = ($category) ? get_posts(array(
 		'numberposts' => -1,
-		'post_type'   => get_custom_post_type('ProvostPerson'),
+		'post_type'   => 'profile',
 		'category'    => $category->term_id,
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
@@ -29,7 +29,7 @@
 	$category = get_category_by_slug('academic-officers');
 	$academic_officers = ($category) ? get_posts(array(
 		'numberposts' => -1,
-		'post_type'   => get_custom_post_type('ProvostPerson'),
+		'post_type'   => 'profile',
 		'category'    => $category->term_id,
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
@@ -38,7 +38,7 @@
 	$category = get_category_by_slug('administrative-staff');
 	$administrative_staff = ($category) ? get_posts(array(
 		'numberposts' => -1,
-		'post_type'   => get_custom_post_type('ProvostPerson'),
+		'post_type'   => 'profile',
 		'category'    => get_category_by_slug('administrative-staff')->term_id,
 		'orderby'     => 'menu_order',
 		'order'       => 'ASC',
@@ -50,9 +50,11 @@
 		<ul class="people"<?php if($id):?> id="<?=$id?>"<?php endif;?>>
 		<?php foreach($people as $person):?>
 			<li class="person">
-				<?=get_the_post_thumbnail($person->ID)?>
-				<span class="name"><?=str_replace('', '&nbsp;', $person->post_title)?></span>
-				<span class="description"><?=get_post_meta($person->ID, 'provost_person_description', True)?></span>
+				<a href="<?=get_permalink($person->ID)?>">
+					<?=get_the_post_thumbnail($person->ID)?>
+					<span class="name"><?=str_replace('', '&nbsp;', $person->post_title)?></span>
+				</a>
+				<span class="description"><?=get_post_meta($person->ID, 'profile_description', True)?></span>
 			</li>
 		<?php endforeach;?>
 		</ul>
