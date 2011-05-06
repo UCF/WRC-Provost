@@ -1,8 +1,8 @@
 <?php
 /*
-Template Name Posts: Diane Chase
+Template Name Posts: Terry Hickey
 */
 
 the_post();
-$signature = "chase";
+$signature = "terry";
 require_once('provost-update-signature.php');
