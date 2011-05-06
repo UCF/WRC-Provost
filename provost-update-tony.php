@@ -55,9 +55,14 @@ table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:to
 				</td>
 				<td id="right" style="padding: 0 10px;">
 					<div style="padding-top:24px; padding-bottom:15px; line-height: 21px;"><img style="width: auto;" src="<?=PROVOST_IMG_URL?>/update-tony-waldrop1.jpg" alt="Tony G. Waldrop, Ph.D. Provost and Vice President for Academic Affairs"></div>
+					<?php
+					// message form has been dropped
+					/*
 					<h2>Contact the Provost</h2>
 					<a href="http://www.provost.ucf.edu/message.html"><img src="<?=PROVOST_IMG_URL?>/update-feedback.gif"></a></div>
-			
+					*/
+					?>
+					
 				</td></tr>
 				<tr><td style="padding: 0 20px;" colspan="2">
 					<div style="font-family:'Lucida Grande', Arial, sans-serif; font-size:11px; margin:0 0 20px 0; border-top:1px solid #ededed;color:#a1a1a1;padding-top:10px;line-height:150%;" id="foot">
