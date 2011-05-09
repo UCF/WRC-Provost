@@ -18,13 +18,15 @@ var __init__ = (function($){
 			var _this    = $(this);
 			var calendar = _this.attr('data-calendar-id');
 			var url      = _this.attr('data-url');
+			var limit    = _this.attr('data-limit');
 			if (!calendar){calendar = 1;}
-			if (!url){url = 'http://events.ucf.edu';}
+			if (!url)     {url = 'http://events.ucf.edu';}
+			if (!limit)   {limit = 4;}
 			
 			$.getUCFEvents({
 					'calendar_id' : calendar,
 					'url'         : PROVOST_MISC_URL+'/events.php',
-					'limit'       : 4}, function(data, status, request){
+					'limit'       : limit}, function(data, status, request){
 				if (data == null){return;}
 				
 				for (var i = 0; i < data.length; i++){
