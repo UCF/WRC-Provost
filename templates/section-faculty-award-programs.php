@@ -16,7 +16,7 @@
 			<?php
 				$url = get_post_meta($program->ID, 'provost_award_url', True);
 				if($url[0] == "/") $url = site_url() . $url;
-				printf('<a href="%s">%s<span class="caption">%s</span</a>',
+				printf('<a href="%s">%s<span class="caption">%s</span></a>',
 					$url,
 					get_the_post_thumbnail($program->ID),
 					$program->post_title
