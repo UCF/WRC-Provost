@@ -174,7 +174,8 @@ add_action('admin_enqueue_scripts', 'provost_admin_scripts');
 function hyphenate($string){
 	# Automatic hyphentation is difficult so here's a really stupid solution
 	$words = array(
-		'Commercialization' => 'Commericaliz-ation',
+		'Commercialization' => 'Commercializ-<br>ation',
+		//'Commercialization' => 'Commercializ<wbr>ation',
 	);
 	
 	return str_replace(array_keys($words), array_values($words), $string);
