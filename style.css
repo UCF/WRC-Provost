@@ -185,14 +185,13 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 #widgets .events a{font-family: "Helvetica Neue", "Helvetica", "sans-serif";}
 #widgets .events ol{list-style-type: none;}
 #widgets .events li{margin: 15px 0;}
-#widgets .events .date{font-size: 16px; background-color: #fef7c8; color: #666666; font-weight: 500; padding: 8px 12px; display: table-cell;
+#widgets .events .date{text-align: center; font-size: 16px; background-color: #fef7c8; color: #666666; font-weight: 500; padding: 11px 12px 12px 12px; display: block; float: left; width: 30px;
 	-moz-box-shadow: 0px 0px 15px #ccc;
 	-webkit-box-shadow: 0px 0px 15px #ccc;
 	box-shadow: 0px 0px 15px #ccc;
 	font-family: "Helvetica Neue", "Helvetica", "sans-serif";
 }
-.msie #widgets .events .date{display: block; float: left; width: 30px;}
-.msie #widgets .events .date{border: 1px solid #ccc;}
+.msie #widgets .events .date{display: block; float: left; width: 30px; border: 1px solid #ccc;}
 #widgets .events .date .day{font-size: 24px; display: block; margin-top: 10px;}
 #widgets .events .title{font-size: 14px; padding-left: 10px; display: table-cell;}
 .msie #widgets .events .title{display: block; margin-left: 50px;}
