@@ -25,7 +25,7 @@ var __init__ = (function($){
 			
 			$.getUCFEvents({
 					'calendar_id' : calendar,
-					'url'         : PROVOST_MISC_URL+'/events.php',
+					'url'         : PROVOST_MISC_URL + '/events.php',
 					'limit'       : limit}, function(data, status, request){
 				if (data == null){return;}
 				
@@ -52,6 +52,16 @@ var __init__ = (function($){
 			});
 		});
 	}
+	
+	$('a').click(function(){
+		var url  = $(this).attr('href');
+		var host = window.location.host;
+		
+		if (url.search(host) < 0 && url.search('http') > -1){
+			$(this).attr('target', '_blank');
+		}
+		return true;
+	});
 	
 	// Google analytics code
 	var _sf_startpt=(new Date()).getTime();
