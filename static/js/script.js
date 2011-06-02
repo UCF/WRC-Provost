@@ -149,7 +149,6 @@ var homeQuoteResizer = function($){
 		
 		// Loop to find ideal text size, stepping through nearby font sizes
 		// until desired target height is reached within a reasonable degree
-		var count = 0;
 		while (Math.abs(current_diff()) > 1){
 			var last_size = current_text_size();
 			var last_diff = current_diff();
@@ -165,9 +164,6 @@ var homeQuoteResizer = function($){
 				_this.css('font-size', last_size);
 				break;
 			}
-			
-			count++;
-			if (count > 10){break;}
 		}
 		
 		// Small padding adjustments to match exact height
