@@ -209,6 +209,13 @@ class ProvostForm extends ProvostLink{
 		);
 		return $fields;
 	}
+	
+	static function get_url($form){
+		$x = get_post_meta($form->ID, 'provost_form_url', True);
+		$y = wp_get_attachment_url(get_post_meta($form->ID, 'provost_form_file', True));
+		
+		return ($y) ? $y : $x;
+	}
 }
 
 
