@@ -22,6 +22,7 @@ abstract class ProvostCustomPostType{
 		$edit_item      = 'Edit Custom Post',
 		$new_item       = 'New Custom Post',
 		$public         = True,
+		$use_revisions  = True,
 		$use_categories = False,
 		$use_thumbnails = False,
 		$use_editor     = False,
@@ -70,16 +71,19 @@ abstract class ProvostCustomPostType{
 		#Default support array
 		$supports = array();
 		if ($this->options('use_title')){
-			$supports = array_merge($supports, array('title'));
+			$supports[] = 'title';
 		}
 		if ($this->options('use_order')){
-			$supports = array_merge($supports, array('page-attributes'));
+			$supports[] = 'page-attributes';
 		}
 		if ($this->options('use_thumbnails')){
-			$supports = array_merge($supports, array('thumbnail'));
+			$supports[] = 'thumbnail';
 		}
 		if ($this->options('use_editor')){
-			$supports = array_merge($supports, array('editor'));
+			$supports[] = 'editor';
+		}
+		if ($this->options('use_revisions')){
+			$supports[] = 'revisions';
 		}
 		return $supports;
 	}
@@ -424,7 +428,7 @@ add_action('do_meta_boxes', 'provost_meta_boxes');
 function provost_save_meta_data($post){
 	#Register custom post types metaboxes
 	foreach(installed_custom_post_types() as $custom_post_type){
-		if (get_post_type($post) == $custom_post_type->options('name')){
+		if (post_type($post) == $custom_post_type->options('name')){
 			$meta_box = $custom_post_type->metabox();
 			break;
 		}
@@ -445,7 +449,7 @@ add_action('save_post', 'provost_save_meta_data');
 function provost_show_meta_boxes($post){
 	#Register custom post types metaboxes
 	foreach(installed_custom_post_types() as $custom_post_type){
-		if (get_post_type($post) == $custom_post_type->options('name')){
+		if (post_type($post) == $custom_post_type->options('name')){
 			$meta_box = $custom_post_type->metabox();
 			break;
 		}

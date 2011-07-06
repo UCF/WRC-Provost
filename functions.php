@@ -175,6 +175,27 @@ add_action('admin_enqueue_scripts', 'provost_admin_scripts');
 
 // Theme custom functions
 // ----------------------
+
+/**
+ * Really get the post type.  A post type of revision will return it's parent
+ * post type.
+ **/
+function post_type($post){
+	if (is_int($post)){
+		$post = get_post($post);
+	}
+	
+	# check post_type field
+	$post_type = $post->post_type;
+	
+	if ($post_type === 'revision'){
+		$parent    = (int)$post->post_parent;
+		$post_type = post_type($parent);
+	}
+	
+	return $post_type;
+}
+
 function hyphenate($string){
 	# Automatic hyphentation is difficult so here's a really stupid solution
 	$words = array(
