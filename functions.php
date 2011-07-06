@@ -6,7 +6,11 @@ require_once('shortcodes.php');
 
 # Plugin-ins
 require_once('custom-post-template/custom-post-templates.php');
+require_once('theme-options.php');
 
+$options = get_option('global');
+
+define('PROVOST_GA_ACCOUNT', $options['ga_account']);
 define('PROVOST_THEME_URL', get_bloginfo('stylesheet_directory'));
 define('PROVOST_STATIC_URL', PROVOST_THEME_URL.'/static');
 define('PROVOST_IMG_URL', PROVOST_STATIC_URL.'/img');
@@ -41,7 +45,7 @@ $SCRIPTS = array(
 	"<script src='http://events.ucf.edu/tools/script.js' type='text/javascript'></script>",
 	"<script type='text/javascript'>
 		var PROVOST_MISC_URL = '".PROVOST_MISC_URL."';
-		var GA_ACCOUNT       = 'UA-7506281-3';
+		var GA_ACCOUNT       = '".PROVOST_GA_ACCOUNT."';
 	</script>",
 	"<script src='".PROVOST_JS_URL."/script.js' type='text/javascript'></script>",
 );
