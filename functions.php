@@ -222,6 +222,16 @@ function get_custom_post_type($class){
 	return null;
 }
 
+function get_custom_post_type_class($name){
+	$installed = installed_custom_post_types();
+	foreach($installed as $object){
+		if ($object->options('name') == $name){
+			return get_class($object);
+		}
+	}
+	return null;
+}
+
 
 /**
  * Returns pages associated with the menu defined by $c;
