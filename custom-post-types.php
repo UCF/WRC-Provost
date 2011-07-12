@@ -145,6 +145,15 @@ abstract class ProvostCustomPostType{
 			register_taxonomy_for_object_type('post_tag', $this->options('name'));
 		}
 	}
+	
+	public function toHTML($post){
+		if (is_int($post)){
+			$post = get_post($post);
+		}
+		
+		$html = '<a href="'.get_permalink($post->ID).'">'.$post->post_title.'</a>';
+		return $html;
+	}
 }
 
 abstract class ProvostLink extends ProvostCustomPostType{
