@@ -93,11 +93,10 @@ function sc_object($attr){
 	}
 	
 	$query_array = array(
-		'tax_query'   => $tax_query,
-		'post_status' => 'publish',
-		'nopaging'    => True,
-		'post_type'   => $options['type'],
-		'numberposts' => $options['limit'],
+		'tax_query'      => $tax_query,
+		'post_status'    => 'publish',
+		'post_type'      => $options['type'],
+		'posts_per_page' => $options['limit'],
 	);
 	$query = new WP_Query($query_array);
 	
