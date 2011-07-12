@@ -288,6 +288,7 @@ class ProvostPerson extends ProvostCustomPostType{
 		$new_item       = 'New Person',
 		$public         = True,
 		$use_categories = True,
+		$use_tags       = True,
 		$use_order      = True,
 		$use_title      = True,
 		$use_metabox    = True,
