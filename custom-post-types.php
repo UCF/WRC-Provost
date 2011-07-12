@@ -24,6 +24,7 @@ abstract class ProvostCustomPostType{
 		$public         = True,
 		$use_revisions  = True,
 		$use_categories = False,
+		$use_tags       = False,
 		$use_thumbnails = False,
 		$use_editor     = False,
 		$use_order      = False,
@@ -139,6 +140,10 @@ abstract class ProvostCustomPostType{
 		if ($this->options('use_categories')){
 			register_taxonomy_for_object_type('category', $this->options('name'));
 		}
+		
+		if ($this->options('use_tags')){
+			register_taxonomy_for_object_type('post_tag', $this->options('name'));
+		}
 	}
 }
 
@@ -201,6 +206,7 @@ class ProvostForm extends ProvostLink{
 		$edit_item      = 'Edit Form',
 		$new_item       = 'New Form',
 		$public         = True,
+		$use_tags       = True,
 		$use_categories = True;
 	
 	public function fields(){
