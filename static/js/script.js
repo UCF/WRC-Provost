@@ -59,8 +59,6 @@ var handleExternalLinks = function($, _this){
 
 var analytics = function(){
 	// Google analytics code
-	var _sf_startpt=(new Date()).getTime();
-	var _gaq = _gaq || [];
 	_gaq.push(['_setAccount', GA_ACCOUNT]);
 	_gaq.push(['_setDomainName', 'none']);
 	_gaq.push(['_setAllowLinker', true]);

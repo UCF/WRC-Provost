@@ -37,6 +37,10 @@
 	thematic_create_stylesheet();
 
 ?>
+	<script type="text/javascript">
+		var _sf_startpt=(new Date()).getTime();
+		var _gaq = _gaq || [];
+	</script>
 </head>
 
 <?php
