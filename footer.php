@@ -10,7 +10,7 @@
 				<?=preg_replace(
 					'/<li[^>]*>([^<]*<[^>]+>[^<]+<[^>]+>)<\/li>[\s]*<\/ul>/',
 					'<li class="last">$1</ul>',
-					wp_nav_menu(array('container_class' => 'menu', 'echo' => False,))
+					wp_nav_menu(array('menu' => 'navigation', 'container_class' => 'menu', 'echo' => False,))
 				)?>
 			</div>
 			<div class="span-12">
