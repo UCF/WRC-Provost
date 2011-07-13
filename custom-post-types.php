@@ -29,7 +29,8 @@ abstract class ProvostCustomPostType{
 		$use_editor     = False,
 		$use_order      = False,
 		$use_title      = False,
-		$use_metabox    = False;
+		$use_metabox    = False,
+		$use_shortcode  = False;
 	
 	public function get_objects($options=array()){
 		$defaults = array(
@@ -144,6 +145,27 @@ abstract class ProvostCustomPostType{
 		if ($this->options('use_tags')){
 			register_taxonomy_for_object_type('post_tag', $this->options('name'));
 		}
+		
+		if ($this->options('use_shortcode')){
+			add_shortcode($this->prefixless_name().'-list', array($this, 'shortcode'));
+		}
+	}
+	
+	public function shortcode($attr){
+		$default = array(
+			'type' => $this->options('name'),
+		);
+		if (is_array($attr)){
+			$attr = array_merge($default, $attr);
+		}else{
+			$attr = $default;
+		}
+		return sc_object($attr);
+	}
+	
+	public function prefixless_name(){
+		$name = str_replace('provost_', '', $this->options('name'));
+		return $name;
 	}
 	
 	public function toHTML($post){
@@ -215,6 +237,7 @@ class ProvostForm extends ProvostLink{
 		$edit_item      = 'Edit Form',
 		$new_item       = 'New Form',
 		$public         = True,
+		$use_shortcode  = True,
 		$use_tags       = True,
 		$use_categories = True;
 	
@@ -292,6 +315,7 @@ class ProvostPerson extends ProvostCustomPostType{
 		$use_order      = True,
 		$use_title      = True,
 		$use_metabox    = True,
+		$use_shortcode  = True,
 		$use_editor     = True;
 	
 	public function fields(){
@@ -315,6 +339,31 @@ class ProvostPerson extends ProvostCustomPostType{
 		add_meta_box('categorydiv', 'Profile Categories', 'custom_post_categories_meta_box', $metabox['page'], 'side');
 		
 		parent::register_metaboxes();
+	}
+	
+	public function toHTML($person){
+		if (is_int($person)){
+			$person = get_post($person);
+		}
+		
+		ob_start();
+		?>
+		<div class="person">
+			<a href="<?=get_permalink($person->ID)?>">
+			<?php
+				$img = get_the_post_thumbnail($person->ID);
+				if ($img):?>
+				<?=$img?>
+				<?php else:?>
+					<img src="<?=PROVOST_IMG_URL?>/no-photo.png" alt="Photo Unavailable" />
+				<?php endif;?>
+				<span class="name"><?=str_replace('', '&nbsp;', $person->post_title)?></span>
+			</a>
+			<span class="description"><?=get_post_meta($person->ID, 'profile_description', True)?></span>
+		</div>
+		<?php
+		$html = ob_get_clean();
+		return $html;
 	}
 }
 

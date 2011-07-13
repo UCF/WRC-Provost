@@ -41,6 +41,7 @@ ul,ol{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
 ul.none{padding: 0; margin: 0; list-style-type: none;}
 
 .blue tr:nth-child(even) td, .blue tr.even td {background:#e5ecf9;}
+.object-list{list-style-type: none; padding: 0; margin: 0;}
 
 /*/ Home Page /*/
 #home #top{}
@@ -85,7 +86,15 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 #home #widgets{padding-left: 15px;}
 
 
-/*/ Profile page /*/
+/*/ Profiles /*/
+.profile-list{padding: 0; margin: 0; list-style-type: none;}
+.profile-list li{display: block; float: left; width: 110px; height: 17em; margin-right: 15px;}
+.profile-list li img{display: block;}
+.profile-list li .name,
+.profile-list li .description{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 14px; display: block;}
+.profile-list li .name{font-weight: bold; margin-top: 10px;}
+.profile-list li .end{clear: both;}
+
 #profile { width:120px; padding:5px 25px 5px 5px; float:left; font-size:11px; line-height:1.4; }
 #profile strong { display:block; font-size:12px; padding:4px 0 2px; }
 #profile img { 

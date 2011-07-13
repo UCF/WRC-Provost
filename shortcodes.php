@@ -59,7 +59,7 @@ add_shortcode('sc-forms', 'sc_forms');
 
 /**
  * Fetches objects defined by arguments passed, outputs the objects according
- * to the toHTML method located on the object.
+ * to the toHTML method located on the object's custom post type.
  **/
 function sc_object($attr){
 	if (!is_array($attr)){return '';}
@@ -97,6 +97,8 @@ function sc_object($attr){
 		'post_status'    => 'publish',
 		'post_type'      => $options['type'],
 		'posts_per_page' => $options['limit'],
+		'orderby'        => 'menu_order',
+		'order'          => 'ASC',
 	);
 	$query = new WP_Query($query_array);
 	
@@ -104,7 +106,7 @@ function sc_object($attr){
 	ob_start();
 	?>
 	
-	<ul class="object-list <?=$options['type']?>">
+	<ul class="object-list <?=$options['type']?>-list">
 		<?php while($query->have_posts()): $query->the_post();
 		$class = get_custom_post_type_class($post->post_type);
 		$class = new $class;?>
@@ -113,6 +115,7 @@ function sc_object($attr){
 		</li>
 		<?php endwhile;?>
 	</ul>
+	<div class="clear"><!-- --></div>
 	
 	<?php
 	$results = ob_get_clean();
