@@ -1,10 +1,10 @@
 <?php 
 
 /**
- * Outputs a list of the provost updates
+ * Outputs a list of the provost updates ordered chronologically.
  *
- * @return string
- * @author Jared Lang
+ * Example:
+ * [sc-provost-updates]
  **/
 function sc_provost_updates(){
 	ob_start();
@@ -16,9 +16,9 @@ add_shortcode('sc-provost-updates', 'sc_provost_updates');
 
 /**
  * Outputs the horizontal faculty award programs list.
- *
- * @return string
- * @author Jared Lang
+ * 
+ * Example:
+ * [sc-faculty-award-programs]
  **/
 function sc_faculty_award_programs($attrs){
 	ob_start();
@@ -31,8 +31,8 @@ add_shortcode('sc-faculty-award-programs', 'sc_faculty_award_programs');
 /**
  * Outputs the Academic Officers and College Deans listings
  *
- * @return string
- * @author Jared Lang
+ * Example:
+ * [sc-org-chart]
  **/
 function sc_org_chart(){
 	ob_start();
@@ -46,8 +46,8 @@ add_shortcode('sc-org-chart', 'sc_org_chart');
  * Outputs forms, organized by the sub-category of 'Forms' they are related to.
  * Uncategorized forms will not display.
  *
- * @return string
- * @author Jared Lang
+ * Example:
+ * [sc-forms]
  **/
 function sc_forms(){
 	ob_start();
@@ -58,8 +58,15 @@ add_shortcode('sc-forms', 'sc_forms');
 
 
 /**
- * Fetches objects defined by arguments passed, outputs the objects according
- * to the toHTML method located on the object's custom post type.
+ * Creates a list of objects without output defined by the object outputted.
+ * 
+ * Example:
+ *
+ * # output all updates tagged important
+ * [sc_object type="provost_update" tags="important"]
+ *
+ * # output a maximum of 10 units categorized as foo
+ * [sc_object type="provost_unit" categories="foo" limit="10"]
  **/
 function sc_object($attr){
 	if (!is_array($attr)){return '';}

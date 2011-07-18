@@ -10,6 +10,7 @@ require_once('theme-options.php');
 
 $options = get_option('global');
 
+define('PROVOST_THEME_DIR', get_stylesheet_directory());
 define('PROVOST_GA_ACCOUNT', $options['ga_account']);
 define('PROVOST_THEME_URL', get_bloginfo('stylesheet_directory'));
 define('PROVOST_STATIC_URL', PROVOST_THEME_URL.'/static');
@@ -175,6 +176,58 @@ add_action('admin_enqueue_scripts', 'provost_admin_scripts');
 
 // Theme custom functions
 // ----------------------
+
+/**
+ * Creates an array 
+ **/
+function shortcodes(){
+	$file = file_get_contents(PROVOST_THEME_DIR.'/shortcodes.php');
+	
+	$documentation = "\/\*\*(?P<documentation>.*?)\*\*\/";
+	$declaration   = "function[\s]+(?P<declaration>[^\(]+)";
+	
+	
+	$found = preg_match_all("/{$documentation}\s*{$declaration}/is", $file, $matches);
+	if ($found){
+		$codes = array();
+		foreach ($matches['declaration'] as $key=>$match){
+			$codes[$match]['documentation'] = $matches['documentation'][$key];
+			$codes[$match]['shortcode']     = str_replace(
+				array('sc_', '_',),
+				array('', '-',),
+				$matches['declaration'][$key]
+			);
+		}
+	}
+	return $codes;
+}
+
+function admin_help(){
+	global $post;
+	$shortcodes = shortcodes();
+	switch($post->post_title){
+		default:
+			?>
+			<h2>Available shortcodes:</h2>
+			<ul>
+				<?php foreach($shortcodes as $sc):?>
+				<li>
+					<h3><?=$sc['shortcode']?></h3>
+					<p><?=nl2br(str_replace(' *', '', htmlentities($sc['documentation'])))?></p>
+				</li>
+				<?php endforeach;?>
+			</ul>
+			<?php
+			break;
+	}
+}
+
+
+function admin_meta_boxes(){
+	global $post;
+	add_meta_box('page-help', 'Help', 'admin_help', 'page', 'normal', 'high');
+}
+add_action('admin_init', 'admin_meta_boxes');
 
 /**
  * Really get the post type.  A post type of revision will return it's parent
