@@ -58,15 +58,18 @@ add_shortcode('sc-forms', 'sc_forms');
 
 
 /**
- * Creates a list of objects without output defined by the object outputted.
+ * Creates a list of objects without output defined by the object outputted.  
+ * This shortcode is available if an auto-generated shortcode for the object 
+ * you want to list is not available, otherwise use the <object>-list shortcodes
+ * instead.
  * 
  * Example:
  *
  * # output all updates tagged important
- * [sc_object type="provost_update" tags="important"]
+ * [sc-object type="provost_update" tags="important"]
  *
  * # output a maximum of 10 units categorized as foo
- * [sc_object type="provost_unit" categories="foo" limit="10"]
+ * [sc-object type="provost_unit" categories="foo" limit="10"]
  **/
 function sc_object($attr){
 	if (!is_array($attr)){return '';}

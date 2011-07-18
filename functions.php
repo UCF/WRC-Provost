@@ -186,10 +186,32 @@ function shortcodes(){
 	$documentation = "\/\*\*(?P<documentation>.*?)\*\*\/";
 	$declaration   = "function[\s]+(?P<declaration>[^\(]+)";
 	
+	$codes = array();
+	$auto  = array_filter(installed_custom_post_types(), create_function('$c', '
+		return $c->options("use_shortcode");
+	'));
+	foreach($auto as $code){
+		$scode  = $code->prefixless_name().'-list';
+		$plural = $code->options('plural_name');
+		$doc = <<<DOC
+ Outputs a list of {$plural} filtered by tag
+ or category.
+
+ Example:
+ # Output a maximum of 5 items tagged foo or bar.
+ [{$scode} tags="foo bar" limit="5"]
+
+ # Output all objects categorized as foo
+ [{$scode} categories="foo"]
+DOC;
+		$codes[] = array(
+			'documentation' => $doc,
+			'shortcode'     => $scode,
+		);
+	}
 	
 	$found = preg_match_all("/{$documentation}\s*{$declaration}/is", $file, $matches);
 	if ($found){
-		$codes = array();
 		foreach ($matches['declaration'] as $key=>$match){
 			$codes[$match]['documentation'] = $matches['documentation'][$key];
 			$codes[$match]['shortcode']     = str_replace(
