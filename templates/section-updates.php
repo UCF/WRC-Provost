@@ -1,6 +1,6 @@
 <?php
 	$updates = get_posts(array(
-		'numberposts' => -1,
+		'numberposts' => 20,
 		'orderby'     => 'date',
 		'order'       => 'DESC',
 		'post_type'   => get_custom_post_type('ProvostUpdate'),
