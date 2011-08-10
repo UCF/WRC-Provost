@@ -54,7 +54,7 @@ table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:to
 					<p>Sincerely,<br><img src="<?=PROVOST_IMG_URL?>/update-signature.gif" alt="Signature&mdash;Tony Waldrop"></p>
 				</td>
 				<td id="right" style="padding: 0 10px;">
-					<div style="padding-top:24px; padding-bottom:15px; line-height: 21px;"><img style="width: auto;" src="<?=PROVOST_IMG_URL?>/update-tony-waldrop1.jpg" alt="Tony G. Waldrop, Ph.D. Provost and Vice President for Academic Affairs"></div>
+					<div style="padding-top:24px; padding-bottom:15px; line-height: 21px;"><img style="width: auto;" src="<?=PROVOST_IMG_URL?>/tony-waldrop-photo2.jpg" alt="Tony G. Waldrop, Ph.D. Provost and Vice President for Academic Affairs"></div>
 					<h2>Contact the Provost</h2>
 					<a href="mailto:provostcomments@ucf.edu"><img src="<?=PROVOST_IMG_URL?>/update-feedback.gif"></a></div>
 					
