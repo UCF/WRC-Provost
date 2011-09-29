@@ -448,6 +448,27 @@ function installed_custom_post_types(){
 }
 
 
+function flush_rewrite_rules_if_necessary(){
+	global $wp_rewrite;
+	$start    = microtime(True);
+	$original = get_option('rewrite_rules');
+	$rules    = $wp_rewrite->rewrite_rules();
+	
+	if (!$rules or !$original){
+		return;
+	}
+	ksort($rules);
+	ksort($original);
+	
+	$rules    = md5(implode('', array_keys($rules)));
+	$original = md5(implode('', array_keys($original)));
+	
+	if ($rules != $original){
+		flush_rewrite_rules();
+	}
+}
+
+
 /**
  * Registers all installed custom post types
  *
@@ -461,7 +482,7 @@ function provost_post_types(){
 	}
 	
 	#This ensures that the permalinks for custom posts work
-	flush_rewrite_rules();
+	flush_rewrite_rules_if_necessary();
 	
 	#Override default page post type to use categories
 	register_taxonomy_for_object_type('category', 'page');
