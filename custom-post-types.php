@@ -168,12 +168,13 @@ abstract class ProvostCustomPostType{
 		return $name;
 	}
 	
-	public function toHTML($post){
+	public function toHTML($post, $wrap=False){
 		if (is_int($post)){
 			$post = get_post($post);
 		}
 		
 		$html = '<a href="'.get_permalink($post->ID).'">'.$post->post_title.'</a>';
+		if($wrap) $html = sprintf('<%1$s>%s</%1$s>', $wrap, $html);
 		return $html;
 	}
 }
@@ -257,6 +258,25 @@ class ProvostForm extends ProvostLink{
 		$y = wp_get_attachment_url(get_post_meta($form->ID, 'provost_form_file', True));
 		
 		return ($y) ? $y : $x;
+	}
+	
+	public function toHTML($post){
+		if (is_int($post)) $post = get_post($post);
+		
+		$external_file = get_post_meta($post->ID, 'provost_form_url', true);
+		$internal_file = get_post_meta($post->ID, 'provost_form_file', true);
+		if($internal_file) $file_url = wp_get_attachment_url(get_post($internal_file)->ID);
+		else $file_url = $external_file;
+		if($file_url){
+			preg_match('/\.(?<file_ext>[^.]+)$/', $file_url, $matches);
+			$doc_class = isset($matches['file_ext']) ? $matches['file_ext'] : 'file';
+		}
+		$style = "document " . $doc_class;
+		
+		if(!$file_url) $file_url == "#";
+		if($file_url=="#") $style = 'missing';
+		
+		return sprintf('<li class="%s"><a href="%s">%s</li>', $style, $file_url, $post->post_title);
 	}
 }
 

@@ -119,11 +119,10 @@ function sc_object($attr){
 	<ul class="object-list <?=$options['type']?>-list">
 		<?php while($query->have_posts()): $query->the_post();
 		$class = get_custom_post_type_class($post->post_type);
-		$class = new $class;?>
-		<li>
-			<?=$class->toHTML($post->ID)?>
-		</li>
-		<?php endwhile;?>
+		$class = new $class;
+		$html  = $class->toHTML($post->ID, 'li');
+		echo $html;
+		endwhile;?>
 	</ul>
 	<div class="clear"><!-- --></div>
 	
