@@ -29,6 +29,8 @@
 	<?php
 		// action hook for placing content before closing the BODY tag
 		thematic_after();
+		wp_admin_bar_render();
 	?>
+	
 </body>
 </html>
