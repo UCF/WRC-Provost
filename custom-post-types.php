@@ -276,7 +276,7 @@ class ProvostForm extends ProvostLink{
 		if(!$file_url) $file_url == "#";
 		if($file_url=="#") $style = 'missing';
 		
-		return sprintf('<li class="%s"><a href="%s">%s</li>', $style, $file_url, $post->post_title);
+		return sprintf('<li class="%s"><a href="%s">%s</a></li>', $style, $file_url, $post->post_title);
 	}
 }
 

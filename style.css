@@ -156,6 +156,7 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 
 #forms-policies-procedures h3{}
 #forms-policies-procedures .form-list{margin-bottom: 15px;}
+.provost_form-list { margin-bottom:15px; padding-left:50px; }
 
 /*/ Update page styles /*/
 .ie7 #updates{}
