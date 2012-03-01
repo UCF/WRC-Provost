@@ -79,6 +79,8 @@ function sc_object($attr){
 		'categories' => '',
 		'type'       => '',
 		'limit'      => -1,
+		'orderby'    => 'menu_order',
+		'order'      => 'ASC'
 	);
 	$options = array_merge($defaults, $attr);
 	
@@ -107,8 +109,8 @@ function sc_object($attr){
 		'post_status'    => 'publish',
 		'post_type'      => $options['type'],
 		'posts_per_page' => $options['limit'],
-		'orderby'        => 'menu_order',
-		'order'          => 'ASC',
+		'orderby'        => $options['orderby'],
+		'order'          => $options['order'],
 	);
 	$query = new WP_Query($query_array);
 	
