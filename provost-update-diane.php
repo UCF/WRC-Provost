@@ -5,4 +5,4 @@ Template Name Posts: Diane Chase
 
 the_post();
 $signature = "chase";
-require_once('provost-update-signature.php');
+require_once('wrc-update-signature.php');

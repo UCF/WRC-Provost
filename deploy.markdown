@@ -1,4 +1,4 @@
-# Deploying Provost
+# Deploying WRC
 
 ## File Change on Server:
 file: `wp-content/plugins/wordpress-importer/wordpress-importer.php`
@@ -9,8 +9,8 @@ append to "Upload file types":
 `doc docx docm xls xlsx xlsm xlt xltx xltm ppt pptx pptm`
 
 ## Creating the WP3 site
-- add provost through network admin
-- title: UCF Office of the Provost and Vice President for Academic Affairs
+- add wrc through network admin
+- title: UCF Office of the WRC and Vice President for Academic Affairs
 - appearance > enable theme
 - users > add : pburt
 - import content from webcom

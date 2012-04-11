@@ -16,7 +16,7 @@
 		<div id="right" class="span-6 last">
 			
 			<!-- Featured Image -->
-			<?php if(has_post_thumbnail() and get_the_title() == 'About the Provost'):?>
+			<?php if(has_post_thumbnail() and get_the_title() == 'About the WRC'):?>
 			<div id="featured-image">
 				<?php the_post_thumbnail();?>
 			</div>

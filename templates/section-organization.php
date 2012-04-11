@@ -1,7 +1,7 @@
 <?php
 	$deans_list = get_posts(array(
 		'numberposts' => 1,
-		'post_type'   => get_custom_post_type('ProvostForm'),
+		'post_type'   => get_custom_post_type('WRCForm'),
 		'category'    => get_category_by_slug('deans-list')->term_id,
 	));
 	if (count($deans_list)){
@@ -9,7 +9,7 @@
 	}
 	$org_chart = get_posts(array(
 		'numberposts' => 1,
-		'post_type'   => get_custom_post_type('ProvostForm'),
+		'post_type'   => get_custom_post_type('WRCForm'),
 		'category'    => get_category_by_slug('org-chart')->term_id,
 	));
 	if (count($org_chart)){
@@ -71,13 +71,13 @@
 <div id="org-chart">
 	<?php if ($academic_officers):?>
 	<h2><?=get_category_by_slug('academic-officers')->name ?></h2>
-	<a href="<?=ProvostForm::get_url($org_chart)?>">Download PDF <?=$org_chart->post_title?></a>
+	<a href="<?=WRCForm::get_url($org_chart)?>">Download PDF <?=$org_chart->post_title?></a>
 	<?php display_people($academic_officers, 'academic-officers');?>
 	<?php endif;?>
 	
 	<?php if ($college_deans):?>
 	<h2><?=get_category_by_slug('college-deans')->name ?></h2>
-	<a href="<?=ProvostForm::get_url($deans_list)?>">Download PDF <?=$deans_list->post_title?></a>
+	<a href="<?=WRCForm::get_url($deans_list)?>">Download PDF <?=$deans_list->post_title?></a>
 	<?php display_people($college_deans, 'college-deans');?>
 	<?php endif;?>
 	

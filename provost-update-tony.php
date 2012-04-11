@@ -5,7 +5,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<title>Provost's Update</title>
+<title>WRC's Update</title>
 <style type="text/css">
 <!--
 html, body { margin-left: 0px; margin-top: 0px; margin-right: 0px; margin-bottom: 0px;
@@ -42,7 +42,7 @@ table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:to
 			<table border="0" align="center" cellpadding="0" cellspacing="0" style="margin:0 auto;">
 				<tr>
 					<td colspan="2" style="background-color: #fffae4;" id="title">
-						<h1>Provost's Update</h1>
+						<h1>WRC's Update</h1>
 						<div class="date"><?=date('l, F j, Y', strtotime($post->post_title))?></div>
 					</td>
 				</tr>
@@ -54,15 +54,15 @@ table, td, tr { border-collapse:collapse; margin:0; padding:0; vertical-align:to
 					<p>Sincerely,<br><img src="<?=PROVOST_IMG_URL?>/update-signature.gif" alt="Signature&mdash;Tony Waldrop"></p>
 				</td>
 				<td id="right" style="padding: 0 10px;">
-					<div style="padding-top:24px; padding-bottom:15px; line-height: 21px;"><img style="width: auto;" src="<?=PROVOST_IMG_URL?>/tony-waldrop-photo2.jpg" alt="Tony G. Waldrop, Ph.D. Provost and Vice President for Academic Affairs"></div>
-					<h2>Contact the Provost</h2>
-					<a href="mailto:provostcomments@ucf.edu"><img src="<?=PROVOST_IMG_URL?>/update-feedback.gif"></a></div>
+					<div style="padding-top:24px; padding-bottom:15px; line-height: 21px;"><img style="width: auto;" src="<?=PROVOST_IMG_URL?>/tony-waldrop-photo2.jpg" alt="Tony G. Waldrop, Ph.D. WRC and Vice President for Academic Affairs"></div>
+					<h2>Contact the WRC</h2>
+					<a href="mailto:wrccomments@ucf.edu"><img src="<?=PROVOST_IMG_URL?>/update-feedback.gif"></a></div>
 					
 				</td></tr>
 				<tr><td style="padding: 0 20px;" colspan="2">
 					<div style="font-family:'Lucida Grande', Arial, sans-serif; font-size:11px; margin:0 0 20px 0; border-top:1px solid #ededed;color:#a1a1a1;padding-top:10px;line-height:150%;" id="foot">
 						University of Central Florida &bull; 4000 Central Florida Blvd. &bull; Orlando, FL 32816-0065<br>
-						<a href="http://www.provost.ucf.edu" style="color:#a1a1a1;text-decoration:underline;">http://www.provost.ucf.edu</a> &nbsp;&nbsp;|&nbsp;&nbsp;<unsubscribe>Click here to unsubscribe.</unsubscribe>
+						<a href="http://www.wrc.ucf.edu" style="color:#a1a1a1;text-decoration:underline;">http://www.wrc.ucf.edu</a> &nbsp;&nbsp;|&nbsp;&nbsp;<unsubscribe>Click here to unsubscribe.</unsubscribe>
 					</div>
 				</td></tr>
 			</table>

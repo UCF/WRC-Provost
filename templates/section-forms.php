@@ -1,5 +1,5 @@
 <?php
-	$provost_forms = new ProvostForm();
+	$wrc_forms = new WRCForm();
 	$categories    = get_categories(array(
 		'orderby' => 'name',
 		'order'   => 'ASC',
@@ -17,14 +17,14 @@
 				'numberposts' => -1,
 				'orderby'     => 'title',
 				'order'       => 'ASC',
-				'post_type'   => get_custom_post_type('ProvostForm'),
+				'post_type'   => get_custom_post_type('WRCForm'),
 				'category'    => $category->term_id,
 			));
 		?>
 		<?php foreach($forms as $form):?>
 		<?php
-			$url  = get_post_meta($form->ID, $provost_forms->options('name').'_url', True);
-			$file = get_post_meta($form->ID, 'provost_form_file', true);
+			$url  = get_post_meta($form->ID, $wrc_forms->options('name').'_url', True);
+			$file = get_post_meta($form->ID, 'wrc_form_file', true);
 			if ($file){
 				$url = wp_get_attachment_url(get_post($file)->ID);
 			}

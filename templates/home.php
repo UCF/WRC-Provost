@@ -3,7 +3,7 @@
 	<div id="home">
 		<div id="top" class="span-24 last">
 			<div class="span-9">
-				<!-- Provost Quote/Marketing -->
+				<!-- WRC Quote/Marketing -->
 				<div id="quote">
 					<?php the_content()?>
 				</div>
@@ -28,13 +28,13 @@
 						'numberposts' => -1,
 						'orderby'     => 'title',
 						'order'       => 'ASC',
-						'post_type'   => get_custom_post_type('ProvostHelp'),
+						'post_type'   => get_custom_post_type('WRCHelp'),
 					));?>
 					<label for="help-select">Need Help Finding:</label>
 					<select id="help-select" class="select-links">
 						<option value="null" selected="selected">(Select a Topic)</option>
 						<?php foreach($help as $link):?>
-						<option value="<?=get_post_meta($link->ID, 'provost_help_url', True)?>"><?=$link->post_title?></option>
+						<option value="<?=get_post_meta($link->ID, 'wrc_help_url', True)?>"><?=$link->post_title?></option>
 						<?php endforeach;?>
 					</select>
 				</div>
@@ -66,7 +66,7 @@
 		</div>
 		
 		<div id="bottom" class="span-24 last">
-			<h2 class="span-24 last">Reporting to the Provost</h2>
+			<h2 class="span-24 last">Reporting to the WRC</h2>
 
 			<div id="links" class="span-18 border">
 				<!-- Colleges-->
@@ -77,13 +77,13 @@
 							'numberposts' => -1,
 							'orderby'     => 'post_title',
 							'order'       => 'ASC',
-							'post_type'   => get_custom_post_type('ProvostUnit'),
+							'post_type'   => get_custom_post_type('WRCUnit'),
 							'category'    => get_category_by_slug('college')->term_id,
 						)) as $i=>$college): $last=!(($i + 1)  % 3);?>
 							<li class="college span-3<?=($last)?' last':'';?>">
-								<?php $url = get_post_meta($college->ID, 'provost_unit_url', True);?>
+								<?php $url = get_post_meta($college->ID, 'wrc_unit_url', True);?>
 								<?php if($url):?>
-								<a href="<?=get_post_meta($college->ID, 'provost_unit_url', True)?>">
+								<a href="<?=get_post_meta($college->ID, 'wrc_unit_url', True)?>">
 									<?=get_the_post_thumbnail($college->ID)?>
 									<span class="name"><?=hyphenate($college->post_title)?></span>
 								</a>
@@ -106,13 +106,13 @@
 							'numberposts' => -1,
 							'orderby'     => 'post_title',
 							'order'       => 'ASC',
-							'post_type'   => get_custom_post_type('ProvostUnit'),
+							'post_type'   => get_custom_post_type('WRCUnit'),
 							'category'    => get_category_by_slug('academic-unit')->term_id,
 						)) as $i=>$unit): $last=!(($i + 1)  % 2);?>
 							<li class="unit span-3<?=($last)?' last':'';?>">
-								<?php $url = get_post_meta($unit->ID, 'provost_unit_url', True);?>
+								<?php $url = get_post_meta($unit->ID, 'wrc_unit_url', True);?>
 								<?php if($url):?>
-								<a href="<?=get_post_meta($unit->ID, 'provost_unit_url', True)?>">
+								<a href="<?=get_post_meta($unit->ID, 'wrc_unit_url', True)?>">
 									<?=get_the_post_thumbnail($unit->ID)?>
 									<span class="name"><?=hyphenate($unit->post_title)?></span>
 								</a>

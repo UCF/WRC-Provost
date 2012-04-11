@@ -70,10 +70,10 @@ function remove_widgitized_areas($content){
 }
 add_action('thematic_widgetized_areas', 'remove_widgitized_areas');
 
-function provost_head_profile($profile){
+function wrc_head_profile($profile){
 	return "<head>";
 }
-add_filter('thematic_head_profile', 'provost_head_profile');
+add_filter('thematic_head_profile', 'wrc_head_profile');
 
 function childtheme_doctitle($title){
 	if ( is_home() || is_front_page() ) {
@@ -83,7 +83,7 @@ function childtheme_doctitle($title){
 }
 add_filter('thematic_doctitle', 'childtheme_doctitle');
 
-function provost_template_redirect(){
+function wrc_template_redirect(){
 	global $post;
 	$type  = $post->post_type;
 	$title = get_the_title();
@@ -93,30 +93,30 @@ function provost_template_redirect(){
 			die();
 	}
 	switch($type){
-		case 'provost_update':
+		case 'wrc_update':
 			$post_template = get_post_meta( $post->ID, 'custom_post_template', true );
 			if(empty($post_template)){
-				include('provost-update-tony.php');
+				include('wrc-update-tony.php');
 			} else {
 				include($post_template);
 			}
 			die();
 	}
 }
-add_filter('template_redirect', 'provost_template_redirect');
+add_filter('template_redirect', 'wrc_template_redirect');
 
 
 #Set html 5
-function provost_create_doctype() {
+function wrc_create_doctype() {
 	$content  = "<!DOCTYPE html>\n";
 	$content .= "<html";
     return $content;
 } // end thematic_create_doctype
-add_filter('thematic_create_doctype', 'provost_create_doctype');
+add_filter('thematic_create_doctype', 'wrc_create_doctype');
 
 
 #Set utf-8 meta charset
-function provost_create_contenttype(){
+function wrc_create_contenttype(){
 	$content  = "\t<meta charset='utf-8'>\n";
 	$content .= "\t<meta http-equiv='X-UA-COMPATIBLE' content='IE=IE8'>\n";
 	ob_start();
@@ -129,11 +129,11 @@ function provost_create_contenttype(){
 	$content .= ob_get_clean();
 	return $content;
 }
-add_filter('thematic_create_contenttype', 'provost_create_contenttype');
+add_filter('thematic_create_contenttype', 'wrc_create_contenttype');
 
 
 #Override default stylesheets
-function provost_create_stylesheet($links){
+function wrc_create_stylesheet($links){
 	global $LINKS;
 	$new_links = $LINKS;
 	
@@ -148,31 +148,31 @@ function provost_create_stylesheet($links){
 	
 	return "\t".implode("\n\t", $links)."\n";
 }
-add_filter('thematic_create_stylesheet', 'provost_create_stylesheet');
+add_filter('thematic_create_stylesheet', 'wrc_create_stylesheet');
 
 
 #Override default scripts
-function provost_head_scripts($scripts){}
-add_filter('thematic_head_scripts', 'provost_head_scripts');
+function wrc_head_scripts($scripts){}
+add_filter('thematic_head_scripts', 'wrc_head_scripts');
 
 
 #Append scripts to bottom of page
-function provost_after(){
+function wrc_after(){
 	global $SCRIPTS;
 	print "\t".implode("\n\t", $SCRIPTS);
 }
-add_filter('thematic_after', 'provost_after');
+add_filter('thematic_after', 'wrc_after');
 
-function provost_footer(){
+function wrc_footer(){
 	print wp_nav_menu(thematic_nav_menu_args());
 }
-add_action('wp_footer', 'provost_footer');
+add_action('wp_footer', 'wrc_footer');
 
 #Add custom javascript to admin
-function provost_admin_scripts(){
+function wrc_admin_scripts(){
 	wp_enqueue_script('custom-admin', PROVOST_JS_URL.'/admin.js', array('jquery'), False, True);
 }
-add_action('admin_enqueue_scripts', 'provost_admin_scripts');
+add_action('admin_enqueue_scripts', 'wrc_admin_scripts');
 
 // Theme custom functions
 // ----------------------

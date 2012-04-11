@@ -1,10 +1,10 @@
 <?php
-	$provost_award_program = new ProvostAwardProgram();
+	$wrc_award_program = new WRCAwardProgram();
 	$programs = get_posts(array(
 		'numberposts' => -1,
 		'orderby'     => $orderby,
 		'order'       => 'ASC',
-		'post_type'   => $provost_award_program->options('name'),
+		'post_type'   => $wrc_award_program->options('name'),
 	));
 	ob_start();
 ?>
@@ -14,7 +14,7 @@
 	<ul class="programs"><?php foreach($programs as $program):?>
 		<li>
 			<?php
-				$url = get_post_meta($program->ID, 'provost_award_url', True);
+				$url = get_post_meta($program->ID, 'wrc_award_url', True);
 				if($url[0] == "/") $url = site_url() . $url;
 				printf('<a href="%s">%s<span class="caption">%s</span></a>',
 					$url,

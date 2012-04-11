@@ -1,17 +1,17 @@
 <?php 
 
 /**
- * Outputs a list of the provost updates ordered chronologically.
+ * Outputs a list of the wrc updates ordered chronologically.
  *
  * Example:
- * [sc-provost-updates]
+ * [sc-wrc-updates]
  **/
-function sc_provost_updates(){
+function sc_wrc_updates(){
 	ob_start();
 	include('templates/section-updates.php');
 	return ob_get_clean();
 }
-add_shortcode('sc-provost-updates', 'sc_provost_updates');
+add_shortcode('sc-wrc-updates', 'sc_wrc_updates');
 
 
 /**
@@ -66,10 +66,10 @@ add_shortcode('sc-forms', 'sc_forms');
  * Example:
  *
  * # output all updates tagged important
- * [sc-object type="provost_update" tags="important"]
+ * [sc-object type="wrc_update" tags="important"]
  *
  * # output a maximum of 10 units categorized as foo
- * [sc-object type="provost_unit" categories="foo" limit="10"]
+ * [sc-object type="wrc_unit" categories="foo" limit="10"]
  **/
 function sc_object($attr){
 	if (!is_array($attr)){return '';}

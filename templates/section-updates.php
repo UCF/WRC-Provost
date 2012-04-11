@@ -3,7 +3,7 @@
 		'numberposts' => 20,
 		'orderby'     => 'date',
 		'order'       => 'DESC',
-		'post_type'   => get_custom_post_type('ProvostUpdate'),
+		'post_type'   => get_custom_post_type('WRCUpdate'),
 	));
 ?>
 <?php if($updates):?>

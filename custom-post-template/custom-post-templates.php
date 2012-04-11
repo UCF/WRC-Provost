@@ -45,7 +45,7 @@ class CustomPostTemplates extends CustomPostTemplates_Plugin
 		$this->tpl_meta_key = 'custom_post_template';
 		// Init hooks and all that
 		$this->register_plugin ( 'custom-post-templates', __FILE__ );
-		$this->add_meta_box( 'select_post_template', __( 'Post Template', 'custom-post-templates' ), 'select_post_template', 'provost_update', 'side', 'default' );
+		$this->add_meta_box( 'select_post_template', __( 'Post Template', 'custom-post-templates' ), 'select_post_template', 'wrc_update', 'side', 'default' );
 		#$this->add_meta_box( 'select_post_template', __( 'Post Template', 'custom-post-templates' ), 'select_post_template', 'post', 'side', 'default' );
 		$this->add_action( 'save_post' );
 		$this->add_filter( 'single_template', 'filter_single_template' );

@@ -6,7 +6,7 @@ var __init__ = (function($){
 			var url   = selected.attr('value');
 			var title = selected.text();
 			if (url != null){
-				$('#provost_help_url').val(url);
+				$('#wrc_help_url').val(url);
 			}
 			if (title != null){
 				$('#title').val(title);

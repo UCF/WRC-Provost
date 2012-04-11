@@ -5,9 +5,9 @@ it is based off of an old email.
 
 */
 ?><!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
-<!-- saved from url=(0095)http://provostoffice.cmail5.com/T/ViewEmail/y/2B24D1ADF41A7698/3639B018851473CFC68C6A341B5D209E -->
+<!-- saved from url=(0095)http://wrcoffice.cmail5.com/T/ViewEmail/y/2B24D1ADF41A7698/3639B018851473CFC68C6A341B5D209E -->
 <HTML 
-xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>Provost's Update</TITLE>
+xmlns="http://www.w3.org/1999/xhtml"><HEAD><TITLE>WRC's Update</TITLE>
 <META content="text/html; charset=utf-8" http-equiv=Content-Type>
 <STYLE type=text/css>
 	BODY { PADDING-BOTTOM: 30px; LINE-HEIGHT: 1.5em; BACKGROUND-COLOR: #dbdcdc; MARGIN: 0px; FONT-FAMILY: Georgia, "Times New Roman", Times, serif; COLOR: #3f3d3d; FONT-SIZE: 11px; PADDING-TOP: 30px }
@@ -58,8 +58,8 @@ cellPadding=0 width=500 align=center>
 	style="BACKGROUND-IMAGE: url(<?=PROVOST_IMG_URL?>/update2-header_gradient_0.jpg); PADDING-LEFT: 10px; HEIGHT: 101px" 
 	id=grad-header><IMG 
 	  style="BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none" 
-	  alt="Provost's Update" 
-	  src="<?=PROVOST_IMG_URL?>/update2-provosts_update_2.gif" width=484 
+	  alt="WRC's Update" 
+	  src="<?=PROVOST_IMG_URL?>/update2-wrcs_update_2.gif" width=484 
 	  height=72>
 	  
 <br>
@@ -93,7 +93,7 @@ cellPadding=0 width=500 align=center>
 			height=107></P>
 			<P 
 			style="PADDING-BOTTOM: 0px; MARGIN: 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px">Diane 
-			Z. Chase, Ph.D.<BR>Interim Provost and Vice President <BR><BR></P>
+			Z. Chase, Ph.D.<BR>Interim WRC and Vice President <BR><BR></P>
 			
 			
 			<?php else: ?>
@@ -105,13 +105,13 @@ cellPadding=0 width=500 align=center>
 			height=107></P>
 			<P 
 			style="PADDING-BOTTOM: 0px; MARGIN: 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px">Terry 
-			L. Hickey, Ph.D.<BR>Provost and Executive Vice President 
+			L. Hickey, Ph.D.<BR>WRC and Executive Vice President 
 			<BR><BR></P>
 			<?php endif; ?>
 			<P 
             style="PADDING-BOTTOM: 0px; MARGIN: 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px">For 
             questions and comments, please 
-			<a style="COLOR: #d19c0c; TEXT-DECORATION: none" target="_blank" href="mailto:provostcomments@ucf.edu">click 
+			<a style="COLOR: #d19c0c; TEXT-DECORATION: none" target="_blank" href="mailto:wrccomments@ucf.edu">click 
             here.</a> <BR><BR><IMG 
 			style="BORDER-BOTTOM-STYLE: none; BORDER-RIGHT-STYLE: none; BORDER-TOP-STYLE: none; BORDER-LEFT-STYLE: none" 
 			alt="UCF Stands for Opportunity" 
@@ -133,7 +133,7 @@ height=12></TD></TR>
 	  <P 
 	  style="PADDING-BOTTOM: 0px; MARGIN: 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px">University 
 	  of Central Florida • 4000 Central Florida Blvd. <BR>Orlando, FL 32816-0111 
-	  • <a target="_blank" href="http://www.provost.ucf.edu/">http://www.provost.ucf.edu/</a></P>
+	  • <a target="_blank" href="http://www.wrc.ucf.edu/">http://www.wrc.ucf.edu/</a></P>
 	  <P 
 	  style="PADDING-BOTTOM: 0px; MARGIN: 0px 0px 10px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px">&nbsp;</P></TD></TR>
 </TBODY></TABLE>

@@ -1,5 +1,5 @@
 <?php
-/*/ The base abstract ProvostCustomPostType covers a really simple post type,
+/*/ The base abstract WRCCustomPostType covers a really simple post type,
 one that does not require additional fields and metaboxes.  This means that
 any object that inherits from this base class can safely ignore most of the
 methods defined in it, and if it needs those additional methods it should
@@ -15,7 +15,7 @@ Custom post types
 ----------------------------------/*/
 abstract class WRCCustomPostType{
 	public 
-		$name           = 'provost_custom_post_type',
+		$name           = 'wrc_custom_post_type',
 		$plural_name    = 'Custom Posts',
 		$singular_name  = 'Custom Post',
 		$add_new_item   = 'Add New Custom Post',
@@ -120,7 +120,7 @@ abstract class WRCCustomPostType{
 			add_meta_box(
 				$metabox['id'],
 				$metabox['title'],
-				'provost_show_meta_boxes',
+				'wrc_show_meta_boxes',
 				$metabox['page'],
 				$metabox['context'],
 				$metabox['priority']
@@ -164,7 +164,7 @@ abstract class WRCCustomPostType{
 	}
 	
 	public function prefixless_name(){
-		$name = str_replace('provost_', '', $this->options('name'));
+		$name = str_replace('wrc_', '', $this->options('name'));
 		return $name;
 	}
 	
@@ -181,7 +181,7 @@ abstract class WRCCustomPostType{
 
 abstract class WRCLink extends WRCCustomPostType{
 	public
-		$name           = 'provost_link',
+		$name           = 'wrc_link',
 		$plural_name    = 'Forms',
 		$singular_name  = 'Form',
 		$add_new_item   = 'Add Form',
@@ -206,7 +206,7 @@ abstract class WRCLink extends WRCCustomPostType{
 
 class WRCHelp extends WRCLink{
 	public
-		$name           = 'provost_help',
+		$name           = 'wrc_help',
 		$plural_name    = 'Help',
 		$singular_name  = 'Help',
 		$add_new_item   = 'Add Help',
@@ -231,7 +231,7 @@ class WRCHelp extends WRCLink{
 
 class WRCForm extends WRCLink{
 	public
-		$name           = 'provost_form',
+		$name           = 'wrc_form',
 		$plural_name    = 'Forms',
 		$singular_name  = 'Form',
 		$add_new_item   = 'Add Form',
@@ -254,8 +254,8 @@ class WRCForm extends WRCLink{
 	}
 	
 	static function get_url($form){
-		$x = get_post_meta($form->ID, 'provost_form_url', True);
-		$y = wp_get_attachment_url(get_post_meta($form->ID, 'provost_form_file', True));
+		$x = get_post_meta($form->ID, 'wrc_form_url', True);
+		$y = wp_get_attachment_url(get_post_meta($form->ID, 'wrc_form_file', True));
 		
 		return ($y) ? $y : $x;
 	}
@@ -263,8 +263,8 @@ class WRCForm extends WRCLink{
 	public function toHTML($post){
 		if (is_int($post)) $post = get_post($post);
 		
-		$external_file = get_post_meta($post->ID, 'provost_form_url', true);
-		$internal_file = get_post_meta($post->ID, 'provost_form_file', true);
+		$external_file = get_post_meta($post->ID, 'wrc_form_url', true);
+		$internal_file = get_post_meta($post->ID, 'wrc_form_file', true);
 		if($internal_file) $file_url = wp_get_attachment_url(get_post($internal_file)->ID);
 		else $file_url = $external_file;
 		if($file_url){
@@ -283,7 +283,7 @@ class WRCForm extends WRCLink{
 
 class WRCUpdate extends WRCCustomPostType{
 	public
-		$name           = 'provost_update',
+		$name           = 'wrc_update',
 		$plural_name    = 'Updates',
 		$singular_name  = 'Update',
 		$add_new_item   = 'Add Update',
@@ -297,7 +297,7 @@ class WRCUpdate extends WRCCustomPostType{
 
 class WRCHomeImages extends WRCCustomPostType{
 	public
-		$name           = 'provost_home_images',
+		$name           = 'wrc_home_images',
 		$plural_name    = 'Home Images',
 		$singular_name  = 'Home Image',
 		$add_new_item   = 'Add Home Image',
@@ -401,7 +401,7 @@ function custom_post_categories_meta_box($post, $box){
 
 class WRCUnit extends WRCLink{
 	public
-		$name           = 'provost_unit',
+		$name           = 'wrc_unit',
 		$plural_name    = 'Colleges/Units',
 		$singular_name  = 'College/Unit',
 		$add_new_item   = 'Add College/Unit',
@@ -425,7 +425,7 @@ class WRCUnit extends WRCLink{
 
 class WRCAwardProgram extends WRCLink{
 	public
-		$name           = 'provost_award',
+		$name           = 'wrc_award',
 		$plural_name    = 'Award Programs',
 		$singular_name  = 'Award Program',
 		$add_new_item   = 'Add Award Program',
@@ -493,7 +493,7 @@ function flush_rewrite_rules_if_necessary(){
  * @return void
  * @author Jared Lang
  **/
-function provost_post_types(){
+function wrc_post_types(){
 	#Register custom post types
 	foreach(installed_custom_post_types() as $custom_post_type){
 		$custom_post_type->register();
@@ -505,7 +505,7 @@ function provost_post_types(){
 	#Override default page post type to use categories
 	register_taxonomy_for_object_type('category', 'page');
 }
-add_action('init', 'provost_post_types');
+add_action('init', 'wrc_post_types');
 
 
 /**
@@ -514,13 +514,13 @@ add_action('init', 'provost_post_types');
  * @return void
  * @author Jared Lang
  **/
-function provost_meta_boxes(){
+function wrc_meta_boxes(){
 	#Register custom post types metaboxes
 	foreach(installed_custom_post_types() as $custom_post_type){
 		$custom_post_type->register_metaboxes();
 	}
 }
-add_action('do_meta_boxes', 'provost_meta_boxes');
+add_action('do_meta_boxes', 'wrc_meta_boxes');
 
 
 /**
@@ -529,7 +529,7 @@ add_action('do_meta_boxes', 'provost_meta_boxes');
  * @return void
  * @author Jared Lang
  **/
-function provost_save_meta_data($post){
+function wrc_save_meta_data($post){
 	#Register custom post types metaboxes
 	foreach(installed_custom_post_types() as $custom_post_type){
 		if (post_type($post) == $custom_post_type->options('name')){
@@ -541,7 +541,7 @@ function provost_save_meta_data($post){
 	return _save_meta_data($post, $meta_box);
 	
 }
-add_action('save_post', 'provost_save_meta_data');
+add_action('save_post', 'wrc_save_meta_data');
 
 
 /**
@@ -550,7 +550,7 @@ add_action('save_post', 'provost_save_meta_data');
  * @return void
  * @author Jared Lang
  **/
-function provost_show_meta_boxes($post){
+function wrc_show_meta_boxes($post){
 	#Register custom post types metaboxes
 	foreach(installed_custom_post_types() as $custom_post_type){
 		if (post_type($post) == $custom_post_type->options('name')){
@@ -636,7 +636,7 @@ function save_default($post_id, $field){
  **/
 function _save_meta_data($post_id, $meta_box){
 	// verify nonce
-	if (!wp_verify_nonce($_POST['provost_meta_box_nonce'], basename(__FILE__))) {
+	if (!wp_verify_nonce($_POST['wrc_meta_box_nonce'], basename(__FILE__))) {
 		return $post_id;
 	}
 
@@ -680,7 +680,7 @@ function _save_meta_data($post_id, $meta_box){
  **/
 function _show_meta_boxes($post, $meta_box){
 	// Use nonce for verification
-	echo '<input type="hidden" name="provost_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
+	echo '<input type="hidden" name="wrc_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
 	echo '<table class="form-table">';
 	foreach ($meta_box['fields'] as $field) {
 		// get current post meta data
@@ -704,15 +704,15 @@ function _show_meta_boxes($post, $meta_box){
 				echo '</select>';
 				break;
 			case 'selector':
-					$help_url = get_post_meta($post->ID, 'provost_help_url', true);
+					$help_url = get_post_meta($post->ID, 'wrc_help_url', true);
 				?>
 					<label for="<?=$field['id']?>"><?=$field['desc']?></label><br />
 					<select class="filler" name="<?=$field['id']?>" id="<?=$field['id']?>">
 						<option>Choose form...</option>
 						<?php foreach($field['options'] as $k=>$v):?>
 						<?php
-						 	$this_url  = get_post_meta($v, 'provost_form_url', true);
-							$this_file = get_post_meta($v, 'provost_form_file', true);
+						 	$this_url  = get_post_meta($v, 'wrc_form_url', true);
+							$this_file = get_post_meta($v, 'wrc_form_file', true);
 							if ($this_file){
 								$this_url = wp_get_attachment_url(get_post($this_file)->ID);
 							}

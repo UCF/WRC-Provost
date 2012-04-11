@@ -1,3 +1,3 @@
-# Women's Research Center Theme (Provost)
+# Women's Research Center Theme (WRC)
 
-This theme is based on the Provost theme.
+This theme is based on the WRC theme.
