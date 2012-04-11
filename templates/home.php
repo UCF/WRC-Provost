@@ -33,29 +33,12 @@
 					</ul>
 				</div>
 				
-				<div id="help">
-					<?php $help = get_posts(array(
-						'numberposts' => -1,
-						'orderby'     => 'title',
-						'order'       => 'ASC',
-						'post_type'   => get_custom_post_type('WRCHelp'),
-					));?>
-					<label for="help-select">Need Help Finding:</label>
-					<select id="help-select" class="select-links">
-						<option value="null" selected="selected">(Select a Topic)</option>
-						<?php foreach($help as $link):?>
-						<option value="<?=get_post_meta($link->ID, 'wrc_help_url', True)?>"><?=$link->post_title?></option>
-						<?php endforeach;?>
-					</select>
-				</div>
-				
 				<div id="search">
 					<?php get_search_form();?>
 				</div>
 			</div>
 		</div>
-		
-				<div class="clear">&nbsp;</div>
+		<div class="clear">&nbsp;</div>
 		<div id="middle" class="span-24 last">
 			<ul>
 			<?php foreach(get_menu_pages('home-menu') as $i=>$page):$last=!(($i + 1) % 4);?>
