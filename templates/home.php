@@ -51,8 +51,6 @@
 		</div>
 		
 		<div id="bottom" class="span-24 last">
-			<h2 class="span-24 last">Reporting to the WRC</h2>
-
 			<div id="links" class="span-18 border">
 				<!-- Colleges-->
 				<div id="home-colleges" class="span-9 append-1">
