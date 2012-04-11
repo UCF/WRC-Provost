@@ -1,3 +1,3 @@
-# Thoughts
+# Women's Research Center Theme (Provost)
 
-we could maintain a blank wordpress template for master and branch it for each wordpress site
+This theme is based on the Provost theme.
