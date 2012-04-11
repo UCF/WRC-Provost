@@ -55,6 +55,7 @@
 			</div>
 		</div>
 		
+				<div class="clear">&nbsp;</div>
 		<div id="middle" class="span-24 last">
 			<ul>
 			<?php foreach(get_menu_pages('home-menu') as $i=>$page):$last=!(($i + 1) % 4);?>
