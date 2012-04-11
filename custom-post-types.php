@@ -455,11 +455,9 @@ function installed_custom_post_types(){
 	$installed = array(
 		'WRCUnit',
 		'WRCPerson',
-		'WRCUpdate',
 		'WRCHomeImages',
 		'WRCForm',
 		'WRCHelp',
-		'WRCAwardProgram',
 	);
 	
 	return array_map(create_function('$class', '
