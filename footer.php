@@ -17,7 +17,7 @@
 				<a id="ucf-logo" href="http://www.ucf.edu"><img src="<?=PROVOST_IMG_URL?>/sfo-stacked.jpg" alt="ucf" /></a>
 			</div>
 			<div class="span-12 last text">
-				<p>Site Maintained by the Office of the WRC and Executive Vice President.</p>
+				<p>Site Maintained by the Women's Research Center.</p>
 				<p>&copy; University of Central Florida
 			</div>
 		</div>
