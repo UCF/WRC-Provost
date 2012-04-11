@@ -46,7 +46,7 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 .blue tr:nth-child(even) td, .blue tr.even td {background:#e5ecf9;}
 .object-list{list-style-type: none; padding: 0; margin: 0;}
 
-#bottom {padding-top:10px;}
+#bottom {padding-top:10px;border-top: 1px solid #e1e1e1; }
 #bottom .widgets h3{font-family: "Helvetica Neue", "Helvetica", "sans-serif";}
 #bottom .widgets > ul {margin:0;padding:0;}
 #bottom .widgets > ul ul {padding-left:20px;}
@@ -71,7 +71,7 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 #home #top #searchform label{display: block; font-weight: normal; color: #c14d00; font-family: "Georgia", "serif"; text-decoration: underline;}
 #home #top #searchform input[type='submit']{width: 20%;}
 #home #top #searchform input[type='search']{width: 75%;}
-#home #middle{margin: 30px 0 10px 0; padding:20px 0 0; border-top: 1px solid #e1e1e1; border-bottom: 1px solid #e1e1e1; }
+#home #middle{margin: 30px 0 10px 0; padding:20px 0 0; border-top: 1px solid #e1e1e1; }
 #home #middle ul{padding: 0; margin: 0; list-style-type: none;}
 #home #middle ul li{}
 #home #middle ul li a{text-decoration: none; font-size: 16px; font-weight: normal;}
