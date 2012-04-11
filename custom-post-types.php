@@ -13,7 +13,7 @@ installed_custom_post_types;
 /*/----------------------------------
 Custom post types
 ----------------------------------/*/
-abstract class ProvostCustomPostType{
+abstract class WRCCustomPostType{
 	public 
 		$name           = 'provost_custom_post_type',
 		$plural_name    = 'Custom Posts',
@@ -179,7 +179,7 @@ abstract class ProvostCustomPostType{
 	}
 }
 
-abstract class ProvostLink extends ProvostCustomPostType{
+abstract class WRCLink extends WRCCustomPostType{
 	public
 		$name           = 'provost_link',
 		$plural_name    = 'Forms',
@@ -204,7 +204,7 @@ abstract class ProvostLink extends ProvostCustomPostType{
 }
 
 
-class ProvostHelp extends ProvostLink{
+class WRCHelp extends WRCLink{
 	public
 		$name           = 'provost_help',
 		$plural_name    = 'Help',
@@ -229,7 +229,7 @@ class ProvostHelp extends ProvostLink{
 }
 
 
-class ProvostForm extends ProvostLink{
+class WRCForm extends WRCLink{
 	public
 		$name           = 'provost_form',
 		$plural_name    = 'Forms',
@@ -281,7 +281,7 @@ class ProvostForm extends ProvostLink{
 }
 
 
-class ProvostUpdate extends ProvostCustomPostType{
+class WRCUpdate extends WRCCustomPostType{
 	public
 		$name           = 'provost_update',
 		$plural_name    = 'Updates',
@@ -295,7 +295,7 @@ class ProvostUpdate extends ProvostCustomPostType{
 }
 
 
-class ProvostHomeImages extends ProvostCustomPostType{
+class WRCHomeImages extends WRCCustomPostType{
 	public
 		$name           = 'provost_home_images',
 		$plural_name    = 'Home Images',
@@ -321,7 +321,7 @@ class ProvostHomeImages extends ProvostCustomPostType{
 	}
 }
 
-class ProvostPerson extends ProvostCustomPostType{
+class WRCPerson extends WRCCustomPostType{
 	public
 		$name           = 'profile',
 		$plural_name    = 'People',
@@ -399,7 +399,7 @@ function custom_post_categories_meta_box($post, $box){
 	post_categories_meta_box($post, $box);
 }
 
-class ProvostUnit extends ProvostLink{
+class WRCUnit extends WRCLink{
 	public
 		$name           = 'provost_unit',
 		$plural_name    = 'Colleges/Units',
@@ -423,7 +423,7 @@ class ProvostUnit extends ProvostLink{
 }
 
 
-class ProvostAwardProgram extends ProvostLink{
+class WRCAwardProgram extends WRCLink{
 	public
 		$name           = 'provost_award',
 		$plural_name    = 'Award Programs',
@@ -453,13 +453,13 @@ Register custom post types and functions for display
 -------------------------------------/*/
 function installed_custom_post_types(){
 	$installed = array(
-		'ProvostUnit',
-		'ProvostPerson',
-		'ProvostUpdate',
-		'ProvostHomeImages',
-		'ProvostForm',
-		'ProvostHelp',
-		'ProvostAwardProgram',
+		'WRCUnit',
+		'WRCPerson',
+		'WRCUpdate',
+		'WRCHomeImages',
+		'WRCForm',
+		'WRCHelp',
+		'WRCAwardProgram',
 	);
 	
 	return array_map(create_function('$class', '
