@@ -47,7 +47,7 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 
 /*/ Home Page /*/
 #home #top{}
-#home #top #quote{font-size: 23px; text-align: right; padding-right: 10px; font-weight: normal; font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
+#home #top #quote{font-size: 23px; text-align: left; padding-right: 10px; font-weight: normal; font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
 #home #top #quote p{font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
 #home #top #announcements{margin: 10px 0 17px 0;}
 .msie #home #top #announcements{margin: 10px 0 13px 0;}

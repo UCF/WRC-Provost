@@ -2,7 +2,17 @@
 	
 	<div id="home">
 		<div id="top" class="span-24 last">
-			<div class="span-9">
+			<div class="span-15">
+				<!-- Slideshow-->
+				<?php $gallery = get_home_images();?>
+				<?php if ($gallery):?>
+				<div class="slideshow">
+					<?=$gallery?>
+				</div>
+				<?php endif;?>
+				<div class="clear">&nbsp;</div>
+			</div>
+			<div class="span-9 last">
 				<!-- WRC Quote/Marketing -->
 				<div id="quote">
 					<?php the_content()?>
@@ -42,15 +52,6 @@
 				<div id="search">
 					<?php get_search_form();?>
 				</div>
-			</div>
-			<div class="span-15 last">
-				<!-- Slideshow-->
-				<?php $gallery = get_home_images();?>
-				<?php if ($gallery):?>
-				<div class="slideshow">
-					<?=$gallery?>
-				</div>
-				<?php endif;?>
 			</div>
 		</div>
 		
