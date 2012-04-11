@@ -48,13 +48,13 @@
 ?>
 	<div id="wrap">
 		<div id="header" class="span-24 last">
-			<h1 class="span-12"><a href="<?php bloginfo('url')?>"><?=bloginfo('name')?></a></h1>
-			<div class="span-12 last" id="menu">
+			<h1><a href="<?php bloginfo('url')?>"><?php bloginfo('name'); ?></a></h1>
+			<div class="span-24 last" id="menu">
 				<?=preg_replace(
 					'/<li[^>]*>([^<]*<[^>]+>[^<]+<[^>]+>)<\/li>[\s]*<\/ul>/',
 					'<li class="last">$1</ul>',
 					wp_nav_menu(array('menu' => 'navigation', 'container_class' => 'menu', 'echo' => False,))
-				)?>
+				)?><br>
 				<div class="end"><!-- --></div>
 			</div>
 		</div>
