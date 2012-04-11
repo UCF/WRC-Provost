@@ -83,9 +83,9 @@ var imageRotate = function($){
 		var options      = $.extend({}, defaults, arguments);
 		var container    = $(this);
 		
-		var active = container.children('img.active');
+		var active = container.children('div.active');
 		if (active.length < 1){
-			active = container.children('img:first');
+			active = container.children('div:first');
 			active.addClass('active');
 			setTimeout(function(){container.imageRotate(options);}, options.image_length);
 			return;
@@ -93,14 +93,16 @@ var imageRotate = function($){
 		
 		var next = active.next();
 		if (next.length < 1){
-			next = container.children('img:first');
+			next = container.children('div:first');
 		}
 		
 		active.addClass('last-active');
+		active.find('.caption').hide();
 		next.css({'opacity' : 0.0});
 		next.addClass('active');
 		next.animate({'opacity': 1.0}, options.fade_length, function(){
 			active.removeClass('active last-active');
+			next.find('.caption').show();
 		});
 		
 		setTimeout(function(){container.imageRotate(options);}, options.image_length);

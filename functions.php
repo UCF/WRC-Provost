@@ -343,7 +343,9 @@ function get_home_images($limit=null, $orderby='menu_order'){
 	if ($images){
 		$html = '';
 		foreach($images as $image){
-			$html .= get_the_post_thumbnail($image->ID);
+			$thumbnail_id = get_post_thumbnail_id($image->ID);
+			$thumbnail    = get_post($thumbnail_id);
+			$html .= sprintf('<div class="clearfix">%s<p class="caption">%s</p></div>', get_the_post_thumbnail($image->ID), $thumbnail->post_excerpt);
 		}
 		return $html;
 	}else{
