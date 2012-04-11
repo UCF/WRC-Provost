@@ -51,69 +51,21 @@
 		</div>
 		
 		<div id="bottom" class="span-24 last">
-			<div id="links" class="span-18 border">
-				<!-- Colleges-->
-				<div id="home-colleges" class="span-9 append-1">
-					<h3>Colleges</h3>
-					<ul>
-						<?php foreach(get_posts(array(
-							'numberposts' => -1,
-							'orderby'     => 'post_title',
-							'order'       => 'ASC',
-							'post_type'   => get_custom_post_type('WRCUnit'),
-							'category'    => get_category_by_slug('college')->term_id,
-						)) as $i=>$college): $last=!(($i + 1)  % 3);?>
-							<li class="college span-3<?=($last)?' last':'';?>">
-								<?php $url = get_post_meta($college->ID, 'wrc_unit_url', True);?>
-								<?php if($url):?>
-								<a href="<?=get_post_meta($college->ID, 'wrc_unit_url', True)?>">
-									<?=get_the_post_thumbnail($college->ID)?>
-									<span class="name"><?=hyphenate($college->post_title)?></span>
-								</a>
-								<?php else:?>
-								<div>
-									<?=get_the_post_thumbnail($college->ID)?>
-									<span class="name"><?=hyphenate($college->post_title)?></span>
-								</div>
-								<?php endif;?>
-							</li>
-						<?php endforeach;?>
-					</ul>
-				</div>
-				
-				<!-- Academic Units-->
-				<div id="home-units" class="span-6 last">
-					<h3>Academic&nbsp;Affairs&nbsp;Units</h3>
-					<ul>
-						<?php foreach(get_posts(array(
-							'numberposts' => -1,
-							'orderby'     => 'post_title',
-							'order'       => 'ASC',
-							'post_type'   => get_custom_post_type('WRCUnit'),
-							'category'    => get_category_by_slug('academic-unit')->term_id,
-						)) as $i=>$unit): $last=!(($i + 1)  % 2);?>
-							<li class="unit span-3<?=($last)?' last':'';?>">
-								<?php $url = get_post_meta($unit->ID, 'wrc_unit_url', True);?>
-								<?php if($url):?>
-								<a href="<?=get_post_meta($unit->ID, 'wrc_unit_url', True)?>">
-									<?=get_the_post_thumbnail($unit->ID)?>
-									<span class="name"><?=hyphenate($unit->post_title)?></span>
-								</a>
-								<?php else:?>
-								<div>
-									<?=get_the_post_thumbnail($unit->ID)?>
-									<span class="name"><?=hyphenate($unit->post_title)?></span>
-								</div>
-								<?php endif;?>
-							</li>
-						<?php endforeach;?>
-					</ul>
-				</div>
-			</div>
-			
-			<div id="widgets" class="prepend-1 span-5 last">
+			<div class="widgets span-8 append-1">
 				<ul>
-				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('primary-aside') ) : ?>
+				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('1st-subsidiary-aside') ) : ?>
+				<?php endif; ?>
+				</ul>
+			</div>
+			<div class="widgets span-8 append-1">
+				<ul>
+				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('2nd-subsidiary-aside') ) : ?>
+				<?php endif; ?>
+				</ul>
+			</div>
+			<div class="widgets span-6 last">
+				<ul>
+				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('3rd-subsidiary-aside') ) : ?>
 				<?php endif; ?>
 				</ul>
 			</div>

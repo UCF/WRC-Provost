@@ -46,6 +46,12 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 .blue tr:nth-child(even) td, .blue tr.even td {background:#e5ecf9;}
 .object-list{list-style-type: none; padding: 0; margin: 0;}
 
+#bottom {padding-top:10px;}
+#bottom .widgets h3{font-family: "Helvetica Neue", "Helvetica", "sans-serif";}
+#bottom .widgets > ul {margin:0;padding:0;}
+#bottom .widgets > ul ul {padding-left:20px;}
+#bottom .widgets > ul > li {list-style-type:none;}
+
 /*/ Home Page /*/
 #home #top{}
 #home #top #quote{font-size: 23px; text-align: left; padding-right: 10px; font-weight: normal; font-family: "Helvetica Neue", "Helvetica", "Arial", "sans-serif";}
@@ -70,8 +76,6 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 #home #middle ul li{}
 #home #middle ul li a{text-decoration: none; font-size: 16px; font-weight: normal;}
 #home #middle ul li a .title{}
-#home #bottom{ padding-top: 10px;}
-#home #bottom #links{border-right: 1px solid #e1e1e1;}
 #home h2{font-size: 10px; text-transform: uppercase; font-weight: normal; letter-spacing: 2px;}
 #home-colleges h3,
 #home-units h3{color: #666666; font-family: "Georgia", "serif"; font-size: 21px; font-weight: normal;}
@@ -85,8 +89,7 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 #home-units ul li img{z-index: -1; position: absolute; background-color: #000;}
 #home-colleges ul .college .name,
 #home-units ul .unit .name{display: block; padding: 5px; overflow: hidden; text-shadow: #000 0px 0px 4px; font-weight: 500;}
-#home #widgets h3{font-family: "Helvetica Neue", "Helvetica", "sans-serif";}
-#home #widgets{padding-left: 15px;}
+
 
 
 /*/ Profiles /*/
