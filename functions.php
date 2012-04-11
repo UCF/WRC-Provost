@@ -333,7 +333,7 @@ function get_menu_pages($c){
  **/
 function get_home_images($limit=null, $orderby='menu_order'){
 	$limit       = ($limit) ? $limit : -1;
-	$home_images = new ProvostHomeImages();
+	$home_images = new WRCHomeImages();
 	$images      = get_posts(array(
 		'numberposts' => -1,
 		'orderby'     => $orderby,
