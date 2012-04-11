@@ -48,8 +48,8 @@
 ?>
 	<div id="wrap">
 		<div id="header" class="span-24 last">
-			<h1 class="span-9"><a href="<?php bloginfo('url')?>">Office of the Provost</a></h1>
-			<div class="span-15 last" id="menu">
+			<h1 class="span-12"><a href="<?php bloginfo('url')?>"><?=bloginfo('name')?></a></h1>
+			<div class="span-12 last" id="menu">
 				<?=preg_replace(
 					'/<li[^>]*>([^<]*<[^>]+>[^<]+<[^>]+>)<\/li>[\s]*<\/ul>/',
 					'<li class="last">$1</ul>',
