@@ -41,13 +41,8 @@
 			
 			<div id="widgets">
 				<ul>
-				<?php if (get_post_meta($post->ID, '1st-subsidiary-aside', True)):?>
-				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('1st-subsidiary-aside') ) : ?>
-				<?php endif; ?>
-				<?php else:?>
 				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('secondary-aside') ) : ?>
 				<?php endif; ?>
-				<?php endif;?>
 				</ul>
 			</div>
 		</div>
