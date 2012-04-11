@@ -215,7 +215,7 @@ class WRCHelp extends WRCLink{
 		$public         = True;
 	
 	public function fields(){
-		$forms    = new ProvostForm();
+		$forms    = new WRCForm();
 		$fields   = parent::fields();
 		$fields[] = array(
 			'name'    => __('forms'),
