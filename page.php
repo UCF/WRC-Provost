@@ -46,7 +46,27 @@
 				</ul>
 			</div>
 		</div>
-		
+		<div id="bottom" class="span-24 last">
+			<div class="widgets span-8 append-1">
+				<ul>
+				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('1st-subsidiary-aside') ) : ?>
+				<?php endif; ?>
+				</ul>
+			</div>
+			<div class="widgets span-8 append-1">
+				<ul>
+				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('2nd-subsidiary-aside') ) : ?>
+				<?php endif; ?>
+				</ul>
+			</div>
+			<div class="widgets span-6 last">
+				<ul>
+				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('3rd-subsidiary-aside') ) : ?>
+				<?php endif; ?>
+				</ul>
+			</div>
+			
+		</div>
 	</div>
 
 <?php get_footer();?>
