@@ -93,13 +93,6 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 
 
 /*/ Profiles /*/
-.profile-list{padding: 0; margin: 0; list-style-type: none;}
-.profile-list li{display: block; float: left; width: 110px; height: 17em; margin-right: 15px;}
-.profile-list li img{display: block;}
-.profile-list li .name,
-.profile-list li .description{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 14px; display: block;}
-.profile-list li .name{font-weight: bold; margin-top: 10px;}
-.profile-list li .end{clear: both;}
 
 #profile { width:120px; padding:5px 25px 5px 5px; float:left; font-size:11px; line-height:1.4; }
 #profile strong { display:block; font-size:12px; padding:4px 0 2px; }
@@ -121,18 +114,18 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 
 
 /*/ Academic Affairs Styles /*/
-#org-chart{margin-top: 1em;}
-#org-chart h2{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 18px; font-weight: bold; display: inline-block;}
-#org-chart a{font-size: 14px;}
-#org-chart .people{padding: 0; margin: 0; list-style-type: none;}
-#org-chart .person{display: block; float: left; width: 110px; height: 17em; margin-right: 15px;}
-#org-chart .person img{display: block;}
-#org-chart .person .name,
-#org-chart .person .description{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 14px; display: block;}
-#org-chart .person .name{font-weight: bold; margin-top: 10px;}
-#org-chart .end{clear: both;}
-#org-chart #academic-officers{}
-#org-chart #college-deans{}
+.profile-list {margin-top: 1em;}
+.profile-list  h2{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 18px; font-weight: bold; display: inline-block;}
+.profile-list  a{font-size: 14px;}
+.profile-list  .people{padding: 0; margin: 0; list-style-type: none;}
+.profile-list  .person{display: block; float: left; width: 110px; height: 17em; margin-right: 15px;}
+.profile-list  .person img{display: block;}
+.profile-list  .person .name,
+.profile-list  .person .description{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 14px; display: block;line-height:1.3em;}
+.profile-list  .person .name{font-weight: bold; margin-top: 10px;}
+.profile-list  .end{clear: both;}
+.profile-list  #academic-officers{}
+.profile-list  #college-deans{}
 
 
 /*/ Page Styles /*/
