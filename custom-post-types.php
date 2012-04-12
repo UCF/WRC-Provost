@@ -336,7 +336,8 @@ class WRCPerson extends WRCCustomPostType{
 		$use_title      = True,
 		$use_metabox    = True,
 		$use_shortcode  = True,
-		$use_editor     = True;
+		$use_editor     = True,
+		$use_thumbnails = True;
 	
 	public function fields(){
 		return array(
