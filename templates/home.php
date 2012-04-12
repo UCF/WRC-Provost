@@ -2,7 +2,7 @@
 	
 	<div id="home">
 		<div id="top" class="span-24 last">
-			<div class="span-15">
+			<div class="span-15 append-1">
 				<!-- Slideshow-->
 				<?php $gallery = get_home_images();?>
 				<?php if ($gallery):?>
@@ -12,7 +12,7 @@
 				<?php endif;?>
 				<div class="clear">&nbsp;</div>
 			</div>
-			<div class="span-9 last">
+			<div class="span-8 last">
 				<!-- WRC Quote/Marketing -->
 				<div id="quote">
 					<?php the_content()?>
