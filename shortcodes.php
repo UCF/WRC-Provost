@@ -1,48 +1,6 @@
 <?php 
 
 /**
- * Outputs a list of the wrc updates ordered chronologically.
- *
- * Example:
- * [sc-wrc-updates]
- **/
-function sc_wrc_updates(){
-	ob_start();
-	include('templates/section-updates.php');
-	return ob_get_clean();
-}
-add_shortcode('sc-wrc-updates', 'sc_wrc_updates');
-
-
-/**
- * Outputs the horizontal faculty award programs list.
- * 
- * Example:
- * [sc-faculty-award-programs]
- **/
-function sc_faculty_award_programs($attrs){
-	ob_start();
-	include('templates/section-faculty-award-programs.php');
-	return ob_get_clean();
-}
-add_shortcode('sc-faculty-award-programs', 'sc_faculty_award_programs');
-
-
-/**
- * Outputs the Academic Officers and College Deans listings
- *
- * Example:
- * [sc-org-chart]
- **/
-function sc_org_chart(){
-	ob_start();
-	include('templates/section-organization.php');
-	return ob_get_clean();
-}
-add_shortcode('sc-org-chart', 'sc_org_chart');
-
-
-/**
  * Outputs forms, organized by the sub-category of 'Forms' they are related to.
  * Uncategorized forms will not display.
  *
@@ -66,10 +24,10 @@ add_shortcode('sc-forms', 'sc_forms');
  * Example:
  *
  * # output all updates tagged important
- * [sc-object type="wrc_update" tags="important"]
+ * [sc-object type="profile" tags="important"]
  *
  * # output a maximum of 10 units categorized as foo
- * [sc-object type="wrc_unit" categories="foo" limit="10"]
+ * [sc-object type="wrc_form" categories="foo" limit="10"]
  **/
 function sc_object($attr){
 	if (!is_array($attr)){return '';}
