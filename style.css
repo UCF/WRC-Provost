@@ -121,8 +121,9 @@ ul.none{padding: 0; margin: 0; list-style-type: none;}
 .profile-list  .person{display: block; float: left; width: 110px; height: 17em; margin-right: 15px;}
 .profile-list  .person img{display: block;}
 .profile-list  .person .name,
-.profile-list  .person .description{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; font-size: 14px; display: block;line-height:1.3em;}
-.profile-list  .person .name{font-weight: bold; margin-top: 10px;}
+.profile-list  .person .description{font-family: "Helvetica Neue", "Helvetica", "sans-serif"; display: block;line-height:1.3em;}
+.profile-list  .person .name{font-weight: bold; margin-top: 10px;font-size:13px;}
+.profile-list  .person .description {font-size:11px;}
 .profile-list  .end{clear: both;}
 .profile-list  #academic-officers{}
 .profile-list  #college-deans{}
