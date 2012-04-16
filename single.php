@@ -9,12 +9,6 @@
 			<div id="profile">
 				<?=get_the_post_thumbnail($person->ID)?>
 				<strong><?=get_post_meta($post->ID, 'profile_description', True)?></strong>
-				<?php
-					$categories = get_the_category();
-					foreach($categories as $c){
-						echo $c->name;
-					}
-				?>
 			</div>
 			<?php endif; ?>
 			<article>
