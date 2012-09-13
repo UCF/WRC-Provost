@@ -30,7 +30,8 @@ abstract class WRCCustomPostType{
 		$use_order      = False,
 		$use_title      = False,
 		$use_metabox    = False,
-		$use_shortcode  = False;
+		$use_shortcode  = False,
+		$built_in       = False;
 	
 	public function get_objects($options=array()){
 		$defaults = array(
@@ -133,6 +134,7 @@ abstract class WRCCustomPostType{
 			'labels'   => $this->labels(),
 			'supports' => $this->supports(),
 			'public'   => $this->options('public'),
+			'_builtin' => $this->options('built_in')
 		);
 		if ($this->options('use_order')){
 			$regisration = array_merge($registration, array('hierarchical' => True,));
@@ -172,9 +174,8 @@ abstract class WRCCustomPostType{
 		if (is_int($post)){
 			$post = get_post($post);
 		}
-		
 		$html = '<a href="'.get_permalink($post->ID).'">'.$post->post_title.'</a>';
-		if($wrap) $html = sprintf('<%1$s>%s</%1$s>', $wrap, $html);
+		if($wrap) $html = sprintf('<%s>%s</%s>', $wrap, $html, $wrap);
 		return $html;
 	}
 }
@@ -448,6 +449,25 @@ class WRCAwardProgram extends WRCLink{
 	}
 }
 
+class Post extends WRCCustomPostType {
+	public
+		$name           = 'post',
+		$plural_name    = 'Posts',
+		$singular_name  = 'Post',
+		$add_new_item   = 'Add New Post',
+		$edit_item      = 'Edit Post',
+		$new_item       = 'New Post',
+		$public         = True,
+		$use_editor     = True,
+		$use_thumbnails = False,
+		$use_order      = True,
+		$use_title      = True,
+		$use_metabox    = True,
+		$use_shortcode  = True,
+		$use_categories = True,
+		$use_tags       = True,
+		$built_in       = True;
+}
 
 /*/-------------------------------------
 Register custom post types and functions for display
@@ -459,6 +479,7 @@ function installed_custom_post_types(){
 		'WRCHomeImages',
 		'WRCForm',
 		'WRCHelp',
+		'Post'
 	);
 	
 	return array_map(create_function('$class', '
