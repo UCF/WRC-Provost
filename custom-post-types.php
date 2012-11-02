@@ -243,122 +243,6 @@ abstract class CustomPostType{
 	}
 }
 
-class Document extends CustomPostType{
-	public
-		$name           = 'provost_form',
-		$plural_name    = 'Documents',
-		$singular_name  = 'Document',
-		$add_new_item   = 'Add New Document',
-		$edit_item      = 'Edit Document',
-		$new_item       = 'New Document',
-		$use_title      = True,
-		$use_editor     = False,
-		$use_shortcode  = True,
-		$use_metabox    = True,
-		$taxonomies     = array('category');
-	
-	public function fields(){
-		$fields   = parent::fields();
-		$fields[] = array(
-			'name' => __('URL'),
-			'desc' => __('Associate this document with a URL.  This will take precedence over any uploaded file, so leave empty if you want to use a file instead.'),
-			'id'   => $this->options('name').'_url',
-			'type' => 'text',
-		);
-		$fields[] = array(
-			'name'    => __('File'),
-			'desc'    => __('Associate this document with an already existing file.'),
-			'id'      => $this->options('name').'_file',
-			'type'    => 'file',
-		);
-		return $fields;
-	}
-	
-	
-	static function get_document_application($form){
-		return mimetype_to_application(self::get_mimetype($form));
-	}
-	
-	
-	static function get_mimetype($form){
-		if (is_numeric($form)){
-			$form = get_post($form);
-		}
-		
-		$prefix   = post_type($form);
-		$document = get_post(get_post_meta($form->ID, $prefix.'_file', True));
-		
-		$is_url = get_post_meta($form->ID, $prefix.'_url', True);
-		
-		return ($is_url) ? "text/html" : $document->post_mime_type;
-	}
-	
-	
-	static function get_title($form){
-		if (is_numeric($form)){
-			$form = get_post($form);
-		}
-		
-		$prefix = post_type($form);
-		
-		return $form->post_title;
-	}
-	
-	static function get_url($form){
-		if (is_numeric($form)){
-			$form = get_post($form);
-		}
-		
-		$prefix = post_type($form);
-		
-		$x = get_post_meta($form->ID, $prefix.'_url', True);
-		$y = wp_get_attachment_url(get_post_meta($form->ID, $prefix.'_file', True));
-		
-		if (!$x and !$y){
-			return '#';
-		}
-		
-		return ($x) ? $x : $y;
-	}
-	
-	
-	/**
-	 * Handles output for a list of objects, can be overridden for descendants.
-	 * If you want to override how a list of objects are outputted, override
-	 * this, if you just want to override how a single object is outputted, see
-	 * the toHTML method.
-	 **/
-	public function objectsToHTML($objects, $css_classes){
-		if (count($objects) < 1){ return '';}
-		
-		$class_name = get_custom_post_type($objects[0]->post_type);
-		$class      = new $class_name;
-		
-		ob_start();
-		?>
-		<ul class="unstyled <?php if($css_classes):?><?=$css_classes?><?php else:?><?=$class->options('name')?>-list<?php endif;?>">
-			<?php foreach($objects as $o):?>
-			<li class="document <?=$class_name::get_document_application($o)?>">
-				<?=$class->toHTML($o)?>
-			</li>
-			<?php endforeach;?>
-		</ul>
-		<?php
-		$html = ob_get_clean();
-		return $html;
-	}
-	
-	
-	/**
-	 * Outputs this item in HTML.  Can be overridden for descendants.
-	 **/
-	public function toHTML($object){
-		$title = Document::get_title($object);
-		$url   = Document::get_url($object);
-		$html = "<a href='{$url}'>{$title}</a>";
-		return $html;
-	}
-}
 
 class Page extends CustomPostType {
 	public
@@ -527,84 +411,67 @@ class Post extends CustomPostType {
 	}
 }
 
-class Help extends CustomPostType {
-	public
-		$name           = 'provost_help',
-		$plural_name    = 'Help',
-		$singular_name  = 'Help',
-		$add_new_item   = 'Add New Help',
-		$edit_item      = 'Edit Help',
-		$new_item       = 'New Help',
-		$use_metabox    = True,
-		$use_editor     = False,
-		$use_thumbnails = False,
-		$use_order      = False,
-		$taxonomies     = array();
-
-
-	public function fields() {
-		$id_prefix  = $this->options('name');
-		$documents  = new Document();
-		return array(
-			array(
-				'name' => 'url',
-				'desc' => 'URL',
-				'id'   => $id_prefix.'_url',
-				'type' => 'text',
-			),
-			array(
-				'name'    => 'forms',
-				'desc'    => 'You can define a url or select an existing form.',
-				'id'      => $id_prefix.'_forms',
-				'type'    => 'select',
-				'options' => $documents->get_objects_as_options()
-			)
-		);
-	}
-}
-
-class Update extends CustomPostType {
-	public
-		$name           = 'provost_update',
-		$plural_name    = 'Updates',
-		$singular_name  = 'Update',
-		$add_new_item   = 'Add New Update',
-		$edit_item      = 'Edit Update',
-		$new_item       = 'New Update',
-		$use_shortcode  = True;
-}
-
 class HomeImage extends CustomPostType {
 	public
-		$name           = 'provost_home_images',
+		$name           = 'wrc_home_images',
 		$plural_name    = 'Home Images',
-		$singular_name  = 'Home Imge',
+		$singular_name  = 'Home Image',
 		$add_new_item   = 'Add New Home Image',
 		$edit_item      = 'Edit Home Image',
 		$new_item       = 'New Home Image',
 		$use_thumbnails = True;
 }
 
-class Unit extends CustomPostType {
+class Form extends CustomPostType {
 	public
-		$name           = 'provost_unit',
-		$plural_name    = 'Colleges/Units',
-		$singular_name  = 'College/Unit',
-		$add_new_item   = 'Add New College/Unit',
-		$edit_item      = 'Edit College/Unit',
-		$new_item       = 'New College/Unit',
-		$use_thumbnails = True,
-		$taxonomies     = array('category');
+		$name           = 'wrc_form',
+		$plural_name    = 'Forms',
+		$singular_name  = 'Form',
+		$add_new_item   = 'Add Form',
+		$edit_item      = 'Edit Form',
+		$new_item       = 'New Form',
+		$public         = True,
+		$use_shortcode  = True,
+		$use_tags       = True,
+		$use_categories = True;
+	
+	public function fields(){
+		$fields   = parent::fields();
+		$fields[] = array(
+			'name'    => __('Document'),
+			'desc'    => __('Define an external url or upload a new file.  Uploaded files will override any url set.'),
+			'id'      => $this->options('name').'_file',
+			'type'    => 'file',
+		);
+		return $fields;
+	}
+	
+	static function get_url($form){
+		$x = get_post_meta($form->ID, 'wrc_form_url', True);
+		$y = wp_get_attachment_url(get_post_meta($form->ID, 'wrc_form_file', True));
+		
+		return ($y) ? $y : $x;
+	}
+	
+	public function toHTML($post){
+		if (is_int($post)) $post = get_post($post);
+		
+		$external_file = get_post_meta($post->ID, 'wrc_form_url', true);
+		$internal_file = get_post_meta($post->ID, 'wrc_form_file', true);
+		if($internal_file) $file_url = wp_get_attachment_url(get_post($internal_file)->ID);
+		else $file_url = $external_file;
+		if($file_url){
+			preg_match('/\.(?<file_ext>[^.]+)$/', $file_url, $matches);
+			$doc_class = isset($matches['file_ext']) ? $matches['file_ext'] : 'file';
+		}
+		$style = "document " . $doc_class;
+		
+		if(!$file_url) $file_url == "#";
+		if($file_url=="#") $style = 'missing';
+		
+		return sprintf('<li class="%s"><a href="%s">%s</a></li>', $style, $file_url, $post->post_title);
+	}
 }
 
-class AwardProgram extends CustomPostType {
-	public
-		$name           = 'provost_award',
-		$plural_name    = 'Award Programs',
-		$singular_name  = 'Award Program',
-		$add_new_item   = 'Add New Award Program',
-		$edit_item      = 'Edit Award Program',
-		$new_item       = 'New Award Program';
-}
 
 ?>

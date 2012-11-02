@@ -7,6 +7,16 @@ require_once('functions/config.php');			# Where per theme settings are registere
 require_once('shortcodes.php');         		# Per theme shortcodes
 
 //Add theme-specific functions here.
+
+/**
+ * Hide unused admin tools (Links, Comments, etc)
+ **/
+function hide_admin_links() {
+	remove_menu_page('link-manager.php');
+	remove_menu_page('edit-comments.php');
+}
+add_action( 'admin_menu', 'hide_admin_links' );
+
 /**
  * Returns published images as html string
  *
@@ -230,87 +240,10 @@ class FeedManager{
 /**
  * Uses the google search appliance to search the current site or the site 
  * defined by the argument $domain.
->>>>>>> upstream/minimal
  *
  * @return array
  * @author Jared Lang
  **/
-<<<<<<< HEAD
-function get_menu_pages($c){
-	return get_posts(array(
-		'numberposts' => -1,
-		'orderby'     => 'menu_order',
-		'order'       => 'ASC',
-		'post_type'   => 'page',
-		'category'    => get_category_by_slug($c)->term_id,
-	));
-}
-
-
-/**
- * Returns published images as html string
- *
- * @return void
- * @author Jared Lang
- **/
-function get_home_images($limit=null, $orderby='menu_order'){
-	$limit       = ($limit) ? $limit : -1;
-	$home_images = new WRCHomeImages();
-	$images      = get_posts(array(
-		'numberposts' => -1,
-		'orderby'     => $orderby,
-		'order'       => 'DESC',
-		'post_type'   => $home_images->options('name'),
-	));
-	if ($images){
-		$html = '';
-		foreach($images as $image){
-			$thumbnail_id = get_post_thumbnail_id($image->ID);
-			$thumbnail    = get_post($thumbnail_id);
-			$html .= sprintf('<div class="clearfix">%s<p class="caption">%s</p></div>', get_the_post_thumbnail($image->ID), $thumbnail->post_excerpt);
-		}
-		return $html;
-	}else{
-		return '';
-	}
-}
-
-
-/**
- * Tells you if this person has just commented within a given time frame and set
- * of comments.
- *
- * @return void
- * @author Jared Lang
- */
-function user_just_commented($comments, $timeframe){
-	/*/ This attempts to detect whether or not the user just commented by
-	inspecting the last 10 comments passed and comparing their IP address and
-	the current time to the comments IP address and post date.
-	
-	Unfortunately, if someone revists the the page this function is called on
-	within the defined timeframe, it will return that they have just commented.
-	/*/
-	
-	$limit    = 10; # Limit number of comments to search in
-	$comments = array_slice($comments, -$limit);
-	
-	foreach($comments as $comment){
-		$diff = time() - strtotime($comment->comment_date_gmt);
-		if ($diff < $timeframe){
-			if ($_SERVER["REMOTE_ADDR"] == $comment->comment_author_IP){
-				return True;
-			}
-		}
-	}
-	return False;
-}
-
-function disallow_direct_load($page){
-	if ( $page == basename($_SERVER['SCRIPT_FILENAME'])){
-		die ( 'Please do not load this page directly. Thanks!' );
-	}
-=======
 function get_search_results(
 		$query,
 		$start=null,
