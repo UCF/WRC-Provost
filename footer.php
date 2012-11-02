@@ -1,4 +1,5 @@
 			<div id="bottom" class="row">
+				<div class="span12 hr"></div>
 				<!-- Colleges-->
 				<div id="home-colleges" class="span4">
 					<h3>Our Location</h3>
