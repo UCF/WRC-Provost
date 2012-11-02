@@ -380,6 +380,7 @@ class Post extends CustomPostType {
 		$public         = True,
 		$use_editor     = True,
 		$use_thumbnails = False,
+		$use_shortcode  = True,
 		$use_order      = True,
 		$use_title      = True,
 		$use_metabox    = True,
@@ -407,7 +408,19 @@ class HomeImage extends CustomPostType {
 		$add_new_item   = 'Add New Home Image',
 		$edit_item      = 'Edit Home Image',
 		$new_item       = 'New Home Image',
+		$use_order		= True,
+		$use_editor		= False,
 		$use_thumbnails = True;
+	
+	public function register_metaboxes(){
+		$metabox = $this->metabox();
+		global $wp_meta_boxes;
+		remove_meta_box('postimagediv', $metabox['page'], 'side');
+		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
+			print "<p>Images will be outputted as defined by the order attribute in the side bar. Higher numbers have priority.</p>";
+		'), $metabox['page'], 'normal', 'high');
+		add_meta_box('postimagediv', __('Home Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
+	}	
 }
 
 class Form extends CustomPostType {
