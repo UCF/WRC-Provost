@@ -10,7 +10,7 @@
 				<div id="home-images-carousel" class="carousel slide">
 					<!-- Carousel items -->
 					<div class="carousel-inner">
-						<?=$gallery?>	
+						<?=$gallery?>
 					</div>
 				</div>
 				<?php endif;?>

@@ -95,12 +95,11 @@ ul.menu li:last-child:after, ul.menu li.last:after{content: " " !important;}
 	margin-top:20px;
 	padding-top:20px;
 	border-top: 1px solid #E1E1E1;
-	border-bottom: 1px solid #E1E1E1;
-	padding-bottom:20px;
 	margin-bottom:20px;
 }
 #home #middle img {margin-bottom:4px;}
 #home #middle a {font-size:16px;text-decoration:none;}
+#home + #bottom {margin-top:0;}
 
 /* Form, Policies, and Procedures */
 #forms-policies-and-procedures .page-content a {color:#953801;}
@@ -172,4 +171,4 @@ ul.menu li:last-child:after, ul.menu li.last:after{content: " " !important;}
 #profile img { 
 	display:block;
 }
-.person-picture-wrap {width:110px;float:left;margin-left:20px;}
+.person-picture-wrap {width:110px;float:left;margin-left:20px;margin-bottom:20px;}

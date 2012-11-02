@@ -1,7 +1,7 @@
 <?php disallow_direct_load('single-profile.php');?>
 <?php get_header(); the_post();?>
 <div class="row" id="<?=$post->post_name?>">
-	<div class="span8 page-content">
+	<div class="span9 page-content">
 		<h2><?php the_title();?></h2>
 		<?php if($post->post_type == 'profile'): ?>
 		<div id="profile" class="pull-left">
