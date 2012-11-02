@@ -263,12 +263,6 @@ class Page extends CustomPostType {
 	public function fields() {
 		$prefix = $this->options('name').'_';
 		return array(
-			array(
-				'name' => 'Hide Lower Section',
-				'desc' => 'This section normally contains the Flickr, News and Events widgets. The footer will not be hidden',
-				'id'   => $prefix.'hide_fold',
-				'type' => 'checkbox',
-			),
 				array(
 					'name' => 'Stylesheet',
 					'desc' => '',
@@ -334,7 +328,7 @@ class Person extends CustomPostType
 	public function objectsToHTML($people, $css_classes) {
 		ob_start();?>
 		<div class="row">
-			<div class="span12">
+			<div class="span9">
 				<table class="table table-striped">
 					<thead>
 						<tr>
@@ -395,12 +389,6 @@ class Post extends CustomPostType {
 	public function fields() {
 		$prefix = $this->options('name').'_';
 		return array(
-			array(
-				'name' => 'Hide Lower Section',
-				'desc' => 'This section normally contains the Flickr, News and Events widgets. The footer will not be hidden',
-				'id'   => $prefix.'hide_fold',
-				'type' => 'checkbox',
-			),
 				array(
 					'name' => 'Stylesheet',
 					'desc' => '',

@@ -8,7 +8,7 @@
  ?>
 <div class="row">
 	<div id="sidebar-events" class="<?php echo $width; ?>">
-		<h3>Events at UCF</h3>
+		<h3>Events</h3>
 		<?php display_events(); ?>
 	</div>
 </div>

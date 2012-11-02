@@ -1,16 +1,16 @@
 			<div id="bottom" class="row">
 				<!-- Colleges-->
-				<div id="home-colleges" class="span5">
+				<div id="home-colleges" class="span4">
 					<h3>Our Location</h3>
-					Map will go here...
+					<iframe width="320" height="240" frameborder="0" src="https://map.ucf.edu/widget?title=&width=300&height=300&illustrated=y&building_id=79" style="border: none; width: 315px; height: 300px;"></iframe>
 				</div>
 				<!--Units -->
 				<div id="home-units" class="span4">
-					<h3>Academic&nbsp;Affairs&nbsp;Units</h3>
+					<h3>Contact Us</h3>
 					Contact us info will go here...
 				</div>
-				<div id="sidebar" class="span3">
-					<?php $sidebar_width = 3; get_template_part('includes/sidebar'); ?>
+				<div id="sidebar" class="span4">
+					<?php $sidebar_width = 4; get_template_part('includes/sidebar'); ?>
 				</div>
 			</div>
 			<?=wp_nav_menu(array(

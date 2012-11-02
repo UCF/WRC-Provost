@@ -26,9 +26,6 @@
 		?>
 		</article>
 	</div>
-	<div id="sidebar" class="span3 offset1">
-		<?php get_template_part('includes/sidebar'); ?>
-	</div>
 	
 </div>
 <?php get_footer();?>
