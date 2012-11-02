@@ -34,8 +34,17 @@ function get_home_images($limit=null, $orderby='menu_order'){
 	));
 	if ($images){
 		$html = '';
+		$count = 0;
 		foreach($images as $image){
-			$html .= '<div class="'.($html == '' ? 'active ' : '').'item">'.get_the_post_thumbnail($image->ID, 'full').'</div>';
+			$thumbnail_id = get_post_thumbnail_id($image->ID);
+			$thumbnail = get_post($thumbnail_id);
+			if ($count == 0) {
+				$html .= sprintf('<div class="item active">%s<p class="caption">%s</p></div>', get_the_post_thumbnail($image->ID), $thumbnail->post_excerpt);
+			}
+			else {
+				$html .= sprintf('<div class="item">%s<p class="caption">%s</p></div>', get_the_post_thumbnail($image->ID), $thumbnail->post_excerpt);
+			}
+			$count++;
 		}
 		return $html;
 	}else{
