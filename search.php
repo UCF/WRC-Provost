@@ -1,39 +1,79 @@
-<?php get_header();?>
-	<div class="page-content" id="search-results">
-		<div id="left" class="span-6 append-1">
-			<h2>Search Results for: <?=esc_html(stripslashes($_GET['s']))?></h2>
-			
-			<div id="widgets">
-				<ul>
-				<?php if (get_post_meta($post->ID, '1st-subsidiary-aside', True)):?>
-				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('1st-subsidiary-aside') ) : ?>
-				<?php endif; ?>
-				<?php else:?>
-				<?php if ( !function_exists('dynamic_sidebar') || !dynamic_sidebar('secondary-aside') ) : ?>
-				<?php endif; ?>
-				<?php endif;?>
+<?php $options = get_option(THEME_OPTIONS_NAME);?>
+<?php if ($options['enable_google'] or $options['enable_google'] === null):?>
+<?php
+	$domain  = $options['search_domain'];
+	$limit   = (int)$options['search_per_page'];
+	$start   = (is_numeric($_GET['start'])) ? (int)$_GET['start'] : 0;
+	$results = get_search_results($_GET['s'], $start, $limit, $domain);
+?>
+<?php get_header(); ?>
+	<div class="row page-content" id="search-results">
+		<div class="span8">
+				<h2>Search Results for <em><?php echo htmlspecialchars($_GET['s']) ?></em></h2>
+				<?php if(count($results['items'])):?>
+				<ul class="unstyled" id="result-list">
+					<?php foreach($results['items'] as $i => $result):?>
+					<li class="<?php echo (($i %2) == 0) ? 'even' : 'odd'; ?>">
+						<h3>
+							<a class="<?=mimetype_to_application(($result['mime']) ? $result['mime'] : 'text/html')?>" href="<?=$result['url']?>">
+								<?php if($result['title']):?>
+								<?=$result['title']?>
+								<?php else:?>
+								<?=substr($result['url'], 0, 45)?>...
+								<?php endif;?>
+							</a>
+						</h3>
+						<p><a href="<?=$result['url']?>" class="ignore-external url sans"><?=$result['url']?></a></p>
+						<p>
+							<?=str_replace('<br>', '', $result['snippet'])?>
+						</p>
+					</li>
+				<?php endforeach;?>
 				</ul>
-			</div>
+			
+				<?php if($start + $limit < $results['number']):?>
+				<a class="button more" href="./?s=<?=$_GET['s']?>&amp;start=<?=$start + $limit?>">More Results</a>
+				<?php endif;?>
+				
+				<?php else:?>
+					
+				<p>No results found for "<?=htmlentities($_GET['s'])?>".</p>
+				
+				<?php endif;?>
 		</div>
-		<div id="right" class="span-17 last">
-			<?php
-				if (have_posts()) {
-					// action hook creating the search loop
-					thematic_searchloop();
-				} else {
-					thematic_abovepost();?>
-					<div id="post-0" class="post noresults">
-						<h3><?php _e('Nothing Found', 'thematic') ?></h3>
-						<p><?php _e('Sorry, but nothing matched your search criteria. Please try again with some different keywords.', 'thematic') ?></p>
-						
-						<form id="noresults-searchform" method="get" action="<?php bloginfo('url') ?>/">
-							<div>
-								<input id="noresults-s" name="s" type="text" value="<?php echo esc_html(stripslashes($_GET['s'])) ?>" size="40" />
-								<input id="noresults-searchsubmit" name="searchsubmit" type="submit" value="<?php _e('Find', 'thematic') ?>" />
-							</div>
-						</form>
-					</div><!-- #post -->
-				<?php thematic_belowpost();
-				}?>
-		</div><!-- #container -->
+		
+		<div id="sidebar" class="span3 offset1">
+			<?php get_template_part('includes/sidebar'); ?>
+		</div>
+	</div>
+	<?php get_template_part('includes/below-the-fold'); ?>
 <?php get_footer();?>
+
+<?php else:?>
+<?php get_header(); the_post();?>
+	<div class="row page-content" id="search-results">
+		<div class="span8">
+			<h2>Search Results</h2>
+			<?php if(have_posts()):?>
+				<ul class="unstyled">
+				<?php $count = 0; while(have_posts()): the_post();?>
+					<li class="<?php echo (($i %2) == 0) ? 'even' : 'odd'; ?>">
+						<h3><a href="<?php the_permalink();?>"><?php the_title();?></a></h3>
+						<p><a href="<?php the_permalink();?>"><?php the_permalink();?></a></p>
+						<p>
+							<?php the_excerpt();?>
+						</p>
+					</li>
+				<?php $count++; endwhile;?>
+				</ul>
+			<?php else:?>		
+				<p>No results found for "<?=htmlentities($_GET['s'])?>".</p>
+			<?php endif;?>
+		</div>
+		
+		<div id="sidebar" class="span3 offset1">
+			<?php get_template_part('includes/sidebar'); ?>
+		</div>
+	</div>
+<?php get_footer();?>
+<?php endif;?>

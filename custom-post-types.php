@@ -1,39 +1,41 @@
 <?php
-/*/ The base abstract WRCCustomPostType covers a really simple post type,
-one that does not require additional fields and metaboxes.  This means that
-any object that inherits from this base class can safely ignore most of the
-methods defined in it, and if it needs those additional methods it should
-simply override and define it's own.
 
-To install a new custom post type, add the class name to the array contained in 
-installed_custom_post_types;
-/*/
-
-
-/*/----------------------------------
-Custom post types
-----------------------------------/*/
-abstract class WRCCustomPostType{
+/**
+ * Abstract class for defining custom post types.  
+ * 
+ **/
+abstract class CustomPostType{
 	public 
-		$name           = 'wrc_custom_post_type',
+		$name           = 'custom_post_type',
 		$plural_name    = 'Custom Posts',
 		$singular_name  = 'Custom Post',
 		$add_new_item   = 'Add New Custom Post',
 		$edit_item      = 'Edit Custom Post',
 		$new_item       = 'New Custom Post',
-		$public         = True,
-		$use_revisions  = True,
-		$use_categories = False,
-		$use_tags       = False,
-		$use_thumbnails = False,
-		$use_editor     = False,
-		$use_order      = False,
-		$use_title      = False,
-		$use_metabox    = False,
-		$use_shortcode  = False,
-		$built_in       = False;
+		$public         = True,  # I dunno...leave it true
+		$use_title      = True,  # Title field
+		$use_editor     = True,  # WYSIWYG editor, post content field
+		$use_revisions  = True,  # Revisions on post content and titles
+		$use_thumbnails = False, # Featured images
+		$use_order      = False, # Wordpress built-in order meta data
+		$use_metabox    = False, # Enable if you have custom fields to display in admin
+		$use_shortcode  = False, # Auto generate a shortcode for the post type
+		                         # (see also objectsToHTML and toHTML methods)
+		$taxonomies     = array('post_tag'),
+		$built_in       = False,
+
+		# Optional default ordering for generic shortcode if not specified by user.
+		$default_orderby = null,
+		$default_order   = null;
 	
+	
+	/**
+	 * Wrapper for get_posts function, that predefines post_type for this
+	 * custom post type.  Any options valid in get_posts can be passed as an
+	 * option array.  Returns an array of objects.
+	 **/
 	public function get_objects($options=array()){
+
 		$defaults = array(
 			'numberposts'   => -1,
 			'orderby'       => 'title',
@@ -45,12 +47,17 @@ abstract class WRCCustomPostType{
 		return $objects;
 	}
 	
+	
+	/**
+	 * Similar to get_objects, but returns array of key values mapping post
+	 * title to id if available, otherwise it defaults to id=>id.
+	 **/
 	public function get_objects_as_options($options=array()){
 		$objects = $this->get_objects($options);
 		$opt     = array();
 		foreach($objects as $o){
 			switch(True){
-				case $this->use_title:
+				case $this->options('use_title'):
 					$opt[$o->post_title] = $o->ID;
 					break;
 				default:
@@ -61,15 +68,29 @@ abstract class WRCCustomPostType{
 		return $opt;
 	}
 	
+	
+	/**
+	 * Return the instances values defined by $key.
+	 **/
 	public function options($key){
 		$vars = get_object_vars($this);
 		return $vars[$key];
 	}
 	
+	
+	/**
+	 * Additional fields on a custom post type may be defined by overriding this
+	 * method on an descendant object.
+	 **/
 	public function fields(){
 		return array();
 	}
 	
+	
+	/**
+	 * Using instance variables defined, returns an array defining what this
+	 * custom post type supports.
+	 **/
 	public function supports(){
 		#Default support array
 		$supports = array();
@@ -91,6 +112,10 @@ abstract class WRCCustomPostType{
 		return $supports;
 	}
 	
+	
+	/**
+	 * Creates labels array, defining names for admin panel.
+	 **/
 	public function labels(){
 		return array(
 			'name'          => __($this->options('plural_name')),
@@ -101,11 +126,16 @@ abstract class WRCCustomPostType{
 		);
 	}
 	
+	
+	/**
+	 * Creates metabox array for custom post type. Override method in
+	 * descendants to add or modify metaboxes.
+	 **/
 	public function metabox(){
 		if ($this->options('use_metabox')){
 			return array(
 				'id'       => $this->options('name').'_metabox',
-				'title'    => __($this->options('singular_name').' Attributes'),
+				'title'    => __($this->options('singular_name').' Fields'),
 				'page'     => $this->options('name'),
 				'context'  => 'normal',
 				'priority' => 'high',
@@ -115,13 +145,17 @@ abstract class WRCCustomPostType{
 		return null;
 	}
 	
+	
+	/**
+	 * Registers metaboxes defined for custom post type.
+	 **/
 	public function register_metaboxes(){
 		if ($this->options('use_metabox')){
 			$metabox = $this->metabox();
 			add_meta_box(
 				$metabox['id'],
 				$metabox['title'],
-				'wrc_show_meta_boxes',
+				'show_meta_boxes',
 				$metabox['page'],
 				$metabox['context'],
 				$metabox['priority']
@@ -129,30 +163,37 @@ abstract class WRCCustomPostType{
 		}
 	}
 	
+	
+	/**
+	 * Registers the custom post type and any other ancillary actions that are
+	 * required for the post to function properly.
+	 **/
 	public function register(){
 		$registration = array(
-			'labels'   => $this->labels(),
-			'supports' => $this->supports(),
-			'public'   => $this->options('public'),
-			'_builtin' => $this->options('built_in')
+			'labels'     => $this->labels(),
+			'supports'   => $this->supports(),
+			'public'     => $this->options('public'),
+			'taxonomies' => $this->options('taxonomies'),
+			'_builtin'   => $this->options('built_in')
 		);
+		
 		if ($this->options('use_order')){
-			$regisration = array_merge($registration, array('hierarchical' => True,));
-		}
-		register_post_type($this->options('name'), $registration);
-		if ($this->options('use_categories')){
-			register_taxonomy_for_object_type('category', $this->options('name'));
+			$registration = array_merge($registration, array('hierarchical' => True,));
 		}
 		
-		if ($this->options('use_tags')){
-			register_taxonomy_for_object_type('post_tag', $this->options('name'));
-		}
+		register_post_type($this->options('name'), $registration);
 		
 		if ($this->options('use_shortcode')){
-			add_shortcode($this->prefixless_name().'-list', array($this, 'shortcode'));
+			add_shortcode($this->options('name').'-list', array($this, 'shortcode'));
 		}
 	}
 	
+	
+	/**
+	 * Shortcode for this custom post type.  Can be overridden for descendants.
+	 * Defaults to just outputting a list of objects outputted as defined by
+	 * toHTML method.
+	 **/
 	public function shortcode($attr){
 		$default = array(
 			'type' => $this->options('name'),
@@ -162,167 +203,205 @@ abstract class WRCCustomPostType{
 		}else{
 			$attr = $default;
 		}
-		return sc_object($attr);
+		return sc_object_list($attr);
 	}
 	
-	public function prefixless_name(){
-		$name = str_replace('wrc_', '', $this->options('name'));
-		return $name;
+	
+	/**
+	 * Handles output for a list of objects, can be overridden for descendants.
+	 * If you want to override how a list of objects are outputted, override
+	 * this, if you just want to override how a single object is outputted, see
+	 * the toHTML method.
+	 **/
+	public function objectsToHTML($objects, $css_classes){
+		if (count($objects) < 1){ return '';}
+		
+		$class = get_custom_post_type($objects[0]->post_type);
+		$class = new $class;
+		
+		ob_start();
+		?>
+		<ul class="<?php if($css_classes):?><?=$css_classes?><?php else:?><?=$class->options('name')?>-list<?php endif;?>">
+			<?php foreach($objects as $o):?>
+			<li>
+				<?=$class->toHTML($o)?>
+			</li>
+			<?php endforeach;?>
+		</ul>
+		<?php
+		$html = ob_get_clean();
+		return $html;
 	}
 	
-	public function toHTML($post, $wrap=False){
-		if (is_int($post)){
-			$post = get_post($post);
-		}
-		$html = '<a href="'.get_permalink($post->ID).'">'.$post->post_title.'</a>';
-		if($wrap) $html = sprintf('<%s>%s</%s>', $wrap, $html, $wrap);
+	
+	/**
+	 * Outputs this item in HTML.  Can be overridden for descendants.
+	 **/
+	public function toHTML($object){
+		$html = '<a href="'.get_permalink($object->ID).'">'.$object->post_title.'</a>';
 		return $html;
 	}
 }
 
-abstract class WRCLink extends WRCCustomPostType{
+class Document extends CustomPostType{
 	public
-		$name           = 'wrc_link',
-		$plural_name    = 'Forms',
-		$singular_name  = 'Form',
-		$add_new_item   = 'Add Form',
-		$edit_item      = 'Edit Form',
-		$new_item       = 'New Form',
-		$public         = True,
+		$name           = 'provost_form',
+		$plural_name    = 'Documents',
+		$singular_name  = 'Document',
+		$add_new_item   = 'Add New Document',
+		$edit_item      = 'Edit Document',
+		$new_item       = 'New Document',
 		$use_title      = True,
-		$use_metabox    = True;
-	
-	public function fields(){
-		return array(
-			array(
-				'name' => __('url'),
-				'desc' => __('URL'),
-				'id'   => $this->options('name').'_url',
-				'type' => 'text',
-			),
-		);
-	}
-}
-
-
-class WRCHelp extends WRCLink{
-	public
-		$name           = 'wrc_help',
-		$plural_name    = 'Help',
-		$singular_name  = 'Help',
-		$add_new_item   = 'Add Help',
-		$edit_item      = 'Edit Help',
-		$new_item       = 'New Help',
-		$public         = True;
-	
-	public function fields(){
-		$forms    = new WRCForm();
-		$fields   = parent::fields();
-		$fields[] = array(
-			'name'    => __('forms'),
-			'desc'    => __('You can define a url or select an existing form.'),
-			'id'      => $this->options('name').'_forms',
-			'type'    => 'selector',
-			'options' => $forms->get_objects_as_options(),
-		);
-		return $fields;
-	}
-}
-
-
-class WRCForm extends WRCLink{
-	public
-		$name           = 'wrc_form',
-		$plural_name    = 'Forms',
-		$singular_name  = 'Form',
-		$add_new_item   = 'Add Form',
-		$edit_item      = 'Edit Form',
-		$new_item       = 'New Form',
-		$public         = True,
+		$use_editor     = False,
 		$use_shortcode  = True,
-		$use_tags       = True,
-		$use_categories = True;
+		$use_metabox    = True,
+		$taxonomies     = array('category');
 	
 	public function fields(){
 		$fields   = parent::fields();
 		$fields[] = array(
-			'name'    => __('Document'),
-			'desc'    => __('Define an external url or upload a new file.  Uploaded files will override any url set.'),
+			'name' => __('URL'),
+			'desc' => __('Associate this document with a URL.  This will take precedence over any uploaded file, so leave empty if you want to use a file instead.'),
+			'id'   => $this->options('name').'_url',
+			'type' => 'text',
+		);
+		$fields[] = array(
+			'name'    => __('File'),
+			'desc'    => __('Associate this document with an already existing file.'),
 			'id'      => $this->options('name').'_file',
 			'type'    => 'file',
 		);
 		return $fields;
 	}
 	
-	static function get_url($form){
-		$x = get_post_meta($form->ID, 'wrc_form_url', True);
-		$y = wp_get_attachment_url(get_post_meta($form->ID, 'wrc_form_file', True));
-		
-		return ($y) ? $y : $x;
+	
+	static function get_document_application($form){
+		return mimetype_to_application(self::get_mimetype($form));
 	}
 	
-	public function toHTML($post){
-		if (is_int($post)) $post = get_post($post);
-		
-		$external_file = get_post_meta($post->ID, 'wrc_form_url', true);
-		$internal_file = get_post_meta($post->ID, 'wrc_form_file', true);
-		if($internal_file) $file_url = wp_get_attachment_url(get_post($internal_file)->ID);
-		else $file_url = $external_file;
-		if($file_url){
-			preg_match('/\.(?<file_ext>[^.]+)$/', $file_url, $matches);
-			$doc_class = isset($matches['file_ext']) ? $matches['file_ext'] : 'file';
+	
+	static function get_mimetype($form){
+		if (is_numeric($form)){
+			$form = get_post($form);
 		}
-		$style = "document " . $doc_class;
 		
-		if(!$file_url) $file_url == "#";
-		if($file_url=="#") $style = 'missing';
+		$prefix   = post_type($form);
+		$document = get_post(get_post_meta($form->ID, $prefix.'_file', True));
 		
-		return sprintf('<li class="%s"><a href="%s">%s</a></li>', $style, $file_url, $post->post_title);
+		$is_url = get_post_meta($form->ID, $prefix.'_url', True);
+		
+		return ($is_url) ? "text/html" : $document->post_mime_type;
+	}
+	
+	
+	static function get_title($form){
+		if (is_numeric($form)){
+			$form = get_post($form);
+		}
+		
+		$prefix = post_type($form);
+		
+		return $form->post_title;
+	}
+	
+	static function get_url($form){
+		if (is_numeric($form)){
+			$form = get_post($form);
+		}
+		
+		$prefix = post_type($form);
+		
+		$x = get_post_meta($form->ID, $prefix.'_url', True);
+		$y = wp_get_attachment_url(get_post_meta($form->ID, $prefix.'_file', True));
+		
+		if (!$x and !$y){
+			return '#';
+		}
+		
+		return ($x) ? $x : $y;
+	}
+	
+	
+	/**
+	 * Handles output for a list of objects, can be overridden for descendants.
+	 * If you want to override how a list of objects are outputted, override
+	 * this, if you just want to override how a single object is outputted, see
+	 * the toHTML method.
+	 **/
+	public function objectsToHTML($objects, $css_classes){
+		if (count($objects) < 1){ return '';}
+		
+		$class_name = get_custom_post_type($objects[0]->post_type);
+		$class      = new $class_name;
+		
+		ob_start();
+		?>
+		<ul class="unstyled <?php if($css_classes):?><?=$css_classes?><?php else:?><?=$class->options('name')?>-list<?php endif;?>">
+			<?php foreach($objects as $o):?>
+			<li class="document <?=$class_name::get_document_application($o)?>">
+				<?=$class->toHTML($o)?>
+			</li>
+			<?php endforeach;?>
+		</ul>
+		<?php
+		$html = ob_get_clean();
+		return $html;
+	}
+	
+	
+	/**
+	 * Outputs this item in HTML.  Can be overridden for descendants.
+	 **/
+	public function toHTML($object){
+		$title = Document::get_title($object);
+		$url   = Document::get_url($object);
+		$html = "<a href='{$url}'>{$title}</a>";
+		return $html;
 	}
 }
 
-
-class WRCUpdate extends WRCCustomPostType{
+class Page extends CustomPostType {
 	public
-		$name           = 'wrc_update',
-		$plural_name    = 'Updates',
-		$singular_name  = 'Update',
-		$add_new_item   = 'Add Update',
-		$edit_item      = 'Edit Update',
-		$new_item       = 'New Update',
+		$name           = 'page',
+		$plural_name    = 'Pages',
+		$singular_name  = 'Page',
+		$add_new_item   = 'Add New Page',
+		$edit_item      = 'Edit Page',
+		$new_item       = 'New Page',
 		$public         = True,
 		$use_editor     = True,
-		$use_title      = True;
-}
-
-
-class WRCHomeImages extends WRCCustomPostType{
-	public
-		$name           = 'wrc_home_images',
-		$plural_name    = 'Home Images',
-		$singular_name  = 'Home Image',
-		$add_new_item   = 'Add Home Image',
-		$edit_item      = 'Edit Home Image',
-		$new_item       = 'New Home Image',
-		$help           = '',
-		$public         = True,
+		$use_thumbnails = False,
 		$use_order      = True,
-		$use_thumbnails = True,
 		$use_title      = True,
-		$use_metabox    = True;
-	
-	public function register_metaboxes(){
-		$metabox = $this->metabox();
-		global $wp_meta_boxes;
-		remove_meta_box('postimagediv', $metabox['page'], 'side');
-		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
-			print "<p>Images will be outputted as defined by the order attribute in the side bar.  Higher numbers have priority.</p>";
-		'), $metabox['page'], 'normal', 'high');
-		add_meta_box('postimagediv', __('Home Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
+		$use_metabox    = True,
+		$built_in       = True;
+
+	public function fields() {
+		$prefix = $this->options('name').'_';
+		return array(
+			array(
+				'name' => 'Hide Lower Section',
+				'desc' => 'This section normally contains the Flickr, News and Events widgets. The footer will not be hidden',
+				'id'   => $prefix.'hide_fold',
+				'type' => 'checkbox',
+			),
+				array(
+					'name' => 'Stylesheet',
+					'desc' => '',
+					'id' => $prefix.'stylesheet',
+					'type' => 'file',
+				),
+		);
 	}
 }
 
-class WRCPerson extends WRCCustomPostType{
+/**
+ * Describes a staff member
+ *
+ * @author Chris Conover
+ **/
+class Person extends CustomPostType
+{
 	public
 		$name           = 'profile',
 		$plural_name    = 'People',
@@ -331,125 +410,88 @@ class WRCPerson extends WRCCustomPostType{
 		$edit_item      = 'Edit Person',
 		$new_item       = 'New Person',
 		$public         = True,
-		$use_categories = True,
-		$use_tags       = True,
-		$use_order      = True,
-		$use_title      = True,
-		$use_metabox    = True,
 		$use_shortcode  = True,
-		$use_editor     = True,
-		$use_thumbnails = True;
-	
-	public function fields(){
-		return array(
-			array(
-				'name' => __('Description'),
-				'desc' => __('Position, title, etc.'),
-				'id'   => $this->options('name').'_description',
-				'type' => 'text',
-			),
-		);
-	}
-	
-	public function register_metaboxes(){
-		$metabox = $this->metabox();
-		global $wp_meta_boxes;
-		remove_meta_box('postimagediv', $metabox['page'], 'side');
-		add_meta_box('postimagediv', __('Person Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
-		
-		remove_meta_box('categorydiv', $metabox['page'], 'side');
-		add_meta_box('categorydiv', 'Profile Categories', 'custom_post_categories_meta_box', $metabox['page'], 'side');
-		
-		parent::register_metaboxes();
-	}
-	
-	public function toHTML($person){
-		if (is_int($person)){
-			$person = get_post($person);
+		$use_metabox    = True,
+		$use_thumbnails = True,
+		$use_order      = True,
+		$taxonomies     = array('org_groups', 'category');
+
+		public function fields(){
+			$fields = array(
+				array(
+					'name'    => 'Description',
+					'desc'    => 'Position, title, etc.',
+					'id'      => $this->options('name').'_description',
+					'type'    => 'text',
+				),
+			);
+			return $fields;
 		}
-		
-		ob_start();
-		?>
-		<div class="person">
-			<a href="<?=get_permalink($person->ID)?>">
-			<?php
-				$img = get_the_post_thumbnail($person->ID);
-				if ($img):?>
-				<?=$img?>
-				<?php else:?>
-					<img src="<?=PROVOST_IMG_URL?>/no-photo.png" alt="Photo Unavailable" />
-				<?php endif;?>
-				<span class="name"><?=str_replace('', '&nbsp;', $person->post_title)?></span>
-			</a>
-			<span class="description"><?=get_post_meta($person->ID, 'profile_description', True)?></span>
+
+	public function get_objects($options=array()){
+		$options['order']    = 'ASC';
+		$options['orderby']  = 'person_orderby_name';
+		$options['meta_key'] = 'person_orderby_name';
+		return parent::get_objects($options);
+	}
+
+	public static function get_name($person) {
+		$prefix = get_post_meta($person->ID, 'person_title_prefix', True);
+		$suffix = get_post_meta($person->ID, 'person_title_suffix', True);
+		$name = $person->post_title;
+		return $prefix.' '.$name.' '.$suffix;
+	}
+
+	public static function get_phones($person) {
+		$phones = get_post_meta($person->ID, 'person_phones', True);
+		return ($phones != '') ? explode(',', $phones) : array();
+	}
+
+	public function objectsToHTML($people, $css_classes) {
+		ob_start();?>
+		<div class="row">
+			<div class="span12">
+				<table class="table table-striped">
+					<thead>
+						<tr>
+							<th scope="col" class="name">Name</th>
+							<th scope="col" class="job_title">Title</th>
+							<th scope="col" class="phones">Phone</th>
+							<th scope="col" class="email">Email</th>
+						</tr>
+					</thead>
+					<tbody>
+				<?
+				foreach($people as $person) { 
+					$email = get_post_meta($person->ID, 'person_email', True); 
+					$link = ($person->post_content == '') ? False : True; ?>
+						<tr>
+							<td class="name">
+								<?if($link) {?><a href="<?=get_permalink($person->ID)?>"><?}?>
+									<?=$this->get_name($person)?>
+								<?if($link) {?></a><?}?>
+							</td>
+							<td class="job_title">
+								<?if($link) {?><a href="<?=get_permalink($person->ID)?>"><?}?>
+								<?=get_post_meta($person->ID, 'person_jobtitle', True)?>
+								<?if($link) {?></a><?}?>
+							</td> 
+							<td class="phones"><?php if(($link) && ($this->get_phones($person))) {?><a href="<?=get_permalink($person->ID)?>">
+								<?php } if($this->get_phones($person)) {?>
+									<ul class="unstyled"><?php foreach($this->get_phones($person) as $phone) { ?><li><?=$phone?></li><?php } ?></ul>
+								<?php } if(($link) && ($this->get_phones($person))) {?></a><?php }?></td>
+							<td class="email"><?=(($email != '') ? '<a href="mailto:'.$email.'">'.$email.'</a>' : '')?></td>
+						</tr>
+				<? } ?>
+				</tbody>
+			</table> 
 		</div>
-		<?php
-		$html = ob_get_clean();
-		return $html;
+	</div><?
+	return ob_get_clean();
 	}
-}
+} // END class 
 
-function custom_post_categories_meta_box($post, $box){
-	// add help text to categories box
-	echo '<p style="padding:8px; border:1px solid #84B6CC; background:#EAF2FA; margin:8px 0;">
-			<span style="font-family:monospace;font-weight:bold;color:#21759B;line-height:13px;">Note</span>: 
-			the Academic Affairs page displays people categorized as 
-			<strong>College Deans</strong>,
-			<strong>Academic Officers</strong>, or 
-			<strong>Administrative Staff</strong>.
-		</p>';
-	post_categories_meta_box($post, $box);
-}
-
-class WRCUnit extends WRCLink{
-	public
-		$name           = 'wrc_unit',
-		$plural_name    = 'Colleges/Units',
-		$singular_name  = 'College/Unit',
-		$add_new_item   = 'Add College/Unit',
-		$edit_item      = 'Edit College/Unit',
-		$new_item       = 'New College/Unit',
-		$public         = True,
-		$use_metabox    = True,
-		$use_categories = True,
-		$use_thumbnails = True,
-		$use_title      = True;
-	
-	public function register_metaboxes(){
-		$metabox = $this->metabox();
-		global $wp_meta_boxes;
-		remove_meta_box('postimagediv', $metabox['page'], 'side');
-		add_meta_box('postimagediv', __('College or Unit Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
-		parent::register_metaboxes();
-	}
-}
-
-
-class WRCAwardProgram extends WRCLink{
-	public
-		$name           = 'wrc_award',
-		$plural_name    = 'Award Programs',
-		$singular_name  = 'Award Program',
-		$add_new_item   = 'Add Award Program',
-		$edit_item      = 'Edit Award Program',
-		$new_item       = 'New Award Program',
-		$public         = True,
-		$use_metabox    = True,
-		$use_thumbnails = True,
-		$use_title      = True;
-	
-	public function register_metaboxes(){
-		$metabox = $this->metabox();
-		
-		global $wp_meta_boxes;
-		remove_meta_box('postimagediv', $metabox['page'], 'side');
-		add_meta_box('postimagediv', __('Award Program Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
-		
-		parent::register_metaboxes();
-	}
-}
-
-class Post extends WRCCustomPostType {
+class Post extends CustomPostType {
 	public
 		$name           = 'post',
 		$plural_name    = 'Posts',
@@ -463,318 +505,106 @@ class Post extends WRCCustomPostType {
 		$use_order      = True,
 		$use_title      = True,
 		$use_metabox    = True,
-		$use_shortcode  = True,
-		$use_categories = True,
-		$use_tags       = True,
+		$taxonomies     = array('post_tag', 'category'),
 		$built_in       = True;
-}
 
-/*/-------------------------------------
-Register custom post types and functions for display
--------------------------------------/*/
-function installed_custom_post_types(){
-	$installed = array(
-		'WRCUnit',
-		'WRCPerson',
-		'WRCHomeImages',
-		'WRCForm',
-		'WRCHelp',
-		'Post'
-	);
-	
-	return array_map(create_function('$class', '
-		return new $class;
-	'), $installed);
-}
-
-
-function flush_rewrite_rules_if_necessary(){
-	global $wp_rewrite;
-	$start    = microtime(True);
-	$original = get_option('rewrite_rules');
-	$rules    = $wp_rewrite->rewrite_rules();
-	
-	if (!$rules or !$original){
-		return;
-	}
-	ksort($rules);
-	ksort($original);
-	
-	$rules    = md5(implode('', array_keys($rules)));
-	$original = md5(implode('', array_keys($original)));
-	
-	if ($rules != $original){
-		flush_rewrite_rules();
-	}
-}
-
-
-/**
- * Registers all installed custom post types
- *
- * @return void
- * @author Jared Lang
- **/
-function wrc_post_types(){
-	#Register custom post types
-	foreach(installed_custom_post_types() as $custom_post_type){
-		$custom_post_type->register();
-	}
-	
-	#This ensures that the permalinks for custom posts work
-	flush_rewrite_rules_if_necessary();
-	
-	#Override default page post type to use categories
-	register_taxonomy_for_object_type('category', 'page');
-}
-add_action('init', 'wrc_post_types');
-
-
-/**
- * Registers all metaboxes for install custom post types
- *
- * @return void
- * @author Jared Lang
- **/
-function wrc_meta_boxes(){
-	#Register custom post types metaboxes
-	foreach(installed_custom_post_types() as $custom_post_type){
-		$custom_post_type->register_metaboxes();
-	}
-}
-add_action('do_meta_boxes', 'wrc_meta_boxes');
-
-
-/**
- * Saves the data for a given post type
- *
- * @return void
- * @author Jared Lang
- **/
-function wrc_save_meta_data($post){
-	#Register custom post types metaboxes
-	foreach(installed_custom_post_types() as $custom_post_type){
-		if (post_type($post) == $custom_post_type->options('name')){
-			$meta_box = $custom_post_type->metabox();
-			break;
-		}
-	}
-	
-	return _save_meta_data($post, $meta_box);
-	
-}
-add_action('save_post', 'wrc_save_meta_data');
-
-
-/**
- * Displays the metaboxes for a given post type
- *
- * @return void
- * @author Jared Lang
- **/
-function wrc_show_meta_boxes($post){
-	#Register custom post types metaboxes
-	foreach(installed_custom_post_types() as $custom_post_type){
-		if (post_type($post) == $custom_post_type->options('name')){
-			$meta_box = $custom_post_type->metabox();
-			break;
-		}
-	}
-	return _show_meta_boxes($post, $meta_box);
-}
-
-/**
- * Field type save functions.
- */
-function save_file($post_id, $field){
-	$file_uploaded = @!empty($_FILES[$field['id']]);
-	if ($file_uploaded){
-		require_once(ABSPATH.'wp-admin/includes/file.php');
-		$override['action'] = 'editpost';
-		$file               = $_FILES[$field['id']];
-		$uploaded_file      = wp_handle_upload($file, $override);
-		
-		# TODO: Pass reason for error back to frontend
-		if ($uploaded_file['error']){return;}
-		
-		$attachment = array(
-			'post_title'     => $file['name'],
-			'post_content'   => '',
-			'post_type'      => 'attachment',
-			'post_parent'    => $post_id,
-			'post_mime_type' => $file['type'],
-			'guid'           => $uploaded_file['url'],
+	public function fields() {
+		$prefix = $this->options('name').'_';
+		return array(
+			array(
+				'name' => 'Hide Lower Section',
+				'desc' => 'This section normally contains the Flickr, News and Events widgets. The footer will not be hidden',
+				'id'   => $prefix.'hide_fold',
+				'type' => 'checkbox',
+			),
+				array(
+					'name' => 'Stylesheet',
+					'desc' => '',
+					'id' => $prefix.'stylesheet',
+					'type' => 'file',
+				),
 		);
-		$id = wp_insert_attachment($attachment, $uploaded_file['file'], $post_id);
-		wp_update_attachment_metadata(
-			$id,
-			wp_generate_attachment_metadata($id, $uploaded_file['file'])
+	}
+}
+
+class Help extends CustomPostType {
+	public
+		$name           = 'provost_help',
+		$plural_name    = 'Help',
+		$singular_name  = 'Help',
+		$add_new_item   = 'Add New Help',
+		$edit_item      = 'Edit Help',
+		$new_item       = 'New Help',
+		$use_metabox    = True,
+		$use_editor     = False,
+		$use_thumbnails = False,
+		$use_order      = False,
+		$taxonomies     = array();
+
+
+	public function fields() {
+		$id_prefix  = $this->options('name');
+		$documents  = new Document();
+		return array(
+			array(
+				'name' => 'url',
+				'desc' => 'URL',
+				'id'   => $id_prefix.'_url',
+				'type' => 'text',
+			),
+			array(
+				'name'    => 'forms',
+				'desc'    => 'You can define a url or select an existing form.',
+				'id'      => $id_prefix.'_forms',
+				'type'    => 'select',
+				'options' => $documents->get_objects_as_options()
+			)
 		);
-		update_post_meta($post_id, $field['id'], $id);
 	}
 }
 
-function save_members($post_id, $field){
-	$new_members = $_POST[$field['id']];
-	$members     = array();
-	if (count($new_members)){
-		foreach($new_members as $id){
-			if(isset($_POST[$field['id'].'_'.$id.'_role'])){
-				$members[$id] =  $_POST[$field['id'].'_'.$id.'_role'];
-			}else{
-				$members[$id] = null;
-			}
-		}
-		update_post_meta($post_id, $field['id'], $members);
-	}
+class Update extends CustomPostType {
+	public
+		$name           = 'provost_update',
+		$plural_name    = 'Updates',
+		$singular_name  = 'Update',
+		$add_new_item   = 'Add New Update',
+		$edit_item      = 'Edit Update',
+		$new_item       = 'New Update',
+		$use_shortcode  = True;
 }
 
-function save_simple_members($post_id, $field){
-	$new_members = $_POST[$field['id']];
-	$members     = array();
-	if (count($new_members)){
-		foreach($new_members as $id){
-			$members[] = $id;
-		}
-	}
-	update_post_meta($post_id, $field['id'], $members);
+class HomeImage extends CustomPostType {
+	public
+		$name           = 'provost_home_images',
+		$plural_name    = 'Home Images',
+		$singular_name  = 'Home Imge',
+		$add_new_item   = 'Add New Home Image',
+		$edit_item      = 'Edit Home Image',
+		$new_item       = 'New Home Image',
+		$use_thumbnails = True;
 }
 
-function save_default($post_id, $field){
-	$old = get_post_meta($post_id, $field['id'], true);
-	$new = $_POST[$field['id']];
-	if ($new && $new != $old) {
-		update_post_meta($post_id, $field['id'], $new);
-	} elseif ('' == $new && $old) {
-		delete_post_meta($post_id, $field['id'], $old);
-	}
+class Unit extends CustomPostType {
+	public
+		$name           = 'provost_unit',
+		$plural_name    = 'Colleges/Units',
+		$singular_name  = 'College/Unit',
+		$add_new_item   = 'Add New College/Unit',
+		$edit_item      = 'Edit College/Unit',
+		$new_item       = 'New College/Unit',
+		$use_thumbnails = True,
+		$taxonomies     = array('category');
 }
 
-/**
- * Handles saving a custom post as well as it's custom fields and metadata.
- *
- * @return void
- * @author Jared Lang
- **/
-function _save_meta_data($post_id, $meta_box){
-	// verify nonce
-	if (!wp_verify_nonce($_POST['wrc_meta_box_nonce'], basename(__FILE__))) {
-		return $post_id;
-	}
-
-	// check autosave
-	if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
-		return $post_id;
-	}
-
-	// check permissions
-	if ('page' == $_POST['post_type']) {
-		if (!current_user_can('edit_page', $post_id)) {
-			return $post_id;
-		}
-	} elseif (!current_user_can('edit_post', $post_id)) {
-		return $post_id;
-	}
-	
-	foreach ($meta_box['fields'] as $field) {
-		switch ($field['type']){
-			case 'file':
-				save_file($post_id, $field);
-				break;
-			case 'members':
-				save_members($post_id, $field);
-				break;
-			case 'simple-members':
-				save_simple_members($post_id, $field);
-				break;
-			default:
-				save_default($post_id, $field);
-				break;
-		}
-	}
+class AwardProgram extends CustomPostType {
+	public
+		$name           = 'provost_award',
+		$plural_name    = 'Award Programs',
+		$singular_name  = 'Award Program',
+		$add_new_item   = 'Add New Award Program',
+		$edit_item      = 'Edit Award Program',
+		$new_item       = 'New Award Program';
 }
 
-/**
- * Outputs the html for the fields defined for a given post and metabox.
- *
- * @return void
- * @author Jared Lang
- **/
-function _show_meta_boxes($post, $meta_box){
-	// Use nonce for verification
-	echo '<input type="hidden" name="wrc_meta_box_nonce" value="', wp_create_nonce(basename(__FILE__)), '" />';
-	echo '<table class="form-table">';
-	foreach ($meta_box['fields'] as $field) {
-		// get current post meta data
-		$meta = get_post_meta($post->ID, $field['id'], true);
-	
-		echo '<tr>',
-			'<th style="width:20%"><label for="', $field['id'], '">', $field['name'], '</label></th>',
-			'<td>';
-		switch ($field['type']) {
-			case 'text':
-				echo '<input type="text" name="', $field['id'], '" id="', $field['id'], '" value="', $meta ? htmlentities($meta) : $field['std'], '" size="30" style="width:97%" />', "\n", $field['desc'];
-				break;
-			case 'textarea':
-				echo '<textarea name="', $field['id'], '" id="', $field['id'], '" cols="60" rows="4" style="width:97%">', $meta ? htmlentities($meta) : $field['std'], '</textarea>', "\n", $field['desc'];
-				break;
-			case 'select':
-				echo '<select name="', $field['id'], '" id="', $field['id'], '">';
-				foreach ($field['options'] as $k=>$option) {
-					echo '<option', $meta == $option ? ' selected="selected"' : '', ' value="', $option, '">', $k, '</option>';
-				}
-				echo '</select>';
-				break;
-			case 'selector':
-					$help_url = get_post_meta($post->ID, 'wrc_help_url', true);
-				?>
-					<label for="<?=$field['id']?>"><?=$field['desc']?></label><br />
-					<select class="filler" name="<?=$field['id']?>" id="<?=$field['id']?>">
-						<option>Choose form...</option>
-						<?php foreach($field['options'] as $k=>$v):?>
-						<?php
-						 	$this_url  = get_post_meta($v, 'wrc_form_url', true);
-							$this_file = get_post_meta($v, 'wrc_form_file', true);
-							if ($this_file){
-								$this_url = wp_get_attachment_url(get_post($this_file)->ID);
-							}
-						?>
-						<option value="<?=$this_url?>"><?=$k?></option>
-						<?php endforeach;?>
-					</select>
-				<?php
-				break;
-			case 'radio':
-				foreach ($field['options'] as $option) {
-					echo '<input type="radio" name="', $field['id'], '" value="', $option['value'], '"', $meta == $option['value'] ? ' checked="checked"' : '', ' />', $option['name'];
-				}
-				break;
-			case 'checkbox':
-				echo '<input type="checkbox" name="', $field['id'], '" id="', $field['id'], '"', $meta ? ' checked="checked"' : '', ' />';
-				break;
-			case 'file':
-				$document_id = get_post_meta($post->ID, $field['id'], True);
-				if ($document_id){
-					$document = get_post($document_id);
-					$url      = wp_get_attachment_url($document->ID);
-				}else{
-					$document = null;
-				}
-				?>
-				<label for="file_<?=$post->ID?>"><?=$field['desc'];?></label><br />
-				<?php if($document):?>
-				Current file:
-				<a href="<?=$url?>"><?=$document->post_title?></a><br /><br />
-				<?php endif;?>
-				<input type="file" id="file_<?=$post->ID?>" name="<?=$field['id']?>"><br />
-				<?php break;
-		}
-		echo     '<td>',
-		'</tr>';
-	}
-	
-	echo '</table>';
-	
-	if($meta_box['helptxt']) echo '<p style="font-size:13px; padding:5px 0; color:#666;">' . $meta_box['helptxt'] . "</p>";
-}
 ?>

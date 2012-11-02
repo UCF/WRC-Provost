@@ -1,7 +1,5 @@
-<form role="search" method="get" id="searchform" action="<?php echo home_url( '/' ); ?>">
-	<div>
-		<label class="screen-reader-text" for="s">Search:</label>
-		<input type="search" value="" name="s" id="s" placeholder="Search this site"/>
-		<input type="submit" id="searchsubmit" value="Search" />
-	</div>
+<form class="form-search" role="search" method="get" action="<?=home_url( '/' )?>">
+	<label for="s">Search:</label><br />
+	<input type="text" class="input-large" value="<?=htmlentities($_GET['s'])?>" name="s" placeholder="Enter your search term here...">
+	<button type="submit" class="btn">Search</button>
 </form>

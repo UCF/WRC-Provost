@@ -1,274 +1,52 @@
 <?php
-# Custom Child Theme Functions
-# http://themeshaper.com/thematic-for-wordpress/guide-customizing-thematic-theme-framework/
-require_once('custom-post-types.php');
-require_once('shortcodes.php');
+require_once('functions/base.php');   			# Base theme functions
+require_once('custom-taxonomies.php');  		# Where per theme taxonomies are defined
+require_once('custom-post-types.php');  		# Where per theme post types are defined
+require_once('functions/admin.php');  			# Admin/login functions
+require_once('functions/config.php');			# Where per theme settings are registered
+require_once('shortcodes.php');         		# Per theme shortcodes
 
-# Plugin-ins
-require_once('custom-post-template/custom-post-templates.php');
-require_once('theme-options.php');
-
-$options = get_option('global');
-
-define('PROVOST_THEME_DIR', get_stylesheet_directory());
-define('PROVOST_GA_ACCOUNT', $options['ga_account']);
-define('PROVOST_THEME_URL', get_bloginfo('stylesheet_directory'));
-define('PROVOST_STATIC_URL', PROVOST_THEME_URL.'/static');
-define('PROVOST_IMG_URL', PROVOST_STATIC_URL.'/img');
-define('PROVOST_JS_URL', PROVOST_STATIC_URL.'/js');
-define('PROVOST_CSS_URL', PROVOST_STATIC_URL.'/css');
-define('PROVOST_MISC_URL', PROVOST_STATIC_URL.'/misc');
-
-// Parent theme overrides and theme setttings
-// ------------------------------------------
-
-#Sets link to be included in head
-$LINKS = array(
-	"<link rel='stylesheet' type='text/css' href='http://universityheader.ucf.edu/bar/css/bar.css' media='all' />",
-	"\n\t<!-- jQuery UI CSS -->",
-	"<link rel='stylesheet' type='text/css' href='".PROVOST_CSS_URL."/jquery-ui.css' media='screen, projection' />",
-	"<link rel='stylesheet' type='text/css' href='".PROVOST_CSS_URL."/jquery-uniform.css' media='screen, projection' />",
-	"\n\t<!-- Blueprint CSS -->",
-	"<link rel='stylesheet' type='text/css' href='".PROVOST_CSS_URL."/blueprint-screen.css' media='screen, projection' />",
-	"<link rel='stylesheet' type='text/css' href='".PROVOST_CSS_URL."/blueprint-print.css' media='print' />",
-	"<!--[if lt IE 8]><link rel='stylesheet' type='text/css' href='".PROVOST_CSS_URL."/blueprint-ie.css' media='screen, projection' /><![endif]-->",
-	"\n\t<!-- Template CSS -->",
-	"<link rel='stylesheet' type='text/css' href='".PROVOST_CSS_URL."/webcom-template.css' media='screen, projection' />",
-);
-
-#Sets scripts to be loaded at bottom of page
-$SCRIPTS = array(
-	"<script src='http://universityheader.ucf.edu/bar/js/university-header.js' type='text/javascript' ></script>",
-	"\n\t<!-- jQuery UI Scripts -->",
-	"<script src='".PROVOST_JS_URL."/jquery-ui.js' type='text/javascript' ></script>",
-	"<script src='".PROVOST_JS_URL."/jquery-browser.js' type='text/javascript' ></script>",
-	"<script src='".PROVOST_JS_URL."/jquery-uniform.js' type='text/javascript' ></script>",
-	"<script src='http://events.ucf.edu/tools/script.js' type='text/javascript'></script>",
-	"<script type='text/javascript'>
-		var PROVOST_MISC_URL = '".PROVOST_MISC_URL."';
-		var GA_ACCOUNT       = '".PROVOST_GA_ACCOUNT."';
-	</script>",
-	"<script src='".PROVOST_JS_URL."/script.js' type='text/javascript'></script>",
-);
-
-
-function remove_widgitized_areas($content){
-	$widgets_to_remove = array(
-		'Index Top',
-		'Index Insert',
-		'Index Bottom',
-		'Single Top',
-		'Single Insert',
-		'Single Bottom',
-		'Page Top',
-		'Page Bottom',
-	);
-	foreach($widgets_to_remove as $widget){
-		unset($content[$widget]);
-	}
-	return $content;
-}
-add_action('thematic_widgetized_areas', 'remove_widgitized_areas');
-
-function wrc_head_profile($profile){
-	return "<head>";
-}
-add_filter('thematic_head_profile', 'wrc_head_profile');
-
-function childtheme_doctitle($title){
-	if ( is_home() || is_front_page() ) {
-		return get_bloginfo('name');
-	}
-	return $title;
-}
-add_filter('thematic_doctitle', 'childtheme_doctitle');
-
-function wrc_template_redirect(){
-	global $post;
-	$type  = $post->post_type;
-	$title = get_the_title();
-	switch($title){
-		case 'Home':
-			include('templates/home.php');
-			die();
-	}
-	switch($type){
-		case 'wrc_update':
-			$post_template = get_post_meta( $post->ID, 'custom_post_template', true );
-			if(empty($post_template)){
-				include('wrc-update-tony.php');
-			} else {
-				include($post_template);
-			}
-			die();
-	}
-}
-add_filter('template_redirect', 'wrc_template_redirect');
-
-
-#Set html 5
-function wrc_create_doctype() {
-	$content  = "<!DOCTYPE html>\n";
-	$content .= "<html";
-    return $content;
-} // end thematic_create_doctype
-add_filter('thematic_create_doctype', 'wrc_create_doctype');
-
-
-#Set utf-8 meta charset
-function wrc_create_contenttype(){
-	$content  = "\t<meta charset='utf-8'>\n";
-	$content .= "\t<meta http-equiv='X-UA-COMPATIBLE' content='IE=IE8'>\n";
-	ob_start();
-	?>
-	<!--[if IE]>
-	<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-	<style>article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {display: block;}</style>
-	<![endif]-->
-<?php
-	$content .= ob_get_clean();
-	return $content;
-}
-add_filter('thematic_create_contenttype', 'wrc_create_contenttype');
-
-
-#Override default stylesheets
-function wrc_create_stylesheet($links){
-	global $LINKS;
-	$new_links = $LINKS;
-	
-	$links = explode("\n", $links);
-	$links = array_map(create_function('$l', '
-		return trim($l);
-	'), $links);
-	$links = array_filter($links, create_function('$l', '
-		return (bool)trim($l);
-	'));
-	$links = array_merge($new_links, $links);
-	
-	return "\t".implode("\n\t", $links)."\n";
-}
-add_filter('thematic_create_stylesheet', 'wrc_create_stylesheet');
-
-
-#Override default scripts
-function wrc_head_scripts($scripts){}
-add_filter('thematic_head_scripts', 'wrc_head_scripts');
-
-
-#Append scripts to bottom of page
-function wrc_after(){
-	global $SCRIPTS;
-	print "\t".implode("\n\t", $SCRIPTS);
-}
-add_filter('thematic_after', 'wrc_after');
-
-function wrc_footer(){
-	print wp_nav_menu(thematic_nav_menu_args());
-}
-add_action('wp_footer', 'wrc_footer');
-
-#Add custom javascript to admin
-function wrc_admin_scripts(){
-	wp_enqueue_script('custom-admin', PROVOST_JS_URL.'/admin.js', array('jquery'), False, True);
-}
-add_action('admin_enqueue_scripts', 'wrc_admin_scripts');
-
-// Theme custom functions
-// ----------------------
-
+//Add theme-specific functions here.
 /**
- * Creates an array 
+ * Returns published images as html string
+ *
+ * @return void
+ * @author Jared Lang
  **/
-function shortcodes(){
-	$file = file_get_contents(PROVOST_THEME_DIR.'/shortcodes.php');
-	
-	$documentation = "\/\*\*(?P<documentation>.*?)\*\*\/";
-	$declaration   = "function[\s]+(?P<declaration>[^\(]+)";
-	
-	$codes = array();
-	$auto  = array_filter(installed_custom_post_types(), create_function('$c', '
-		return $c->options("use_shortcode");
-	'));
-	foreach($auto as $code){
-		$scode  = $code->prefixless_name().'-list';
-		$plural = $code->options('plural_name');
-		$doc = <<<DOC
- Outputs a list of {$plural} filtered by tag
- or category.
-
- Example:
- # Output a maximum of 5 items tagged foo or bar.
- [{$scode} tags="foo bar" limit="5"]
-
- # Output all objects categorized as foo
- [{$scode} categories="foo"]
-DOC;
-		$codes[] = array(
-			'documentation' => $doc,
-			'shortcode'     => $scode,
-		);
-	}
-	
-	$found = preg_match_all("/{$documentation}\s*{$declaration}/is", $file, $matches);
-	if ($found){
-		foreach ($matches['declaration'] as $key=>$match){
-			$codes[$match]['documentation'] = $matches['documentation'][$key];
-			$codes[$match]['shortcode']     = str_replace(
-				array('sc_', '_',),
-				array('', '-',),
-				$matches['declaration'][$key]
-			);
+function get_home_images($limit=null, $orderby='menu_order'){
+	$limit       = ($limit) ? $limit : -1;
+	$home_images = new HomeImage();
+	$images      = get_posts(array(
+		'numberposts' => -1,
+		'orderby'     => $orderby,
+		'order'       => 'DESC',
+		'post_type'   => $home_images->options('name'),
+	));
+	if ($images){
+		$html = '';
+		foreach($images as $image){
+			$html .= '<div class="'.($html == '' ? 'active ' : '').'item">'.get_the_post_thumbnail($image->ID, 'full').'</div>';
 		}
-	}
-	return $codes;
-}
-
-function admin_help(){
-	global $post;
-	$shortcodes = shortcodes();
-	switch($post->post_title){
-		default:
-			?>
-			<h2>Available shortcodes:</h2>
-			<ul>
-				<?php foreach($shortcodes as $sc):?>
-				<li>
-					<h3><?=$sc['shortcode']?></h3>
-					<p><?=nl2br(str_replace(' *', '', htmlentities($sc['documentation'])))?></p>
-				</li>
-				<?php endforeach;?>
-			</ul>
-			<?php
-			break;
+		return $html;
+	}else{
+		return '';
 	}
 }
-
-
-function admin_meta_boxes(){
-	global $post;
-	add_meta_box('page-help', 'Help', 'admin_help', 'page', 'normal', 'high');
-}
-add_action('admin_init', 'admin_meta_boxes');
 
 /**
- * Really get the post type.  A post type of revision will return it's parent
- * post type.
+ * Returns pages associated with the menu defined by $c;
+ *
+ * @return array
+ * @author Jared Lang
  **/
-function post_type($post){
-	if (is_int($post)){
-		$post = get_post($post);
-	}
-	
-	# check post_type field
-	$post_type = $post->post_type;
-	
-	if ($post_type === 'revision'){
-		$parent    = (int)$post->post_parent;
-		$post_type = post_type($parent);
-	}
-	
-	return $post_type;
+function get_menu_pages($c){
+	return get_posts(array(
+		'numberposts' => -1,
+		'orderby'     => 'menu_order',
+		'order'       => 'ASC',
+		'post_type'   => 'page',
+		'category'    => get_category_by_slug($c)->term_id,
+	));
 }
 
 function hyphenate($string){
@@ -277,43 +55,187 @@ function hyphenate($string){
 		'Commercialization' => 'Commercializ-<br>ation',
 		//'Commercialization' => 'Commercializ<wbr>ation',
 	);
-	
+
 	return str_replace(array_keys($words), array_values($words), $string);
 }
 
+
+function get_events($start=null, $limit=null){
+	$options = get_option(THEME_OPTIONS_NAME);
+	$qstring = (bool)strpos($options['events_url'], '?');
+	$url     = $options['events_url'];
+	if (!$qstring){
+		$url .= '?';
+	}else{
+		$url .= '&';
+	}
+	$url    .= 'upcoming=upcoming&format=rss';
+	$events  = array_reverse(FeedManager::get_items($url));
+	$events  = array_slice($events, $start, $limit);
+	return $events;
+}
+
+function display_events($header='h2'){?>
+	<?php $options = get_option(THEME_OPTIONS_NAME);?>
+	<?php $count   = $options['events_max_items']?>
+	<?php $events  = get_events(0, ($count) ? $count : 3);?>
+	<?php if(count($events)):?>
+		<table class="table table-condensed events">
+			<?php foreach($events as $item):?>
+			<tr class="item">
+				<td class="date">
+					<?php
+						$month = $item->get_date("M");
+						$day   = $item->get_date("j");
+					?>
+					<div class="month"><?=$month?></div>
+					<div class="day"><?=$day?></div>
+				</td>
+				<td class="title">
+					<a href="<?=$item->get_link()?>" class="wrap ignore-external"><?=$item->get_title()?></a>
+				</td>
+			</tr>
+			<?php endforeach;?>
+		</table>
+	<?php else:?>
+		<p>Unable to fetch events</p>
+	<?php endif;?>
+<?php
+}
+
 /**
- * Returns the name of the custom post type defined by $class
- *
- * @return string
- * @author Jared Lang
+ * Handles fetching and processing of feeds.  Currently uses SimplePie to parse
+ * retrieved feeds, and automatically handles caching of content fetches.
+ * Multiple calls to the same feed url will not result in multiple parsings, per
+ * request as they are stored in memory for later use.
  **/
-function get_custom_post_type($class){
-	$installed = installed_custom_post_types();
-	foreach($installed as $object){
-		if (get_class($object) == $class){
-			return $object->options('name');
+class FeedManager{
+	static private
+		$feeds        = array(),
+		$cache_length = 3600;
+	
+	/**
+	 * Provided a URL, will return an array representing the feed item for that
+	 * URL.  A feed item contains the content, url, simplepie object, and failure
+	 * status for the URL passed.  Handles caching of content requests.
+	 *
+	 * @return array
+	 * @author Jared Lang
+	 **/
+	static protected function __new_feed($url){
+		$timer = Timer::start();
+		require_once(ABSPATH . WPINC . '/class-feed.php');
+		
+		$simplepie = null;
+		$failed    = False;
+		$cache_key = 'feedmanager-'.md5($url);
+		$content   = get_site_transient($cache_key);
+		
+		if ($content === False){
+			$content = @file_get_contents($url);
+			if ($content === False){
+				$failed  = True;
+				$content = null;
+				error_log('FeedManager failed to fetch data using url of '.$url);
+			}else{
+				set_site_transient($cache_key, $content, self::$cache_length);
+			}
+		}
+		
+		if ($content){
+			$simplepie = new SimplePie();
+			$simplepie->set_raw_data($content);
+			$simplepie->init();
+			$simplepie->handle_content_type();
+			
+			if ($simplepie->error){
+				error_log($simplepie->error);
+				$simplepie = null;
+				$failed    = True;
+			}
+		}else{
+			$failed = True;
+		}
+		
+		$elapsed = round($timer->elapsed() * 1000);
+		debug("__new_feed: {$elapsed} milliseconds");
+		return array(
+			'content'   => $content,
+			'url'       => $url,
+			'simplepie' => $simplepie,
+			'failed'    => $failed,
+		);
+	}
+	
+	
+	/**
+	 * Returns all the items for a given feed defined by URL
+	 *
+	 * @return array
+	 * @author Jared Lang
+	 **/
+	static protected function __get_items($url){
+		if (!array_key_exists($url, self::$feeds)){
+			self::$feeds[$url] = self::__new_feed($url);
+		}
+		if (!self::$feeds[$url]['failed']){
+			return self::$feeds[$url]['simplepie']->get_items();
+		}else{
+			return array();
+		}
+		
+	}
+	
+	
+	/**
+	 * Retrieve the current cache expiration value.
+	 *
+	 * @return void
+	 * @author Jared Lang
+	 **/
+	static public function get_cache_expiration(){
+		return self::$cache_length;
+	}
+	
+	
+	/**
+	 * Set the cache expiration length for all feeds from this manager.
+	 *
+	 * @return void
+	 * @author Jared Lang
+	 **/
+	static public function set_cache_expiration($expire){
+		if (is_number($expire)){
+			self::$cache_length = (int)$expire;
 		}
 	}
-	return null;
-}
-
-function get_custom_post_type_class($name){
-	$installed = installed_custom_post_types();
-	foreach($installed as $object){
-		if ($object->options('name') == $name){
-			return get_class($object);
-		}
+	
+	
+	/**
+	 * Returns all items from the feed defined by URL and limited by the start
+	 * and limit arguments.
+	 *
+	 * @return array
+	 * @author Jared Lang
+	 **/
+	static public function get_items($url, $start=null, $limit=null){
+		if ($start === null){$start = 0;}
+		
+		$items = self::__get_items($url);
+		$items = array_slice($items, $start, $limit);
+		return $items;
 	}
-	return null;
 }
-
 
 /**
- * Returns pages associated with the menu defined by $c;
+ * Uses the google search appliance to search the current site or the site 
+ * defined by the argument $domain.
+>>>>>>> upstream/minimal
  *
  * @return array
  * @author Jared Lang
  **/
+<<<<<<< HEAD
 function get_menu_pages($c){
 	return get_posts(array(
 		'numberposts' => -1,
@@ -388,5 +310,64 @@ function disallow_direct_load($page){
 	if ( $page == basename($_SERVER['SCRIPT_FILENAME'])){
 		die ( 'Please do not load this page directly. Thanks!' );
 	}
+=======
+function get_search_results(
+		$query,
+		$start=null,
+		$per_page=null,
+		$domain=null,
+		$search_url="http://google.cc.ucf.edu/search"
+	){
+	$start     = ($start) ? $start : 0;
+	$per_page  = ($per_page) ? $per_page : 10;
+	$domain    = ($domain) ? $domain : $_SERVER['SERVER_NAME'];
+	$results   = array(
+		'number' => 0,
+		'items'  => array(),
+	);
+	$query     = trim($query);
+	$per_page  = (int)$per_page;
+	$start     = (int)$start;
+	$query     = urlencode($query);
+	$arguments = array(
+		'num'        => $per_page,
+		'start'      => $start,
+		'ie'         => 'UTF-8',
+		'oe'         => 'UTF-8',
+		'client'     => 'default_frontend',
+		'output'     => 'xml',
+		'sitesearch' => $domain,
+		'q'          => $query,
+	);
+	
+	if (strlen($query) > 0){
+		$query_string = http_build_query($arguments);
+		$url          = $search_url.'?'.$query_string;
+		$response     = file_get_contents($url);
+		
+		if ($response){
+			$xml   = simplexml_load_string($response);
+			$items = $xml->RES->R;
+			$total = $xml->RES->M;
+			
+			$temp = array();
+			
+			if ($total){
+				foreach($items as $result){
+					$item            = array();
+					$item['url']     = str_replace('https', 'http', $result->U);
+					$item['title']   = $result->T;
+					$item['rank']    = $result->RK;
+					$item['snippet'] = $result->S;
+					$item['mime']    = $result['MIME'];
+					$temp[]          = $item;
+				}
+				$results['items'] = $temp;
+			}
+			$results['number'] = $total;
+		}
+	}
+	
+	return $results;
 }
 ?>
