@@ -88,28 +88,6 @@ Config::$theme_settings = array(
 		)),
 	),
 	'Events' => array(
-		new RadioField(array(
-			'name'        => 'Enable Events Below the Fold',
-			'id'          => THEME_OPTIONS_NAME.'[enable_events]',
-			'description' => 'Display events in the bottom page content, appearing on most pages.',
-			'default'     => 1,
-			'choices'     => array(
-				'On'  => 1,
-				'Off' => 0,
-			),
-			'value'       => $theme_options['enable_events'],
-		)),
-		new RadioField(array(
-			'name'        => 'Enable Events on Search Page',
-			'id'          => THEME_OPTIONS_NAME.'[enable_search_events]',
-			'description' => 'Display events on the search results page.',
-			'value'       => $theme_options['enable_search_events'],
-			'default'     => 1,
-			'choices'     => array(
-				'On'  => 1,
-				'Off' => 0,
-			),
-		)),
 		new SelectField(array(
 			'name'        => 'Events Max Items',
 			'id'          => THEME_OPTIONS_NAME.'[events_max_items]',
@@ -130,40 +108,6 @@ Config::$theme_settings = array(
 			'description' => 'Base URL for the calendar you wish to use. Example: <em>http://events.ucf.edu/mycalendar</em>',
 			'value'       => $theme_options['events_url'],
 			'default'     => 'http://events.ucf.edu',
-		)),
-	),
-	'News' => array(
-		new RadioField(array(
-			'name'        => 'Enable News Below the Fold',
-			'id'          => THEME_OPTIONS_NAME.'[enable_news]',
-			'description' => 'Display UCF Today news in the bottom page content, appearing on most pages.',
-			'default'     => 1,
-			'choices'     => array(
-				'On'  => 1,
-				'Off' => 0,
-			),
-			'value'       => $theme_options['enable_news'],
-		)),
-		new SelectField(array(
-			'name'        => 'News Max Items',
-			'id'          => THEME_OPTIONS_NAME.'[news_max_items]',
-			'description' => 'Maximum number of articles to display when outputting news information.',
-			'value'       => $theme_options['news_max_items'],
-			'default'     => 2,
-			'choices'     => array(
-				'1' => 1,
-				'2' => 2,
-				'3' => 3,
-				'4' => 4,
-				'5' => 5,
-			),
-		)),
-		new TextField(array(
-			'name'        => 'News Feed',
-			'id'          => THEME_OPTIONS_NAME.'[news_url]',
-			'description' => 'Use the following URL for the news RSS feed <br />Example: <em>http://today.ucf.edu/feed/</em>',
-			'value'       => $theme_options['news_url'],
-			'default'     => 'http://today.ucf.edu/feed/',
 		)),
 	),
 	'Search' => array(
@@ -206,19 +150,32 @@ Config::$theme_settings = array(
 			'description' => 'Your organization\'s name',
 			'value'       => $theme_options['organization_name'],
 		)),
-		new SelectField(array(
-			'name'        => 'Home Image',
-			'id'          => THEME_OPTIONS_NAME.'[site_image]',
-			'description' => 'Image to feature on the homepage.  Select any image uploaded to the <a href="'.get_admin_url().'upload.php">media gallery</a> or <a href="'.get_admin_url().'media-new.php">upload a new image</a>.',
-			'choices'     => get_image_choices(),
-			'value'       => $theme_options['site_image'],
-		)),
 		new TextareaField(array(
-			'name'        => 'Site Description',
-			'id'          => THEME_OPTIONS_NAME.'[site_description]',
-			'description' => 'A quick description of your organization and its role.',
-			'default'     => 'This is the site\'s default description, change or remove it on the <a href="'.get_admin_url().'admin.php?page=theme-options#site">theme options page</a> in the admin site.',
-			'value'       => $theme_options['site_description'],
+			'name'        => 'Contact Us Information',
+			'id'          => THEME_OPTIONS_NAME.'[site_footer_contactus]',
+			'description' => 'Contact information for your organization that is available on all pages in the footer.',
+			'default'     => '<strong>Linda Walters, Interim Director of the UCF Center for Success of Women Faculty</strong><br>
+<a href="mailto:Linda.Walters@ucf.edu">Linda.Walters@ucf.edu</a><br>
+<br>
+<strong>Fran Ragsdale</strong> <br>
+<a href="mailto:Fran.Ragsdale@ucf.edu">Fran.Ragsdale@ucf.edu</a><br>
+<br>
+<strong>Phone: 407-823-4240</strong> <br>
+<br>
+<strong>Mailing Address</strong><br>
+Center for Success of Women Faculty<br>
+University of Central Florida<br>
+P.O. Box 160955<br>
+Orlando, FL 32816-0955<br>
+<br>
+<strong>Physical Address</strong><br>
+4000 Central Florida Blvd. Orlando, FL 32816<br>
+<br>
+<strong>Internal Mail (UCF)</strong><br>
+Center for Success of Women Faculty <br>
+CL1 Room 207 <br>
+32816-0955',
+			'value'       => $theme_options['site_footer_contactus'],
 		)),
 	),
 	'Social' => array(
@@ -253,49 +210,6 @@ Config::$theme_settings = array(
 			'description' => 'URL to the twitter user account you would like to direct visitors to.  Example: <em>http://twitter.com/csbrisketbus</em>',
 			'value'       => $theme_options['twitter_url'],
 		)),
-		new RadioField(array(
-			'name'        => 'Enable Flickr',
-			'id'          => THEME_OPTIONS_NAME.'[enable_flickr]',
-			'description' => 'Automatically display flickr images throughout the site',
-			'default'     => 1,
-			'choices'     => array(
-				'On'  => 1,
-				'Off' => 0,
-			),
-			'value'       => $theme_options['enable_flickr'],
-		)),
-		new TextField(array(
-			'name'        => 'Flickr Photostream ID',
-			'id'          => THEME_OPTIONS_NAME.'[flickr_id]',
-			'description' => 'ID of the flickr photostream you would like to show pictures from.  Example: <em>65412398@N05</em>',
-			'default'     => '36226710@N08',
-			'value'       => $theme_options['flickr_id'],
-		)),
-		new SelectField(array(
-			'name'        => 'Flickr Max Images',
-			'id'          => THEME_OPTIONS_NAME.'[flickr_max_items]',
-			'description' => 'Maximum number of flickr images to display',
-			'value'       => $theme_options['flickr_max_items'],
-			'default'     => 12,
-			'choices'     => array(
-				'6'  => 6,
-				'12' => 12,
-				'18' => 18,
-			),
-		)),
-	),
-	'Styles' => array(
-		new RadioField(array(
-			'name'        => 'Enable Responsiveness',
-			'id'          => THEME_OPTIONS_NAME.'[bootstrap_enable_responsive]',
-			'description' => 'Turn on responsive styles provided by the Twitter Bootstrap framework.  This setting should be decided upon before building out subpages, etc. to ensure content is designed to shrink down appropriately.  Turning this off will enable the single 940px-wide Bootstrap layout.',
-			'default'     => 1,
-			'choices'     => array(
-				'On'  => 1,
-				'Off' => 0,
-			),
-			'value'       => $theme_options['bootstrap_enable_responsive'],
-	    ))
 	),
 );
 
@@ -312,11 +226,6 @@ Config::$styles = array(
 	THEME_STATIC_URL.'/bootstrap/bootstrap/css/bootstrap.css',
 );
 
-if ($theme_options['bootstrap_enable_responsive'] == 1) {
-	array_push(Config::$styles, 
-		THEME_STATIC_URL.'/bootstrap/bootstrap/css/bootstrap-responsive.css'
-	);		
-}
 
 # Only include gravity forms styles if the plugin is active
 include_once(ABSPATH.'wp-admin/includes/plugin.php' );
@@ -331,12 +240,6 @@ array_push(Config::$styles,
 	get_bloginfo('stylesheet_url')
 );
 
-# Must be loaded after style.css
-if ($theme_options['bootstrap_enable_responsive'] == 1) {
-	array_push(Config::$styles, 
-		THEME_URL.'/style-responsive.css'
-	);
-}
 
 # Scripts (output in footer)
 Config::$scripts = array(
