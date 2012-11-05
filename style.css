@@ -143,9 +143,13 @@ ul.menu li:last-child:after, ul.menu li.last:after{content: " " !important;}
 .events .title .wrap{display: block; max-height: 65px;overflow:hidden}
 
 /* Search Results */
-#search-results #result-list li {padding:0 10px 5px 10px;}
-#search-results #result-list li.even {background-color:#e7e7e7;padding:;}
-#search-results {}
+#search-results { }
+#search-results h2 { line-height:30px; }
+#search-results h3 { margin-bottom: 0; }
+#search-results h3 a { color: #C00202; text-decoration: none; }
+#search-results ul li {padding:0 10px 5px 10px; overflow:hidden;}
+#search-results ul li p, #search-results ul li ol, #search-results ul li ul { font-size: 14px; line-height: 22px; }
+#search-results .search-person-img {width:90px;float:left;margin-right:10px;margin-bottom:10px;}
 
 /* Profile */
 #profile {

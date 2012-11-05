@@ -8,8 +8,10 @@
 ?>
 <?php get_header(); ?>
 	<div class="row page-content" id="search-results">
+		<div class="span3">
+			<h2>Search Results for: <?php echo htmlspecialchars($_GET['s']) ?></h2>
+		</div>
 		<div class="span9">
-				<h2>Search Results for <em><?php echo htmlspecialchars($_GET['s']) ?></em></h2>
 				<?php if(count($results['items'])):?>
 				<ul class="unstyled" id="result-list">
 					<?php foreach($results['items'] as $i => $result):?>
@@ -23,7 +25,6 @@
 								<?php endif;?>
 							</a>
 						</h3>
-						<p><a href="<?=$result['url']?>" class="ignore-external url sans"><?=$result['url']?></a></p>
 						<p>
 							<?=str_replace('<br>', '', $result['snippet'])?>
 						</p>
@@ -43,21 +44,25 @@
 		</div>
 		
 	</div>
-	<?php get_template_part('includes/below-the-fold'); ?>
 <?php get_footer();?>
 
 <?php else:?>
 <?php get_header(); the_post();?>
 	<div class="row page-content" id="search-results">
+		<div class="span3">
+			<h2>Search Results for: <?php echo htmlspecialchars($_GET['s']) ?></h2>
+		</div>
 		<div class="span9">
-			<h2>Search Results</h2>
 			<?php if(have_posts()):?>
 				<ul class="unstyled">
 				<?php $count = 0; while(have_posts()): the_post();?>
 					<li class="<?php echo (($i %2) == 0) ? 'even' : 'odd'; ?>">
 						<h3><a href="<?php the_permalink();?>"><?php the_title();?></a></h3>
-						<p><a href="<?php the_permalink();?>"><?php the_permalink();?></a></p>
 						<p>
+							<?php if ($post->post_type == 'profile' && has_post_thumbnail($post->ID)) { ?>
+								<?php $thumb = wp_get_attachment_image_src(get_post_thumbnail_id($post->ID), 'medium'); ?>
+								<a href="<?php the_permalink();?>"><img class="search-person-img" src="<?=$thumb[0]?>" /></a>
+							<?php } ?>
 							<?php the_excerpt();?>
 						</p>
 					</li>
