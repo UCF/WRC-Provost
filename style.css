@@ -73,6 +73,8 @@ ul.menu li:last-child:after, ul.menu li.last:after{content: " " !important;}
 
 /* Home */
 #home.page-content {margin-top:20px;}
+#home.page-content a { color: #333; }
+#home.page-content a:hover { color: #c30202; }
 #home-images-carousel .caption {font-size:12px;line-height:15px;padding-top:5px;}
 #home #quote p{font-size:16px;line-height:22px;padding-bottom:25px;}
 #home #announcements {font-size:14px;line-height:18px;padding-bottom:10px;}
