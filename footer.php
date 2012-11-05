@@ -1,14 +1,19 @@
+<?php $options = get_option(THEME_OPTIONS_NAME);?>
 			<div id="bottom" class="row">
 				<div class="span12 hr"></div>
 				<!-- Colleges-->
-				<div id="home-colleges" class="span4">
+				<div id="bottom-location" class="span4">
 					<h3>Our Location</h3>
-					<iframe width="320" height="240" frameborder="0" src="https://map.ucf.edu/widget?title=&width=300&height=300&illustrated=y&building_id=79" style="border: none; width: 315px; height: 300px;"></iframe>
+					<iframe style="border: none; width: 315px; height: 300px;" src="https://map.ucf.edu/widget?title=&amp;width=300&amp;height=300&amp;illustrated=y&amp;building_id=79" frameborder="0" width="320" height="240"></iframe>
 				</div>
 				<!--Units -->
-				<div id="home-units" class="span4">
+				<div id="bottom-contact" class="span4">
 					<h3>Contact Us</h3>
-					Contact us info will go here...
+					<?php
+						if ($options['site_footer_contactus']) {
+							print $options['site_footer_contactus'];
+						}
+					?>
 				</div>
 				<div id="sidebar" class="span4">
 					<?php $sidebar_width = 4; get_template_part('includes/sidebar'); ?>
@@ -29,7 +34,6 @@
 						<a class="ignore-external" href="http://www.ucf.edu"><img src="<?=THEME_IMG_URL?>/ucf-large.png" alt="" title="" /></a>
 					</div>
 					<div class="span9" id="info">
-						<?php $options = get_option(THEME_OPTIONS_NAME);?>
 						<?php if($options['site_contact'] or $options['organization_name']):?>
 						<p>
 							Site maintained by the <?php if($options['site_contact'] and $options['organization_name']):?>
