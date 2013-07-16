@@ -401,29 +401,6 @@ class Post extends CustomPostType {
 	}
 }
 
-class HomeImage extends CustomPostType {
-	public
-		$name           = 'wrc_home_images',
-		$plural_name    = 'Home Images',
-		$singular_name  = 'Home Image',
-		$add_new_item   = 'Add New Home Image',
-		$edit_item      = 'Edit Home Image',
-		$new_item       = 'New Home Image',
-		$use_order		= True,
-		$use_editor		= False,
-		$use_thumbnails = True;
-	
-	public function register_metaboxes(){
-		$metabox = $this->metabox();
-		global $wp_meta_boxes;
-		remove_meta_box('postimagediv', $metabox['page'], 'side');
-		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
-			print "<p>Images will be outputted as defined by the order attribute in the side bar. Higher numbers have priority.</p>";
-		'), $metabox['page'], 'normal', 'high');
-		add_meta_box('postimagediv', __('Home Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
-	}	
-}
-
 class Form extends CustomPostType {
 	public
 		$name           = 'wrc_form',
@@ -433,19 +410,22 @@ class Form extends CustomPostType {
 		$edit_item      = 'Edit Form',
 		$new_item       = 'New Form',
 		$public         = True,
+		$use_editor		= False,
+		$use_metabox    = True,
 		$use_shortcode  = True,
 		$use_tags       = True,
 		$use_categories = True;
 	
 	public function fields(){
-		$fields   = parent::fields();
-		$fields[] = array(
-			'name'    => __('Document'),
-			'desc'    => __('Define an external url or upload a new file.  Uploaded files will override any url set.'),
-			'id'      => $this->options('name').'_file',
-			'type'    => 'file',
+		$prefix = $this->options('name').'_';
+		return array(
+			array(
+				'name'    => 'Document',
+				'desc'    => 'Define an external url or upload a new file.  Uploaded files will override any url set.',
+				'id'      => $prefix.'file',
+				'type'    => 'file',
+			),
 		);
-		return $fields;
 	}
 	
 	static function get_url($form){
@@ -473,6 +453,40 @@ class Form extends CustomPostType {
 		
 		return sprintf('<li class="%s"><a href="%s">%s</a></li>', $style, $file_url, $post->post_title);
 	}
+}
+
+class HomeImage extends CustomPostType {
+	public
+		$name           = 'wrc_home_images',
+		$plural_name    = 'Home Images',
+		$singular_name  = 'Home Image',
+		$add_new_item   = 'Add New Home Image',
+		$edit_item      = 'Edit Home Image',
+		$new_item       = 'New Home Image',
+		/* $use_metabox must be True to prevent metabox overrides in
+			register_metaboxes() from being applied globally */
+		$use_metabox	= True,
+		$use_order		= True,
+		$use_editor		= False,
+		$use_thumbnails = True;
+
+	public function register_metaboxes(){
+		$metabox = $this->metabox();
+		add_meta_box(
+			$metabox['id'],
+			$metabox['title'],
+			'show_meta_boxes',
+			$metabox['page'],
+			$metabox['context'],
+			$metabox['priority']
+		);
+		remove_meta_box('postimagediv', $metabox['page'], 'side');
+		add_meta_box('posthelp', __('Home Image Help'), create_function('$p', '
+			print "<p>Images will be outputted as defined by the order attribute in the side bar. Higher numbers have priority.</p>";
+		'), $metabox['page'], 'normal', 'high');
+		add_meta_box('postimagediv', __('Home Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
+	}
+	
 }
 
 
