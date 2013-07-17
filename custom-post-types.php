@@ -413,8 +413,7 @@ class Form extends CustomPostType {
 		$use_editor		= False,
 		$use_metabox    = True,
 		$use_shortcode  = True,
-		$use_tags       = True,
-		$use_categories = True;
+		$taxonomies     = array('post_tag', 'category');
 	
 	public function fields(){
 		$prefix = $this->options('name').'_';
