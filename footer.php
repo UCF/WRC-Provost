@@ -4,7 +4,7 @@
 				<!-- Colleges-->
 				<div id="bottom-location" class="span4">
 					<h3>Our Location</h3>
-					<iframe style="border: none; width: 315px; height: 300px;" src="https://map.ucf.edu/widget?title=&amp;width=300&amp;height=300&amp;illustrated=y&amp;building_id=79" frameborder="0" width="320" height="240"></iframe>
+					<iframe style="border: none; width: 315px; height: 300px;" src="//map.ucf.edu/widget?title=&amp;width=300&amp;height=300&amp;illustrated=y&amp;building_id=79" frameborder="0" width="320" height="240"></iframe>
 				</div>
 				<!--Units -->
 				<div id="bottom-contact" class="span4">

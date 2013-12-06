@@ -31,7 +31,7 @@ add_action('after_setup_theme', '__init__');
 #define('DEBUG', True);                  # Always on
 #define('DEBUG', False);                 # Always off
 define('DEBUG', isset($_GET['debug'])); # Enable via get parameter
-define('THEME_URL', get_bloginfo('stylesheet_directory'));
+define('THEME_URL', get_stylesheet_directory_uri());
 define('THEME_ADMIN_URL', get_admin_url());
 define('THEME_DIR', get_stylesheet_directory());
 define('THEME_INCLUDES_DIR', THEME_DIR.'/includes');
@@ -222,7 +222,6 @@ Config::$links = array(
 # Header styles
 Config::$styles = array(
 	array('admin' => True, 'src' => THEME_CSS_URL.'/admin.css',),
-	'http://universityheader.ucf.edu/bar/css/bar.css',
 	THEME_STATIC_URL.'/bootstrap/bootstrap/css/bootstrap.css',
 );
 
@@ -243,12 +242,18 @@ array_push(Config::$styles,
 
 # Scripts (output in footer)
 Config::$scripts = array(
-	array('name' => 'jquery', 'src' => 'http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js',),
 	array('admin' => True, 'src' => THEME_JS_URL.'/admin.js',),
-	'http://universityheader.ucf.edu/bar/js/university-header.js',
+	'//universityheader.ucf.edu/bar/js/university-header.js',
 	THEME_STATIC_URL.'/bootstrap/bootstrap/js/bootstrap.js',
 	THEME_STATIC_URL.'/js/script.js',
 );
+
+function jquery_in_header() {
+    wp_deregister_script( 'jquery' );
+    wp_register_script( 'jquery', '//code.jquery.com/jquery-1.7.1.min.js');
+    wp_enqueue_script( 'jquery' );
+}
+add_action('wp_enqueue_scripts', 'jquery_in_header');
 
 # Header Meta
 Config::$metas = array(
