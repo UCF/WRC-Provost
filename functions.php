@@ -316,7 +316,7 @@ function get_search_results(
 /**
  * Retrieve protocol-relative assets via wp_get_attachment_url
  **/
-function protocol_relative_attachment_url($url, $id) {
+function protocol_relative_attachment_url($url) {
     if (is_ssl()) {
         $url = str_replace('http://', 'https://', $url);
     }
