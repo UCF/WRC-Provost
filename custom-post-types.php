@@ -1,11 +1,11 @@
 <?php
 
 /**
- * Abstract class for defining custom post types.  
- * 
+ * Abstract class for defining custom post types.
+ *
  **/
 abstract class CustomPostType{
-	public 
+	public
 		$name           = 'custom_post_type',
 		$plural_name    = 'Custom Posts',
 		$singular_name  = 'Custom Post',
@@ -27,8 +27,8 @@ abstract class CustomPostType{
 		# Optional default ordering for generic shortcode if not specified by user.
 		$default_orderby = null,
 		$default_order   = null;
-	
-	
+
+
 	/**
 	 * Wrapper for get_posts function, that predefines post_type for this
 	 * custom post type.  Any options valid in get_posts can be passed as an
@@ -46,8 +46,8 @@ abstract class CustomPostType{
 		$objects = get_posts($options);
 		return $objects;
 	}
-	
-	
+
+
 	/**
 	 * Similar to get_objects, but returns array of key values mapping post
 	 * title to id if available, otherwise it defaults to id=>id.
@@ -67,8 +67,8 @@ abstract class CustomPostType{
 		}
 		return $opt;
 	}
-	
-	
+
+
 	/**
 	 * Return the instances values defined by $key.
 	 **/
@@ -76,8 +76,8 @@ abstract class CustomPostType{
 		$vars = get_object_vars($this);
 		return $vars[$key];
 	}
-	
-	
+
+
 	/**
 	 * Additional fields on a custom post type may be defined by overriding this
 	 * method on an descendant object.
@@ -85,8 +85,8 @@ abstract class CustomPostType{
 	public function fields(){
 		return array();
 	}
-	
-	
+
+
 	/**
 	 * Using instance variables defined, returns an array defining what this
 	 * custom post type supports.
@@ -111,8 +111,8 @@ abstract class CustomPostType{
 		}
 		return $supports;
 	}
-	
-	
+
+
 	/**
 	 * Creates labels array, defining names for admin panel.
 	 **/
@@ -125,8 +125,8 @@ abstract class CustomPostType{
 			'new_item'      => __($this->options('new_item')),
 		);
 	}
-	
-	
+
+
 	/**
 	 * Creates metabox array for custom post type. Override method in
 	 * descendants to add or modify metaboxes.
@@ -144,8 +144,8 @@ abstract class CustomPostType{
 		}
 		return null;
 	}
-	
-	
+
+
 	/**
 	 * Registers metaboxes defined for custom post type.
 	 **/
@@ -162,8 +162,8 @@ abstract class CustomPostType{
 			);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Registers the custom post type and any other ancillary actions that are
 	 * required for the post to function properly.
@@ -176,19 +176,19 @@ abstract class CustomPostType{
 			'taxonomies' => $this->options('taxonomies'),
 			'_builtin'   => $this->options('built_in')
 		);
-		
+
 		if ($this->options('use_order')){
 			$registration = array_merge($registration, array('hierarchical' => True,));
 		}
-		
+
 		register_post_type($this->options('name'), $registration);
-		
+
 		if ($this->options('use_shortcode')){
 			add_shortcode($this->options('name').'-list', array($this, 'shortcode'));
 		}
 	}
-	
-	
+
+
 	/**
 	 * Shortcode for this custom post type.  Can be overridden for descendants.
 	 * Defaults to just outputting a list of objects outputted as defined by
@@ -205,8 +205,8 @@ abstract class CustomPostType{
 		}
 		return sc_object_list($attr);
 	}
-	
-	
+
+
 	/**
 	 * Handles output for a list of objects, can be overridden for descendants.
 	 * If you want to override how a list of objects are outputted, override
@@ -215,10 +215,10 @@ abstract class CustomPostType{
 	 **/
 	public function objectsToHTML($objects, $css_classes){
 		if (count($objects) < 1){ return '';}
-		
+
 		$class = get_custom_post_type($objects[0]->post_type);
 		$class = new $class;
-		
+
 		ob_start();
 		?>
 		<ul class="<?php if($css_classes):?><?=$css_classes?><?php else:?><?=$class->options('name')?>-list<?php endif;?>">
@@ -232,8 +232,8 @@ abstract class CustomPostType{
 		$html = ob_get_clean();
 		return $html;
 	}
-	
-	
+
+
 	/**
 	 * Outputs this item in HTML.  Can be overridden for descendants.
 	 **/
@@ -341,8 +341,8 @@ class Person extends CustomPostType
 					</thead>
 					<tbody>
 				<?
-				foreach($people as $person) { 
-					$email = get_post_meta($person->ID, 'person_email', True); 
+				foreach($people as $person) {
+					$email = get_post_meta($person->ID, 'person_email', True);
 					$link = ($person->post_content == '') ? False : True; ?>
 						<tr>
 							<td class="name">
@@ -354,7 +354,7 @@ class Person extends CustomPostType
 								<?if($link) {?><a href="<?=get_permalink($person->ID)?>"><?}?>
 								<?=get_post_meta($person->ID, 'person_jobtitle', True)?>
 								<?if($link) {?></a><?}?>
-							</td> 
+							</td>
 							<td class="phones"><?php if(($link) && ($this->get_phones($person))) {?><a href="<?=get_permalink($person->ID)?>">
 								<?php } if($this->get_phones($person)) {?>
 									<ul class="unstyled"><?php foreach($this->get_phones($person) as $phone) { ?><li><?=$phone?></li><?php } ?></ul>
@@ -363,12 +363,12 @@ class Person extends CustomPostType
 						</tr>
 				<? } ?>
 				</tbody>
-			</table> 
+			</table>
 		</div>
 	</div><?
 	return ob_get_clean();
 	}
-} // END class 
+} // END class
 
 class Post extends CustomPostType {
 	public
@@ -414,10 +414,16 @@ class Form extends CustomPostType {
 		$use_metabox    = True,
 		$use_shortcode  = True,
 		$taxonomies     = array('post_tag', 'category');
-	
+
 	public function fields(){
 		$prefix = $this->options('name').'_';
 		return array(
+			array(
+				'name' => 'URL',
+				'desc' => 'Associate this document with a URL.  This will take precedence over any uploaded file, so leave empty if you want to use a file instead.',
+				'id'   => $this->options('name').'_url',
+				'type' => 'text',
+			),
 			array(
 				'name'    => 'Document',
 				'desc'    => 'Define an external url or upload a new file.  Uploaded files will override any url set.',
@@ -426,17 +432,17 @@ class Form extends CustomPostType {
 			),
 		);
 	}
-	
+
 	static function get_url($form){
 		$x = get_post_meta($form->ID, 'wrc_form_url', True);
 		$y = wp_get_attachment_url(get_post_meta($form->ID, 'wrc_form_file', True));
-		
+
 		return ($y) ? $y : $x;
 	}
-	
+
 	public function toHTML($post){
 		if (is_int($post)) $post = get_post($post);
-		
+
 		$external_file = get_post_meta($post->ID, 'wrc_form_url', true);
 		$internal_file = get_post_meta($post->ID, 'wrc_form_file', true);
 		if($internal_file) $file_url = wp_get_attachment_url(get_post($internal_file)->ID);
@@ -446,10 +452,10 @@ class Form extends CustomPostType {
 			$doc_class = isset($matches['file_ext']) ? $matches['file_ext'] : 'file';
 		}
 		$style = "document " . $doc_class;
-		
+
 		if(!$file_url) $file_url == "#";
 		if($file_url=="#") $style = 'missing';
-		
+
 		return sprintf('<li class="%s"><a href="%s">%s</a></li>', $style, $file_url, $post->post_title);
 	}
 }
@@ -485,7 +491,7 @@ class HomeImage extends CustomPostType {
 		'), $metabox['page'], 'normal', 'high');
 		add_meta_box('postimagediv', __('Home Image'), 'post_thumbnail_meta_box', $metabox['page'], 'normal', 'high');
 	}
-	
+
 }
 
 
