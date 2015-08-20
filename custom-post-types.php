@@ -445,8 +445,15 @@ class Form extends CustomPostType {
 
 		$external_file = get_post_meta($post->ID, 'wrc_form_url', true);
 		$internal_file = get_post_meta($post->ID, 'wrc_form_file', true);
-		if($internal_file) $file_url = wp_get_attachment_url(get_post($internal_file)->ID);
-		else $file_url = $external_file;
+
+		// 'url' should take precedence over an uploaded file
+		if ( $external_file ) {
+			$file_url = $external_file;
+		}
+		else {
+			$file_url = wp_get_attachment_url( get_post( $internal_file )->ID );
+		}
+
 		if($file_url){
 			preg_match('/\.(?<file_ext>[^.]+)$/', $file_url, $matches);
 			$doc_class = isset($matches['file_ext']) ? $matches['file_ext'] : 'file';
