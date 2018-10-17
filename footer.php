@@ -1,11 +1,6 @@
 <?php $options = get_option(THEME_OPTIONS_NAME);?>
 			<div id="bottom" class="row">
 				<div class="span12 hr"></div>
-				<!-- Colleges-->
-				<div id="bottom-location" class="span4">
-					<h3>Our Location</h3>
-					<iframe style="border: none; width: 315px; height: 300px;" src="//map.ucf.edu/widget?title=&amp;width=300&amp;height=300&amp;illustrated=y&amp;building_id=79" frameborder="0" width="320" height="240"></iframe>
-				</div>
 				<!--Units -->
 				<div id="bottom-contact" class="span4">
 					<h3>Contact Us</h3>
@@ -15,14 +10,11 @@
 						}
 					?>
 				</div>
-				<div id="sidebar" class="span4">
-					<?php $sidebar_width = 4; get_template_part('includes/sidebar'); ?>
-				</div>
 			</div>
 			<?=wp_nav_menu(array(
-				'theme_location' => 'footer-menu', 
-				'container'      => 'false', 
-				'menu_id'        => 'footer-menu', 
+				'theme_location' => 'footer-menu',
+				'container'      => 'false',
+				'menu_id'        => 'footer-menu',
 				'fallback_cb'    => false,
 				'depth'          => 1,
 				'walker'         => new Bootstrap_Walker_Nav_Menu()
